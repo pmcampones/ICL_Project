@@ -1,0 +1,78 @@
+
+PARSER_BEGIN(Parser)
+
+
+/** ID lister. */
+public class Parser {
+
+  /** Main entry point. */
+  public static void main(String args[]) {
+    Parser parser = new Parser(System.in);
+
+    while (true) {
+    try {
+    parser.Start();
+    System.out.println( "OK!" );
+    } catch (Exception e) {
+      System.out.println ("Syntax Error!");
+      parser.ReInit(System.in);
+    }
+    }
+  }
+
+}
+
+PARSER_END(Parser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\r"
+}
+
+TOKEN :
+{
+  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+  |
+  < Num: (["0"-"9"]) + >
+  |
+  < PLUS : "+" >
+  |
+  < MINUS : "-">
+  |
+  < TIMES : "*">
+  |
+  < DIV : "/">
+  |
+  < LPAR : "(" >
+  |
+  < RPAR : ")" >
+  |
+  < EL: "\n" >
+}
+
+void Start() :
+{}
+{
+   Exp() <EL>
+}
+
+void Exp() :
+{}
+{
+     Term() ( ( <PLUS> | <MINUS> ) Term()  ) *
+
+}
+
+void Term() :
+{}
+{
+     Fact() ( ( <TIMES> | <DIV> ) Term() )?
+}
+
+void Fact() :
+{}
+{
+   ( <Num> | <LPAR> Exp() <RPAR> )
+}
