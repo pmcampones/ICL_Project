@@ -26,3 +26,7 @@ hs_err_pid*
 #Intellij stuff
 *.iml
 .idea*
+out*
+
+#Pedro Trash
+src/Parser*

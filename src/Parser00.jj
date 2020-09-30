@@ -6,7 +6,7 @@ PARSER_BEGIN(Parser)
 public class Parser {
 
   /** Main entry point. */
-  public static void main(String args[]) {
+  public static void main(String[] args) {
     Parser parser = new Parser(System.in);
 
     while (true) {
@@ -74,5 +74,5 @@ void Term() :
 void Fact() :
 {}
 {
-   ( <Num> | <LPAR> Exp() <RPAR> )
+   <Num> | <LPAR> Exp() <RPAR> | <MINUS> Exp()
 }

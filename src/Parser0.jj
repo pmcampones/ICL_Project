@@ -2,7 +2,7 @@ PARSER_BEGIN(Parser)
 
 
 /** ID lister. */
-public class Parser {
+import Tree.ASTMult;import Tree.ASTNeg;public class Parser {
 
   /** Main entry point. */
   public static void main(String[] args) {
@@ -19,8 +19,8 @@ public class Parser {
     }
     }
   }
-
 }
+
 
 PARSER_END(Parser)
 
@@ -78,7 +78,9 @@ ASTNode Term() :
 {
      t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term() 
  		 {
-                 } 
+            if (op.kind == TIMES) t1 = new ASTMult(t1, t2);
+            else t1 = new ASTDiv(t1, t2);
+     }
 		)?
      { return t1; } 
 }
@@ -88,27 +90,13 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); } | <LPAR> t=Exp() <RPAR> )
+   ( (n=<Num> | n=<MINUS>) {
+        if (n.kind == MINUS)
+            t = new ASTNeg(Exp());
+        else
+            t = new ASTNum(Integer.parseInt(n.image));
+ }
+   | <LPAR> t=Exp() <RPAR> )
    { return t; }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
