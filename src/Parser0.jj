@@ -90,7 +90,13 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( n=<Num> { t = new ASTNum(Integer.parseInt(n.image)); } | <LPAR> t=Exp() <RPAR> )
+   ( (n=<Num> | n=<MINUS>) {
+        if (n.kind == MINUS)
+            t = new ASTNeg(Exp());
+        else
+            t = new ASTNum(Integer.parseInt(n.image));
+ }
+   | <LPAR> t=Exp() <RPAR> )
    { return t; }
 }
 
