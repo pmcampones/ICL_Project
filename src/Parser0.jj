@@ -76,7 +76,8 @@ ASTNode Exp() :
   ASTNode t1, t2; }
 {
      t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
-                 { if (op.kind == PLUS) 
+                 {
+                    if (op.kind == PLUS)
                          t1 = new ASTPlus(t1,t2);
                    else  t1 = new ASTSub(t1,t2);
                  } 
@@ -102,17 +103,11 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( (n=<Num> | n=<MINUS> | n =<DEF> | n = <Id> ) {
-        if (n.kind == MINUS)
-            t = new ASTNeg(Exp());
-        else if (n.kind == Num)
-            t = new ASTNum(Integer.parseInt(n.image));
-        else if (n.kind == DEF)
-            t = Def();
-        else
-            t = new ASTNum(env.find(n.image));
- }
-   | <LPAR> t=Exp() <RPAR> )
+   ( n=<Num>    {t = new ASTNum(Integer.parseInt(n.image));}
+   | n=<MINUS>  {t = new ASTNeg(Fact());}
+   | n =<DEF> t = Exp()
+   | n = <Id>   {t = new ASTNum(env.find(n.image));}
+   | <LPAR> t = Exp() <RPAR>)
    { return t; }
 }
 
