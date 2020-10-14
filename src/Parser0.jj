@@ -6,7 +6,7 @@ import tree.*;
 import environment.*;
 public class Parser {
 
-    private static Environment env = new Environment();
+    //private static Environment env = new Environment();
 
   /** Main entry point. */
   public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-    System.out.println( exp.eval(env) );
+    System.out.println( exp.eval(new Environment()) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
       parser.ReInit(System.in);
@@ -103,18 +103,18 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( n=<Num>    {t = new ASTNum(Integer.parseInt(n.image));}
-   | n=<MINUS>  {t = new ASTNeg(Fact());}
-   | n =<DEF> t = Exp()
-   | n = <Id>   {t = new ASTNum(env.find(n.image));}
-   | <LPAR> t = Exp() <RPAR>)
+   ( n = <Num>    {t = new ASTNum(Integer.parseInt(n.image));}
+   | n = <MINUS>  {t = new ASTNeg(Fact());}
+   | n = <DEF>     t = Def()
+   | n = <Id>     {t = new ASTVariable(n.image);}
+   | <LPAR>        t = Exp() <RPAR>)
    { return t; }
 }
 
 ASTNode Def() :
-{   Token def, id, eq, in, end;
-    ASTNode init, body, result;
+{   Token id;
+    ASTNode init, body;
 } {
-    id = <Id> eq = <EQUALS> init = Exp() in = <IN> body = Exp() end =<END>
-{return new ASTDef(id.image, init, body, env);}
+    id = <Id> <EQUALS> init = Exp() <IN> body = Exp() <END>
+{return new ASTDef(id.image, init, body);}
 }
