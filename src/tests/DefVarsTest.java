@@ -116,7 +116,7 @@ public class DefVarsTest {
     }
 
     private void tryToTestDefNestedCaires1() throws ParseException {
-        String exp = "def x = 1 in def = x + x in x + y end end";
+        String exp = "def x = 1 in def y = x + x in x + y end end";
         writeToToken(exp);
         assertEquals(3, run());
     }
