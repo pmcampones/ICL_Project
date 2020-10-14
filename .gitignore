@@ -29,5 +29,9 @@ hs_err_pid*
 out*
 
 #Pedro Trash
+	#Intellij trash
 src/Parser*
 src/parser*
+	#Eclipse trash
+.classpath
+.project
