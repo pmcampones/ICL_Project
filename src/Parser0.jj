@@ -37,6 +37,12 @@ SKIP :
 
 TOKEN :
 {
+  < DEF: "def" >
+  |
+  < IN: "in" >
+  |
+  < END: "end" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
@@ -54,12 +60,6 @@ TOKEN :
   < RPAR : ")" >
   |
   < EL: "\n" >
-  |
-  < DEF: "def" >
-  |
-  < IN: "in" >
-  |
-  < END: "end" >
   |
   < EQUALS: "=" >
 }
@@ -120,13 +120,6 @@ ASTNode Def() :
 {   Token def, id, eq, in, end;
     ASTNode init, body;
 } {
-    id = <Id> eq = <EQUALS>{
-        init = Exp();
-        env = env.beginScope();
-        env.assoc(id, init);
-}   in = <IN> {
-        body = Exp();
-        env.endScope();
-} end = <END>
-{return body;}
+    id = <Id> eq = <EQUALS> init = Exp() in = <IN> body = Exp() end =<END>
+{return new ASTDef(id, init, body, env);}
 }
