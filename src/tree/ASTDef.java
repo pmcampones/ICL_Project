@@ -2,7 +2,7 @@ package tree;
 
 import environment.Environment;
 
-public class ASTDef {
+public class ASTDef implements ASTNode {
 
     private final String id;
 

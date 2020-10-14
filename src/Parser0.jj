@@ -6,7 +6,7 @@ import tree.*;
 import environment.*;
 public class Parser {
 
-    private Environment env = new Environment();
+    private static Environment env = new Environment();
 
   /** Main entry point. */
   public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class Parser {
     }
     }
   }
-}
+
 }
 
 PARSER_END(Parser)
@@ -105,12 +105,12 @@ ASTNode Fact() :
    ( (n=<Num> | n=<MINUS> | n =<DEF> | n = <Id> ) {
         if (n.kind == MINUS)
             t = new ASTNeg(Exp());
-        else if (n.kind == NUM)
+        else if (n.kind == Num)
             t = new ASTNum(Integer.parseInt(n.image));
         else if (n.kind == DEF)
             t = Def();
         else
-            t = new ASTNum(env.find(n));
+            t = new ASTNum(env.find(n.image));
  }
    | <LPAR> t=Exp() <RPAR> )
    { return t; }
@@ -118,8 +118,8 @@ ASTNode Fact() :
 
 ASTNode Def() :
 {   Token def, id, eq, in, end;
-    ASTNode init, body;
+    ASTNode init, body, result;
 } {
     id = <Id> eq = <EQUALS> init = Exp() in = <IN> body = Exp() end =<END>
-{return new ASTDef(id, init, body, env);}
+{return new ASTDef(id.image, init, body, env);}
 }
