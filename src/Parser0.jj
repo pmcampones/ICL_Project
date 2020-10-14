@@ -104,7 +104,7 @@ ASTNode Fact() :
 {
    ( (n=<Num> | n=<MINUS> | n =<DEF> | n = <Id> ) {
         if (n.kind == MINUS)
-            t = new ASTNeg(Exp());
+            t = new ASTNeg(Term());
         else if (n.kind == Num)
             t = new ASTNum(Integer.parseInt(n.image));
         else if (n.kind == DEF)
