@@ -2,43 +2,23 @@ package tests;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.Random;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import environment.Environment;
 import parser.ParseException;
 import parser.Parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static parser.Parser.Start;
+import static tests.TestUtils.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ArithmeticOpTest {
 		
-	private static final int DEFAULT_LEN = 20;
-	
-	private static final int MAX_RAND = 100;
-		
 	public ArithmeticOpTest() {
 		new Parser(new ByteArrayInputStream(new byte[0]));
-	}
-
-	@AfterEach
-	public void tearDown() throws IOException {}
-	
-	private void writeToToken(String exp) {
-		exp += "\n";
-		byte[] expBytes = exp.getBytes();
-		Parser.ReInit(new ByteArrayInputStream(expBytes));
-	}
-	
-	private int run() throws ParseException {
-		return Start().eval(new Environment());
 	}
 	
 	@Test
@@ -123,11 +103,11 @@ public class ArithmeticOpTest {
 	}
 	
 	private String genSameOpStr(int[] nums, String operator) {
-		StringBuffer expWritter = new StringBuffer("");
+		StringBuilder expWriter = new StringBuilder("");
 		for (int i = 0; i < nums.length - 1; i++)
-			expWritter.append(nums[i] + operator);
-		expWritter.append(nums[nums.length - 1]);
-		return expWritter.toString();
+			expWriter.append(nums[i] + operator);
+		expWriter.append(nums[nums.length - 1]);
+		return expWriter.toString();
 	}
 	
 	@Test
@@ -141,8 +121,7 @@ public class ArithmeticOpTest {
 		int[] nums = getNumsArray();		
 		writeToToken(genSameOpStr(nums, "+"));
 		int sum = 0;
-		for (int i = 0; i < nums.length; i++)
-			sum += nums[i];
+		for (int num : nums) sum += num;
 		assertEquals(sum, run());
 	}
 	
@@ -196,8 +175,7 @@ public class ArithmeticOpTest {
 		String exp = String.format("%d / %s", bigNum, genSameOpStr(nums, "/"));
 		writeToToken(exp);
 		int accum = bigNum;
-		for (int i = 0; i < nums.length; i++)
-			accum /= nums[i];
+		for (int num : nums) accum /= num;
 		assertEquals(accum, run());
 	}
 	
