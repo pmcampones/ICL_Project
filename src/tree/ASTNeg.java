@@ -1,4 +1,6 @@
-package Tree;
+package tree;
+
+import environment.Environment;
 
 public class ASTNeg implements ASTNode {
 
@@ -7,6 +9,6 @@ public class ASTNeg implements ASTNode {
     public ASTNeg(ASTNode node) {this.node = node;}
 
     @Override
-    public int eval() {return -node.eval();}
+    public int eval(Environment e) {return -node.eval(e);}
 
 }

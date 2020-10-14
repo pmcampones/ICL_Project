@@ -1,4 +1,6 @@
-package Tree;
+package tree;
+
+import environment.Environment;
 
 public class ASTNum implements ASTNode {
 
@@ -6,7 +8,7 @@ public class ASTNum implements ASTNode {
 
     public ASTNum(int val) {this.val = val;}
 
-    public int eval() {return val;}
+    public int eval(Environment e) {return val;}
 
 }
 
