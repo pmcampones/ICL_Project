@@ -2,7 +2,11 @@ PARSER_BEGIN(Parser)
 
 
 /** ID lister. */
-import Tree.ASTMult;import Tree.ASTNeg;public class Parser {
+import tree.*;
+import environment.*;
+public class Parser {
+
+    private static Environment env = new Environment();
 
   /** Main entry point. */
   public static void main(String[] args) {
@@ -12,15 +16,15 @@ import Tree.ASTMult;import Tree.ASTNeg;public class Parser {
     while (true) {
     try {
     exp = parser.Start();
-    System.out.println( exp.eval() );
+    System.out.println( exp.eval(env) );
     } catch (Exception e) {
       System.out.println ("Syntax Error!");
       parser.ReInit(System.in);
     }
     }
   }
-}
 
+}
 
 PARSER_END(Parser)
 
@@ -33,6 +37,12 @@ SKIP :
 
 TOKEN :
 {
+  < DEF: "def" >
+  |
+  < IN: "in" >
+  |
+  < END: "end" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
@@ -50,6 +60,8 @@ TOKEN :
   < RPAR : ")" >
   |
   < EL: "\n" >
+  |
+  < EQUALS: "=" >
 }
 
 ASTNode Start():
@@ -90,13 +102,24 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( (n=<Num> | n=<MINUS>) {
+   ( (n=<Num> | n=<MINUS> | n =<DEF> | n = <Id> ) {
         if (n.kind == MINUS)
             t = new ASTNeg(Exp());
-        else
+        else if (n.kind == Num)
             t = new ASTNum(Integer.parseInt(n.image));
+        else if (n.kind == DEF)
+            t = Def();
+        else
+            t = new ASTNum(env.find(n.image));
  }
    | <LPAR> t=Exp() <RPAR> )
    { return t; }
 }
 
+ASTNode Def() :
+{   Token def, id, eq, in, end;
+    ASTNode init, body, result;
+} {
+    id = <Id> eq = <EQUALS> init = Exp() in = <IN> body = Exp() end =<END>
+{return new ASTDef(id.image, init, body, env);}
+}
