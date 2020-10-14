@@ -17,10 +17,6 @@ import static tests.TestUtils.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ArithmeticOpTest {
 		
-	private static final int DEFAULT_LEN = 20;
-	
-	private static final int MAX_RAND = 100;
-		
 	public ArithmeticOpTest() {
 		new Parser(new ByteArrayInputStream(new byte[0]));
 	}
