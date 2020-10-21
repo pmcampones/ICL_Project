@@ -89,12 +89,12 @@ ASTNode Term() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term() 
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Fact()
  		 {
             if (op.kind == TIMES) t1 = new ASTMult(t1, t2);
             else t1 = new ASTDiv(t1, t2);
      }
-		)?
+		)*
      { return t1; } 
 }
 
