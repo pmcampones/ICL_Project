@@ -98,7 +98,7 @@ public class ArithmeticOpTest {
 		int[] nums = new int[DEFAULT_LEN];
 		Random r = new Random();
 		for (int i = 0; i < DEFAULT_LEN; i++)
-			nums[i] = r.nextInt(MAX_RAND);
+			nums[i] = r.nextInt(MAX_RAND) + 1;
 		return nums;
 	}
 	
@@ -158,11 +158,7 @@ public class ArithmeticOpTest {
 		assertEquals(accum, run());
 	}
 	
-	//@Test
-	/*
-	 * It's impossible to pass this test because the evaluation of the expressions is done from right to left
-	 * such that, 1024 / 2 / 2 is read as 1024 / (2 / 2) = 1024 / 1 = 1024 
-	 */
+	@Test
 	public void testManyDivs() {
 		try {
 			tryToTestManyDivs();
