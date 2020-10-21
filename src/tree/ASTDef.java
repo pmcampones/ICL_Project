@@ -10,13 +10,10 @@ public class ASTDef implements ASTNode {
 
     private final ASTNode body;
 
-    private final Environment env;
-
-    public ASTDef(String id, ASTNode init, ASTNode body, Environment env) {
+    public ASTDef(String id, ASTNode init, ASTNode body) {
         this.id = id;
         this.init = init;
         this.body = body;
-        this.env = env;
     }
 
     public int eval(Environment e) {
