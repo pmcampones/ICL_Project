@@ -2,6 +2,8 @@ package tree;
 
 import environment.Environment;
 
+import java.util.Queue;
+
 public class ASTDef implements ASTNode {
 
     private final String id;
@@ -16,6 +18,7 @@ public class ASTDef implements ASTNode {
         this.body = body;
     }
 
+    @Override
     public int eval(Environment e) {
         int inVal = init.eval(e);
         e.beginScope();
@@ -23,5 +26,10 @@ public class ASTDef implements ASTNode {
         int bodVal = body.eval(e);
         e.endScope();
         return bodVal;
+    }
+
+    @Override
+    public void compile(Queue<String> codeBlock) {
+
     }
 }
