@@ -79,7 +79,7 @@ public class ArithmeticOpTest {
 		int[] nums = new int[DEFAULT_LEN];
 		Random r = new Random();
 		for (int i = 0; i < DEFAULT_LEN; i++)
-			nums[i] = r.nextInt(MAX_RAND);
+			nums[i] = r.nextInt(MAX_RAND) + 1;
 		return nums;
 	}
 	
