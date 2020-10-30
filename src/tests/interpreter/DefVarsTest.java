@@ -108,4 +108,31 @@ public class DefVarsTest {
         assertEquals(x * y, run());
     }
 
+    @Test
+    public void testDefSameVarDifferentScopesSimple()
+            throws ParseException,
+            IDDeclaredTwiceException, UndeclaredIdentifierException {
+        String exp = "def x = 2 in def x = 1 in x end end";
+        writeToToken(exp);
+        assertEquals(1, run());
+    }
+
+    @Test
+    public void testDefSameVarDifferentScopesComplex()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
+        String exp = "def x = 2 in def y = def x = x+1 in x+x end in x * y end end";
+        writeToToken(exp);
+        assertEquals(12, run());
+    }
+
+    @Test
+    public void testDefDifferentVarsSameScope()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
+        String exp = "def x = 2 y = x+2 in def z = 3 in def y = x+1 in x + y + z end end end";
+        writeToToken(exp);
+        assertEquals(8, run());
+    }
+
 }

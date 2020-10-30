@@ -16,12 +16,12 @@ public class Environment {
         this(null);
     }
 
-    public Environment(Environment parentEnv) {
+    private Environment(Environment parentEnv) {
         this.parentEnv = parentEnv;
     }
 
     public Environment beginScope() {
-        return new Environment(parentEnv);
+        return new Environment(this);
     }
 
     public Environment endScope() {

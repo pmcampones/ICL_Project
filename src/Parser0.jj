@@ -4,6 +4,9 @@ PARSER_BEGIN(Parser)
 /** ID lister. */
 import tree.*;
 import environment.*;
+import java.lang.invoke.VarHandle;
+import java.util.Collection;
+import java.util.LinkedList;
 public class Parser {
 
     //private static Environment env = new Environment();
@@ -14,16 +17,15 @@ public class Parser {
     ASTNode exp;
 
     while (true) {
-    try {
-    exp = parser.Start();
-    System.out.println( exp.eval(new Environment()) );
-    } catch (Exception e) {
-      System.out.println ("Syntax Error!");
-      parser.ReInit(System.in);
-    }
+        try {
+            exp = parser.Start();
+            System.out.println( exp.eval(new Environment()) );
+        } catch (Exception e) {
+          System.out.println ("Syntax Error!");
+          parser.ReInit(System.in);
+        }
     }
   }
-
 }
 
 PARSER_END(Parser)
@@ -114,7 +116,16 @@ ASTNode Fact() :
 ASTNode Def() :
 {   Token id;
     ASTNode init, body;
+    Collection<ASTDef.Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 } {
-    id = <Id> <EQUALS> init = Exp() <IN> body = Exp() <END>
-{return new ASTDef(id.image, init, body);}
+    (
+        (id = <Id>
+        <EQUALS>
+        init = Exp())
+        {variables.add(new Variable(id, init));}
+    )+
+    <IN>
+    body = Exp()
+    <END>
+{return new ASTDef(variables, body);}
 }
