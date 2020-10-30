@@ -1,5 +1,7 @@
 package tests;
 
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import parser.ParseException;
@@ -21,13 +23,9 @@ public class DefVarsTest {
     }
 
     @Test
-    public void testDefWithoutUsingSimple() {
-        try {
-            tryToTestDefWithoutUsingSimple();
-        } catch (ParseException e) {fail();}
-    }
-
-    private void tryToTestDefWithoutUsingSimple() throws ParseException {
+    public void testDefWithoutUsingSimple()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("def x = 1 in %d + %d end", first, second);
@@ -36,13 +34,9 @@ public class DefVarsTest {
     }
 
     @Test
-    public void testDefWithoutUsingComplex() {
-        try {
-            tryToTestDefWithoutUsingComplex();
-        } catch (ParseException e) {fail();}
-    }
-
-    private void tryToTestDefWithoutUsingComplex() throws ParseException {
+    public void testDefWithoutUsingComplex()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         Random r = new Random();
         int[] nums = new int[5];
         for(int i = 0; i < nums.length; i++)
@@ -55,13 +49,7 @@ public class DefVarsTest {
     }
 
     @Test
-    public void testDefUsingSimple() {
-        try {
-            tryToTestDefUsingSimple();
-        } catch (ParseException e) {fail();}
-    }
-
-    private void tryToTestDefUsingSimple() throws ParseException {
+    public void testDefUsingSimple() throws ParseException, IDDeclaredTwiceException, UndeclaredIdentifierException {
         Random r = new Random();
         int attr = r.nextInt(MAX_RAND);
         int num = r.nextInt(MAX_RAND);
@@ -72,13 +60,9 @@ public class DefVarsTest {
     }
 
     @Test
-    public void testDefUsingComplex() {
-        try {
-            tryToTestDefUsingComplex();
-        } catch (ParseException e) {fail();}
-    }
-
-    public void tryToTestDefUsingComplex() throws ParseException {
+    public void testDefUsingComplex()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         Random r = new Random();
         int attr = r.nextInt(MAX_RAND);
         int[] nums = new int[3];
@@ -92,13 +76,9 @@ public class DefVarsTest {
     }
 
     @Test
-    public void testDefNestedSimple() {
-        try {
-            tryToTestDefNestedSimple();
-        } catch (ParseException e) {fail();}
-    }
-
-    private void tryToTestDefNestedSimple() throws ParseException {
+    public void testDefNestedSimple()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         Random r = new Random();
         int attr1 = r.nextInt(MAX_RAND), attr2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d in def y = %d in x * (-y + x) end end",
@@ -109,25 +89,18 @@ public class DefVarsTest {
     }
 
     @Test
-    public void testDefNestedCaires1() {
-        try {
-            tryToTestDefNestedCaires1();
-        } catch (ParseException e) {fail();}
-    }
-
-    private void tryToTestDefNestedCaires1() throws ParseException {
+    public void testDefNestedCaires1()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         String exp = "def x = 1 in def y = x + x in x + y end end";
         writeToToken(exp);
         assertEquals(3, run());
     }
 
-    public void testDefNestedCaires2() {
-        try {
-            tryToTestDefNestedCaires2();
-        } catch (ParseException e) {fail();}
-    }
-
-    private void tryToTestDefNestedCaires2() throws ParseException {
+    @Test
+    public void testDefNestedCaires2()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         int x = 2, z = x + 1, y = z + z;
         String exp = "def x = 2 in def y = def z = x + 1 in z + z end in x * y end end";
         writeToToken(exp);

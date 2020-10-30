@@ -4,6 +4,8 @@ package tests;
 import java.io.ByteArrayInputStream;
 import java.util.Random;
 
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -11,7 +13,6 @@ import parser.ParseException;
 import parser.Parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import static tests.TestUtils.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,71 +23,51 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testNumber() {
-		try {
-			tryToTestNumber();
-		} catch (ParseException e){fail();}
-	}
-	
-	private void tryToTestNumber() throws ParseException {
+	public void testNumber()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		int number = new Random().nextInt();
 		writeToToken(String.valueOf(number));
-		assertEquals(number, run());		
+		assertEquals(number, run());
 	}
 	
 	@Test
-	public void testSum() {
-		try {
-			tryToTestSum();
-		} catch (ParseException e){fail();}
-	}
-	
-	private void tryToTestSum() throws ParseException {
+	public void testSum()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Random r = new Random();
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("%d + %d", first, second);
 		writeToToken(exp);
-		assertEquals(first + second, run());		
+		assertEquals(first + second, run());
 	}
 	
 	@Test
-	public void testSub() {
-		try {
-			tryToTestSub();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestSub() throws ParseException {
+	public void testSub()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Random r = new Random();
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("%d - %d", first, second);
 		writeToToken(exp);
-		assertEquals(first - second, run());		
+		assertEquals(first - second, run());
 	}
 	
 	@Test
-	public void testMult() {
-		try {
-			tryToTestMult();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestMult() throws ParseException {
+	public void testMult()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Random r = new Random();
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("%d * %d", first, second);
 		writeToToken(exp);
-		assertEquals(first * second, run());		
+		assertEquals(first * second, run());
 	}
 	
 	@Test
-	public void testDiv() {
-		try {
-			tryToTestDiv();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestDiv() throws ParseException {
+	public void testDiv()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Random r = new Random();
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("%d / %d", first, second);
@@ -111,14 +92,10 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testManySums() {
-		try {
-			tryToTestManySums();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestManySums() throws ParseException {
-		int[] nums = getNumsArray();		
+	public void testManySums()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
+		int[] nums = getNumsArray();
 		writeToToken(genSameOpStr(nums, "+"));
 		int sum = 0;
 		for (int num : nums) sum += num;
@@ -126,15 +103,10 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testManySubs() {
-		try {
-			tryToTestManySubs();
-		} catch (ParseException e) {fail();}
-		
-	}
-	
-	private void tryToTestManySubs() throws ParseException {
-		int[] nums = getNumsArray();		
+	public void testManySubs()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
+		int[] nums = getNumsArray();
 		writeToToken(genSameOpStr(nums, "-"));
 		int accum = nums[0];
 		for (int i = 1; i < nums.length; i++)
@@ -143,13 +115,9 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testManyMults() {
-		try {
-			tryToTestManyMults();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestManyMults() throws ParseException {
+	public void testManyMults()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		int[] nums = getNumsArray();
 		writeToToken(genSameOpStr(nums, "*"));
 		int accum = nums[0];
@@ -159,13 +127,9 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testManyDivs() {
-		try {
-			tryToTestManyDivs();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestManyDivs() throws ParseException {
+	public void testManyDivs()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		int bigNum = Integer.MAX_VALUE;
 		int[] nums = getNumsArray();
 		String exp = String.format("%d / %s", bigNum, genSameOpStr(nums, "/"));
@@ -176,41 +140,29 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testBrackets() {
-		try {
-			tryToTestBrackets();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestBrackets() throws ParseException {
+	public void testBrackets()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		int num = new Random().nextInt();
 		writeToToken(String.format("( %d )", num));
 		assertEquals(num, run());
 	}
 
 	@Test
-	public void testBracketsSum() {
-		try {
-			tryToTestBracketsSum();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestBracketsSum() throws ParseException {
+	public void testBracketsSum()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Random r = new Random();
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("(%d + %d)", first, second);
 		writeToToken(exp);
-		assertEquals(first + second, run());		
+		assertEquals(first + second, run());
 	}
 	
 	@Test
-	public void testSumsMultBrackets() {
-		try {
-			tryToTestSumsMultBrackets();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestSumsMultBrackets() throws ParseException {
+	public void testSumsMultBrackets()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		String exp = "2 * (3 + 4 * (5 + 6) - 1 * (2))";
 		int val = 2 * (3 + 4 * (5 + 6) - 1 * 2);
 		writeToToken(exp);
@@ -218,41 +170,29 @@ public class ArithmeticOpTest {
 	}
 	
 	@Test
-	public void testMinusSingle() {
-		try {
-			tryToTestMinus();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestMinus() throws ParseException {
+	public void testMinusSingle()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		int num = new Random().nextInt();
 		writeToToken(String.format("-%d", num));
 		assertEquals(-num, run());
 	}
 	
 	@Test
-	public void testMinusTwo() {
-		try {
-			tryToTestMinusTwo();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestMinusTwo() throws ParseException {
+	public void testMinusTwo()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Random r = new Random();
 		int first = -1 * r.nextInt(), second = -1 * r.nextInt();
 		String exp = String.format("-%d + %d\n", first, second);
 		writeToToken(exp);
-		assertEquals(-first + second, run());		
+		assertEquals(-first + second, run());
 	}
 	
 	@Test
-	public void testMinusExpression() {
-		try {
-			tryToTestMinusExpression();
-		} catch (ParseException e) {fail();}
-	}
-	
-	private void tryToTestMinusExpression() throws ParseException {
+	public void testMinusExpression()
+			throws ParseException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		String exp = "-(2 * (3 + 4 * (5 + 6) - 1 * (2)))";
 		int val = -(2 * (3 + 4 * (5 + 6) - 1 * 2));
 		writeToToken(exp);
