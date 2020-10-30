@@ -3,36 +3,34 @@ package tree;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.exceptions.VariableValueAssociatedWithUnprocessedExpressionException;
 
+import java.util.Collection;
 import java.util.Queue;
 
 public class ASTDef implements ASTNode {
 
-    private final String id;
-
-    private final ASTNode init;
+    private final Collection<Variable> variables;
 
     private final ASTNode body;
 
-    public ASTDef(String id, ASTNode init, ASTNode body) {
-        this.id = id;
-        this.init = init;
+    public ASTDef(Collection<Variable> variables, ASTNode body) {
+        this.variables = variables;
         this.body = body;
     }
     
     @Override
-    public int eval(Environment e)
+    public int eval(Environment prevEnv)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        int inVal = init.eval(e);
-        e.beginScope();
-        e.assoc(id, inVal);
-        int bodVal = body.eval(e);
-        e.endScope();
-        return bodVal;
+        Environment currEnv = prevEnv.beginScope();
+        for (Variable v : variables)
+            currEnv.assoc(v.id, v.exp.eval(currEnv));
+        return body.eval(currEnv);
     }
 
     @Override
     public void compile(Queue<String> codeBlock) {
 
     }
+
 }
