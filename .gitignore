@@ -35,3 +35,6 @@ src/parser*
 	#Eclipse trash
 .classpath
 .project
+
+#Tests
+test*
