@@ -21,10 +21,4 @@ public class TestUtils {
         byte[] expBytes = exp.getBytes();
         Parser.ReInit(new ByteArrayInputStream(expBytes));
     }
-
-    static int run()
-            throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
-        return Start().eval(new Environment());
-    }
 }
