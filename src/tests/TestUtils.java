@@ -1,6 +1,8 @@
 package tests;
 
 import environment.Environment;
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
 
@@ -20,7 +22,9 @@ public class TestUtils {
         Parser.ReInit(new ByteArrayInputStream(expBytes));
     }
 
-    static int run() throws ParseException {
+    static int run()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         return Start().eval(new Environment());
     }
 }

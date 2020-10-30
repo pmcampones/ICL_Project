@@ -1,6 +1,8 @@
 package tree;
 
 import environment.Environment;
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 
 import java.util.Queue;
 
@@ -17,9 +19,10 @@ public class ASTDef implements ASTNode {
         this.init = init;
         this.body = body;
     }
-
+    
     @Override
-    public int eval(Environment e) {
+    public int eval(Environment e)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
         int inVal = init.eval(e);
         e.beginScope();
         e.assoc(id, inVal);
