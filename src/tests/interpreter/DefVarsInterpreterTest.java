@@ -11,15 +11,14 @@ import java.io.ByteArrayInputStream;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import static tests.TestUtils.*;
 import static tests.interpreter.InterpreterTestUtil.run;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DefVarsTest {
+public class DefVarsInterpreterTest {
 
-    public DefVarsTest() {
+    public DefVarsInterpreterTest() {
         new Parser(new ByteArrayInputStream(new byte[0]));
     }
 

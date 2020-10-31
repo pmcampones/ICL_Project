@@ -4,8 +4,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Queue;
+import org.apache.commons.io.FileUtils;
+ 
 
 public class Compiler {
+
+    private static final String DEFAULT_PACKAGE = "compiledPrograms/";
 
     private static final String FILE_STUB =
             ".class public Demo\n" +
@@ -44,14 +48,14 @@ public class Compiler {
                     "\n" +
                     ".end method";
 
-    public static void generateOutputFile(String filepath, Queue<String> codeBlock) throws IOException {
+    public static void generateOutputFile(String filename, Queue<String> codeBlock) throws IOException {
         String code = generateCodeString(codeBlock);
         String fileContent = String.format(FILE_STUB, code);
-        File f = new File(filepath);
-        if (f.createNewFile()) {
-            try (FileWriter writer = new FileWriter(f)) {
-                writer.write(fileContent);
-            }
+        File f = new File(filename);
+        if (f.exists())
+        	FileUtils.forceDelete(f);
+        try (FileWriter writer = new FileWriter(f)) {
+            writer.write(fileContent);
         }
     }
 
