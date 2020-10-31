@@ -16,9 +16,9 @@ import static tests.TestUtils.*;
 import static tests.interpreter.InterpreterTestUtil.run;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ArithmeticOpTest {
+public class ArithmeticOpInterpreterTest {
 
-    public ArithmeticOpTest() {
+    public ArithmeticOpInterpreterTest() {
         new Parser(new ByteArrayInputStream(new byte[0]));
     }
 
@@ -73,22 +73,6 @@ public class ArithmeticOpTest {
         String exp = String.format("%d / %d", first, second);
         writeToToken(exp);
         assertEquals(first / second, run());
-    }
-
-    private int[] getNumsArray() {
-        int[] nums = new int[DEFAULT_LEN];
-        Random r = new Random();
-        for (int i = 0; i < DEFAULT_LEN; i++)
-            nums[i] = r.nextInt(MAX_RAND) + 1;
-        return nums;
-    }
-
-    private String genSameOpStr(int[] nums, String operator) {
-        StringBuilder expWriter = new StringBuilder("");
-        for (int i = 0; i < nums.length - 1; i++)
-            expWriter.append(nums[i]).append(operator);
-        expWriter.append(nums[nums.length - 1]);
-        return expWriter.toString();
     }
 
     @Test
@@ -160,7 +144,7 @@ public class ArithmeticOpTest {
     }
 
     @Test
-    public void testSumsMultBrackets()
+    public void testSumsAndMultBrackets()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException {
         String exp = "2 * (3 + 4 * (5 + 6) - 1 * (2))";

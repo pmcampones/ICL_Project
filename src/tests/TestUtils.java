@@ -1,14 +1,9 @@
 package tests;
 
-import environment.Environment;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
-import parser.ParseException;
 import parser.Parser;
 
 import java.io.ByteArrayInputStream;
-
-import static parser.Parser.Start;
+import java.util.Random;
 
 public class TestUtils {
 
@@ -20,5 +15,21 @@ public class TestUtils {
         exp += "\n";
         byte[] expBytes = exp.getBytes();
         Parser.ReInit(new ByteArrayInputStream(expBytes));
+    }
+    
+    public static String genSameOpStr(int[] nums, String operator) {
+        StringBuilder expWriter = new StringBuilder("");
+        for (int i = 0; i < nums.length - 1; i++)
+            expWriter.append(nums[i]).append(operator);
+        expWriter.append(nums[nums.length - 1]);
+        return expWriter.toString();
+    }
+    
+    public static int[] getNumsArray() {
+        int[] nums = new int[DEFAULT_LEN];
+        Random r = new Random();
+        for (int i = 0; i < DEFAULT_LEN; i++)
+            nums[i] = r.nextInt(MAX_RAND) + 1;
+        return nums;
     }
 }
