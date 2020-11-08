@@ -1,6 +1,7 @@
 package tree;
 
 import compiler.CodeBlock;
+import compiler.Coordinates;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -14,13 +15,14 @@ public class ASTDiv implements ASTNode {
     public ASTDiv(ASTNode l, ASTNode r) {this.l = l; this.r = r;}
 
     @Override
-    public int eval(Environment e)
+    public int eval(Environment<Integer> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException {
         return l.eval(e) / r.eval(e);
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment env) {
+    public void compile(CodeBlock cb, Environment<Coordinates> env) 
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
         ASTNode.pushNodes(l, r, cb, DIVISION_OPERATION_COMPILER, env);
     }
 

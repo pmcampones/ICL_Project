@@ -46,6 +46,8 @@ public class CodeBlock {
 	}
 	
 	String getFrameCode() {
+		if (frames.isEmpty())
+			return "";
 		int index = 0;
 		StringBuilder builder = new StringBuilder();
 		int firstFrameVars = frames.poll();

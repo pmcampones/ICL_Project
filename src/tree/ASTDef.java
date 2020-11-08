@@ -3,6 +3,7 @@ package tree;
 import java.util.Collection;
 
 import compiler.CodeBlock;
+import compiler.Coordinates;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -19,24 +20,36 @@ public class ASTDef implements ASTNode {
     }
     
     @Override
-    public int eval(Environment prevEnv)
+    public int eval(Environment<Integer> prevEnv)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        Environment currEnv = prevEnv.beginScope();
+        Environment<Integer> currEnv = prevEnv.beginScope();
         for (Variable v : variables)
             currEnv.assoc(v.id, v.exp.eval(currEnv));
         return body.eval(currEnv);
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment prevEnv) {
-    	Environment currEnv = compileBoilerPlate(cb, prevEnv);
+    public void compile(CodeBlock cb, Environment<Coordinates> prevEnv) 
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv);
     	assocVarsPos(cb, currEnv);
     	cb.addOperation("pop");
     	body.compile(cb, currEnv);
-    	//TODO POP currEnv
+    	closeFrame(cb, currEnv);
     }
     
-    private void assocVarsPos(CodeBlock cb, Environment env) {
+    private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv) {
+    	int depth = currEnv.getDepth();
+    	cb.addOperation("aload 3");
+    	String prevFrame = depth == 0 ? 
+    			"java/lang/Object" : "frame_" + (depth - 1);
+    	cb.addOperation(String.format("getfield frame_%d/sl L%s", depth, prevFrame));
+    	cb.addOperation("astore 3");
+    	
+    }
+    
+    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> env) 
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	int varIndex = 0;
     	for (Variable v : variables) {
     		cb.addOperation("dup");
@@ -44,12 +57,13 @@ public class ASTDef implements ASTNode {
     		cb.addOperation(
     				String.format("putfield frame_%d v%d l", 
     						env.getDepth(), varIndex++));
+    		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex));
     	}
     }
     
-    private Environment compileBoilerPlate
-    		(CodeBlock cb, Environment prevEnv) {
-    	Environment currEnv = prevEnv.beginScope();
+    private Environment<Coordinates> compileBoilerPlate
+    		(CodeBlock cb, Environment<Coordinates> prevEnv) {
+    	Environment<Coordinates> currEnv = prevEnv.beginScope();
     	int depth = currEnv.getDepth();
     	cb.addOperation(String.format("new frame_%d", depth));
     	cb.addOperation("dup");

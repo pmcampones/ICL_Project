@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
 
+import compiler.CodeBlock;
 import compiler.Compiler;
+import compiler.Coordinates;
+import environment.Environment;
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
 
@@ -19,7 +22,8 @@ public class CompilationUtils {
 	
 	static int compileAndGetResults(String methodName) 
 			throws ParseException, IOException, 
-			InterruptedException {
+			InterruptedException, IDDeclaredTwiceException, 
+			UndeclaredIdentifierException {
 		String assembledFilePath = String.format(ASSEMBLED_FILE_PATH_STUB, methodName);
 		generateAssembledFile(assembledFilePath);
 		compileAssembledFile(assembledFilePath);
@@ -27,10 +31,11 @@ public class CompilationUtils {
 	}
 	
 	private static void generateAssembledFile(String assembledFilePath) 
-			throws ParseException, IOException {
-		Queue<String> codeBlock = new LinkedList<>();
-        Parser.Start().compile(codeBlock);
-        Compiler.generateOutputFile(assembledFilePath, codeBlock);
+			throws ParseException, IOException, 
+			IDDeclaredTwiceException, UndeclaredIdentifierException {
+		CodeBlock cb = new CodeBlock();
+        Parser.Start().compile(cb, new Environment<Coordinates>());
+        Compiler.generateOutputFile(assembledFilePath, cb);
 	}
 	
 	private static void compileAssembledFile(String assembledFilePath) 
