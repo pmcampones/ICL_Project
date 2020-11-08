@@ -1,10 +1,9 @@
 package tree;
 
+import compiler.CodeBlock;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
-
-import java.util.Queue;
 
 public class ASTSub implements ASTNode {
 
@@ -20,8 +19,8 @@ public class ASTSub implements ASTNode {
     }
 
     @Override
-    public void compile(Queue<String> codeBlock) {
-        ASTNode.pushNodes(l, r, codeBlock, SUBTRACTION_OPERATION_COMPILER);
+    public void compile(CodeBlock cb, Environment env) {
+        ASTNode.pushNodes(l, r, cb, SUBTRACTION_OPERATION_COMPILER, env);
     }
 
 }

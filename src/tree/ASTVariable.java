@@ -1,9 +1,8 @@
 package tree;
 
+import compiler.CodeBlock;
 import environment.Environment;
 import environment.exceptions.UndeclaredIdentifierException;
-
-import java.util.Queue;
 
 public class ASTVariable implements ASTNode {
 
@@ -17,7 +16,7 @@ public class ASTVariable implements ASTNode {
     }
 
     @Override
-    public void compile(Queue<String> codeBlock) {
+    public void compile(CodeBlock cb, Environment env) {
 
     }
 }

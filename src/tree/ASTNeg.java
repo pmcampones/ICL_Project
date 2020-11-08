@@ -1,10 +1,9 @@
 package tree;
 
+import compiler.CodeBlock;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
-
-import java.util.Queue;
 
 public class ASTNeg implements ASTNode {
 
@@ -19,8 +18,8 @@ public class ASTNeg implements ASTNode {
     }
 
     @Override
-    public void compile(Queue<String> codeBlock) {
-        new ASTMult(node, new ASTNum(-1)).compile(codeBlock);
+    public void compile(CodeBlock cb, Environment env) {
+        new ASTMult(node, new ASTNum(-1)).compile(cb, env);
     }
 
 }

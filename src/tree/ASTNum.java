@@ -1,8 +1,7 @@
 package tree;
 
+import compiler.CodeBlock;
 import environment.Environment;
-
-import java.util.Queue;
 
 public class ASTNum implements ASTNode {
 
@@ -15,8 +14,8 @@ public class ASTNum implements ASTNode {
     public int eval(Environment e) {return val;}
 
     @Override
-    public void compile(Queue<String> codeBlock) {
-        codeBlock.add(String.format(PUSH_NUMBER_COMPILER, val));
+    public void compile(CodeBlock cb, Environment env) {
+        cb.addOperation(String.format(PUSH_NUMBER_COMPILER, val));
     }
 
 }

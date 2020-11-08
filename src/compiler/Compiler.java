@@ -50,21 +50,16 @@ public class Compiler {
                     "\n" +
                     ".end method";
 
-    public static void generateOutputFile(String filename, Queue<String> codeBlock) throws IOException {
-        String code = generateCodeString(codeBlock);
-        String fileContent = String.format(FILE_STUB, code);
+    public static void generateOutputFile(String filename, CodeBlock code) throws IOException {
+        String frameCode = code.getFrameCode();
+        String callStackCode = code.getCallStackCode();
+        String fileContent = String.format(FILE_STUB, frameCode, callStackCode);
         File f = new File(filename);
         if (f.exists())
         	FileUtils.forceDelete(f);
         try (FileWriter writer = new FileWriter(f)) {
             writer.write(fileContent);
         }
-    }
-
-    private static String generateCodeString(Queue<String> codeBlock) {
-        StringBuilder builder = new StringBuilder();
-        codeBlock.forEach(builder::append);
-        return builder.toString();
     }
 
 }

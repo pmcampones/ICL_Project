@@ -4,7 +4,7 @@ import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
-import java.util.Queue;
+import compiler.CodeBlock;
 
 public class ASTMult implements ASTNode {
 
@@ -21,8 +21,8 @@ public class ASTMult implements ASTNode {
     }
 
     @Override
-    public void compile(Queue<String> codeBlock) {
-        ASTNode.pushNodes(l, r, codeBlock, MULTIPLY_OPERATION_COMPILER);
+    public void compile(CodeBlock cb, Environment env) {
+        ASTNode.pushNodes(l, r, cb, MULTIPLY_OPERATION_COMPILER, env);
     }
 
 }
