@@ -125,8 +125,8 @@ public class ArithmeticOpCompilerTest {
         String exp = "1024 / 2 / 2";
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        int accum = bigNum;
-        for (int num : nums) accum /= num;
+//        int accum = bigNum;
+//        for (int num : nums) accum /= num;
         assertEquals(256, compileAndGetResults(methodName));
     }
     
