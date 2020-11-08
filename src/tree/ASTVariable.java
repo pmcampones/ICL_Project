@@ -21,9 +21,9 @@ public class ASTVariable implements ASTNode {
     	int currDepth = env.getDepth();
     	Coordinates varLocation = env.find(id);
     	cb.addOperation("aload_3");
-    	for (int i = currDepth; i < varLocation.depth; i--) 
-    		cb.addOperation(String.format("getfield frame_%d/sl Lframe_%d", i, i - 1));
+    	for (int i = currDepth; i > varLocation.depth; i--) 
+    		cb.addOperation(String.format("getfield frame_%d/sl Lframe_%d;", i, i - 1));
     	cb.addOperation(
-    			String.format("getfield frame_%d/v%d l", varLocation.depth, varLocation.frameIndex));
+    			String.format("getfield frame_%d/v%d I", varLocation.depth, varLocation.frameIndex));
     }
 }

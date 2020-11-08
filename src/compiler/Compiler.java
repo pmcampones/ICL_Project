@@ -35,9 +35,12 @@ public class Compiler {
                     "\n" +
                     "       ; place your bytecodes here\n" +
                     "       ; START\n" +
-                    "	%s" +					//FRAME CLASSES
                     "\n" +
-                    "	%s" +                  	//CALL STACK CODE
+                    "%s" +					//FRAME CLASSES
+                    "\n" +
+                    ";---------------------------------------------------" +
+                    "\n" +
+                    "%s" +                  	//CALL STACK CODE
                     "       ; END\n" +
                     "\n" +
                     "\n" +

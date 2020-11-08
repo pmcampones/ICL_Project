@@ -6,7 +6,7 @@ import environment.Environment;
 
 public class ASTNum implements ASTNode {
 
-    private static final String PUSH_NUMBER_COMPILER = "sipush %d\n";
+    private static final String PUSH_NUMBER_COMPILER = "sipush %d";
 
     private final int val;
 

@@ -6,10 +6,11 @@ import java.util.Queue;
 public class CodeBlock {
 	
 	private static final String INIT_METHOD =
-					".method public <init>()V\n" +
+					"\n.method public <init>()V\n" +
 					"aload_0\n" + 
 					"invokenonvirtual java/lang/Object/<init>()V\n" +
-					"return .end method\n";
+					"return\n" +
+					".end method\n";
 	
 	/*
 	 * Number of variables per frame.
@@ -25,7 +26,7 @@ public class CodeBlock {
 	private final Queue<String> callStackOperations = new LinkedList<>();
 	
 	public void addOperation(String op) {
-		callStackOperations.add(op);
+		callStackOperations.add(String.format("%s\n", op));
 	}
 	
 	public void createFrame(int numVars) {

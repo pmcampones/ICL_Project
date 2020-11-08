@@ -8,7 +8,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTPlus implements ASTNode {
 
-    private static final String ADD_OPERATION_COMPILER = "iadd\n";
+    private static final String ADD_OPERATION_COMPILER = "iadd";
 
     private final ASTNode l, r;
 

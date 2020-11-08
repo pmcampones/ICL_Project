@@ -8,7 +8,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTDiv implements ASTNode {
 
-    private static final String DIVISION_OPERATION_COMPILER = "idiv\n";
+    private static final String DIVISION_OPERATION_COMPILER = "idiv";
 
     private final ASTNode l, r;
 

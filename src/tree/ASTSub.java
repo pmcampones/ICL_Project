@@ -8,7 +8,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTSub implements ASTNode {
 
-    private static final String SUBTRACTION_OPERATION_COMPILER = "isub\n";
+    private static final String SUBTRACTION_OPERATION_COMPILER = "isub";
 
     private final ASTNode l, r;
 

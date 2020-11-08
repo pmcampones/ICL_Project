@@ -32,6 +32,7 @@ public class ASTDef implements ASTNode {
     public void compile(CodeBlock cb, Environment<Coordinates> prevEnv) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv);
+    	cb.createFrame(variables.size());
     	assocVarsPos(cb, currEnv);
     	cb.addOperation("pop");
     	body.compile(cb, currEnv);
@@ -40,11 +41,11 @@ public class ASTDef implements ASTNode {
     
     private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv) {
     	int depth = currEnv.getDepth();
-    	cb.addOperation("aload 3");
+    	cb.addOperation("aload_3");
     	String prevFrame = depth == 0 ? 
     			"java/lang/Object" : "frame_" + (depth - 1);
-    	cb.addOperation(String.format("getfield frame_%d/sl L%s", depth, prevFrame));
-    	cb.addOperation("astore 3");
+    	cb.addOperation(String.format("getfield frame_%d/sl L%s;", depth, prevFrame));
+    	cb.addOperation("astore_3");
     	
     }
     
@@ -55,9 +56,9 @@ public class ASTDef implements ASTNode {
     		cb.addOperation("dup");
     		v.exp.compile(cb, env);
     		cb.addOperation(
-    				String.format("putfield frame_%d v%d l", 
-    						env.getDepth(), varIndex++));
-    		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex));
+    				String.format("putfield frame_%d/v%d I", 
+    						env.getDepth(), varIndex));
+    		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex++));
     	}
     }
     
@@ -68,15 +69,13 @@ public class ASTDef implements ASTNode {
     	cb.addOperation(String.format("new frame_%d", depth));
     	cb.addOperation("dup");
     	cb.addOperation(
-    			String.format("invokespecial frame_%d/<init>()V\n", depth));
+    			String.format("invokespecial frame_%d/<init>()V", depth));
     	cb.addOperation("dup");
     	cb.addOperation("aload_3");
-    	cb.addOperation(
-    			String.format("putfield frame_%d", depth));
     	String prevFrame = depth == 0 ? 
     			"java/lang/Object" : "frame_" + (depth - 1);
     	cb.addOperation(
-    			String.format("/sl L%s", prevFrame));
+    			String.format("putfield frame_%d/sl L%s;", depth, prevFrame));
     	cb.addOperation("dup");
     	cb.addOperation("astore_3");
     	return currEnv;

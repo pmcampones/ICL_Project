@@ -9,7 +9,7 @@ import compiler.Coordinates;
 
 public class ASTMult implements ASTNode {
 
-    private static final String MULTIPLY_OPERATION_COMPILER = "imul\n";
+    private static final String MULTIPLY_OPERATION_COMPILER = "imul";
 
     private final ASTNode l, r;
 
