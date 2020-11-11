@@ -4,13 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Queue;
-import org.apache.commons.io.FileUtils;
  
-
 public class Compiler {
 
-    private static final String DEFAULT_PACKAGE = "compiledPrograms/";
 
     private static final String FILE_STUB =
             ".class public %s\n" +
@@ -50,27 +46,30 @@ public class Compiler {
                     "\n" +
                     ".end method";
     
-    private static void writeToFile(String fileName, String fileContent) throws IOException {
-    	File f = new File(fileName);
+    private static void writeToFile(String filePath, String fileContent) throws IOException {
+    	File f = new File(filePath);
     	try(FileWriter writer = new FileWriter(f, false)) {
     		writer.write(fileContent);
     	}
     	
     }
 
-    public static void generateOutputFile(String filename, CodeBlock code) throws IOException {
+    public static void generateOutputFile(String fileDirectory, String fileName, CodeBlock code) throws IOException {
         Collection<String> frameCode = code.getFrameCode();
         
         int index = 0;
         for(String frame: frameCode) {
-        	String frameName = String.format("Frame_%d", index++);
-        	String frameContent = String.format(FILE_STUB, frameName, frame);
-        	writeToFile(frameName, frameContent);
+        	String frameName = String.format("frame_%d", index++);
+//        	String frameContent = String.format(frame, fileDirectory);
+//        	writeToFile(frameName, frameContent);
+        	writeToFile(frameName, frame);
         }
         
         String callStackCode = code.getCallStackCode();
-        String fileContent = String.format(FILE_STUB, filename, callStackCode);
-        writeToFile(filename, fileContent);
+//        String filePath = String.format("%s/%s", fileDirectory, fileName);
+//        String fileContent = String.format(FILE_STUB, filePath, callStackCode);
+        String fileContent = String.format(FILE_STUB, fileName, callStackCode);
+        writeToFile(fileName, fileContent);
 
     }
 

@@ -29,6 +29,10 @@ public class CodeBlock {
 	
 	private final Deque<Integer> activeFrames = new LinkedList<>();
 	
+	public CodeBlock() {
+		activeFrames.add(-1);
+	}
+	
 	public void addOperation(String op) {
 		callStackOperations.add(String.format("%s\n", op));
 	}

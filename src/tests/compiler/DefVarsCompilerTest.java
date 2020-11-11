@@ -36,7 +36,7 @@ class DefVarsCompilerTest {
         String exp = String.format("def x = 1 in %d + %d end", first, second);
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(first + second, compileAndGetResults(methodName));
+        assertEquals(first + second, compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -53,7 +53,7 @@ class DefVarsCompilerTest {
         writeToToken(exp);
         int expected = nums[0] * (-nums[1] + nums[2] * (nums[3] - nums[4]));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(expected, compileAndGetResults(methodName));
+        assertEquals(expected, compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -68,7 +68,7 @@ class DefVarsCompilerTest {
                 attr, num);
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(attr * num, compileAndGetResults(methodName));
+        assertEquals(attr * num, compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -86,7 +86,7 @@ class DefVarsCompilerTest {
         writeToToken(exp);
         int expected = nums[0] * (-attr + nums[1] * (attr  - nums[2]));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(expected, compileAndGetResults(methodName));
+        assertEquals(expected, compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -101,7 +101,7 @@ class DefVarsCompilerTest {
         writeToToken(exp);
         int expected = attr1 * (-attr2 + attr1);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(expected, compileAndGetResults(methodName));
+        assertEquals(expected, compileAndGetResults(methodName, 2));
     }
 
     @Test
@@ -112,7 +112,7 @@ class DefVarsCompilerTest {
         String exp = "def x = 1 in def y = x + x in x + y end end";
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(3, compileAndGetResults(methodName));
+        assertEquals(3, compileAndGetResults(methodName, 2));
     }
 
     @Test
@@ -124,7 +124,7 @@ class DefVarsCompilerTest {
         String exp = "def x = 2 in def y = def z = x + 1 in z + z end in x * y end end";
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(x * y, compileAndGetResults(methodName));
+        assertEquals(x * y, compileAndGetResults(methodName, 3));
     }
 
     @Test
@@ -135,7 +135,7 @@ class DefVarsCompilerTest {
         String exp = "def x = 2 in def x = 1 in x end end";
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(1, compileAndGetResults(methodName));
+        assertEquals(1, compileAndGetResults(methodName, 2));
     }
 
     @Test
@@ -146,7 +146,7 @@ class DefVarsCompilerTest {
         String exp = "def x = 2 in def y = def x = x+1 in x+x end in x * y end end";
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(12, compileAndGetResults(methodName));
+        assertEquals(12, compileAndGetResults(methodName, 3));
     }
 
     @Test
@@ -157,7 +157,7 @@ class DefVarsCompilerTest {
         String exp = "def x = 2 y = x+2 in def z = 3 in def y = x+1 in x + y + z end end end";
         writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(8, compileAndGetResults(methodName));
+        assertEquals(8, compileAndGetResults(methodName, 3));
     }
     
     @Test
@@ -168,6 +168,6 @@ class DefVarsCompilerTest {
     	String exp = "def x = 2 y = 3 in def k = x+y in x+y+k end end";
     	writeToToken(exp);
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(10, compileAndGetResults(methodName));
+    	assertEquals(10, compileAndGetResults(methodName, 2));
     }
 }
