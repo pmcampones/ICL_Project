@@ -3,6 +3,7 @@ package compiler;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Queue;
 import org.apache.commons.io.FileUtils;
  
@@ -12,7 +13,7 @@ public class Compiler {
     private static final String DEFAULT_PACKAGE = "compiledPrograms/";
 
     private static final String FILE_STUB =
-            ".class public Demo\n" +
+            ".class public %s\n" +
                     ".super java/lang/Object\n" +
                     "\n" +
                     ";\n" +
@@ -35,12 +36,8 @@ public class Compiler {
                     "\n" +
                     "       ; place your bytecodes here\n" +
                     "       ; START\n" +
-                    "\n" +
-                    "%s" +					//FRAME CLASSES
-                    "\n" +
-                    ";---------------------------------------------------" +
-                    "\n" +
-                    "%s" +                  	//CALL STACK CODE
+                          "\n" +
+                          "%s" +                  	//CODE
                     "       ; END\n" +
                     "\n" +
                     "\n" +
@@ -52,17 +49,29 @@ public class Compiler {
                     "       return\n" +
                     "\n" +
                     ".end method";
+    
+    private static void writeToFile(String fileName, String fileContent) throws IOException {
+    	File f = new File(fileName);
+    	try(FileWriter writer = new FileWriter(f, false)) {
+    		writer.write(fileContent);
+    	}
+    	
+    }
 
     public static void generateOutputFile(String filename, CodeBlock code) throws IOException {
-        String frameCode = code.getFrameCode();
-        String callStackCode = code.getCallStackCode();
-        String fileContent = String.format(FILE_STUB, frameCode, callStackCode);
-        File f = new File(filename);
-        if (f.exists())
-        	FileUtils.forceDelete(f);
-        try (FileWriter writer = new FileWriter(f)) {
-            writer.write(fileContent);
+        Collection<String> frameCode = code.getFrameCode();
+        
+        int index = 0;
+        for(String frame: frameCode) {
+        	String frameName = String.format("Frame_%d", index++);
+        	String frameContent = String.format(FILE_STUB, frameName, frame);
+        	writeToFile(frameName, frameContent);
         }
+        
+        String callStackCode = code.getCallStackCode();
+        String fileContent = String.format(FILE_STUB, filename, callStackCode);
+        writeToFile(filename, fileContent);
+
     }
 
 }

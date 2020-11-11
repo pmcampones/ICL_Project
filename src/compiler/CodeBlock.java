@@ -1,6 +1,8 @@
 package compiler;
 
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class CodeBlock {
@@ -18,26 +20,43 @@ public class CodeBlock {
 	 * 	all other have a link to the previous frame.
 	 * 	Naming convention is "frame_X" with X = position of the frame in the queue.
 	 */
-	private final Queue<Integer> frames = new LinkedList<>();
+	private final Queue<Frame> frames = new LinkedList<>();
 	
 	/*
 	 * Code to be written in the call stack
 	 */
 	private final Queue<String> callStackOperations = new LinkedList<>();
 	
+	private final Deque<Integer> activeFrames = new LinkedList<>();
+	
 	public void addOperation(String op) {
 		callStackOperations.add(String.format("%s\n", op));
 	}
 	
 	public void createFrame(int numVars) {
-		frames.add(numVars);
+		int parent = activeFrames.getFirst();
+		activeFrames.add(frames.size());
+		frames.add(new Frame(numVars, parent));
 	}
 	
-	private String createClass(String staticLink, int numVars, int nameIndex) {
+	public void closeFrame() {
+		activeFrames.pop();
+	}
+	
+	public int getActiveFrame() {
+		return activeFrames.getFirst();
+	}
+	
+	private String createClass(Frame frame, int nameIndex) {
+		
+		String staticLink = frame.parent == -1 ? "Object" : String.format("frame_%d", frame.parent); 
+		
 		StringBuilder builder = new StringBuilder();
 		builder.append(".class public frame_").append(nameIndex).append("\n")
 		.append(".super java/lang/Object\n")
 		.append(".field public sl Ljava/lang/").append(staticLink).append(";\n");
+		
+		int numVars = frame.numVariables;
 		
 		for (int i = 0; i < numVars; i++) 
 			builder.append(".field public v").append(i).append(" l\n");
@@ -46,16 +65,13 @@ public class CodeBlock {
 		return builder.toString();
 	}
 	
-	String getFrameCode() {
-		if (frames.isEmpty())
-			return "";
+	List<String> getFrameCode() {
+		List<String> frameCode = new LinkedList<String>();
 		int index = 0;
-		StringBuilder builder = new StringBuilder();
-		int firstFrameVars = frames.poll();
-		builder.append(createClass("Object", firstFrameVars, index++));
-		while (!frames.isEmpty())
-			builder.append("\n").append(createClass("frame_" + index, frames.poll(), index++));
-		return builder.toString();
+		
+		for(Frame f : frames)
+			frameCode.add(createClass(f, index++));
+		return frameCode;
 	}
 	
 	String getCallStackCode() {
