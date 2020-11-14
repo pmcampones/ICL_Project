@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.Frame;
 import environment.Environment;
 import environment.exceptions.UndeclaredIdentifierException;
 
@@ -20,10 +21,13 @@ public class ASTVariable implements ASTNode {
     public void compile(CodeBlock cb, Environment<Coordinates> env) throws UndeclaredIdentifierException {
     	int currDepth = env.getDepth();
     	Coordinates varLocation = env.find(id);
-    	cb.addOperation("aload_3");
-    	for (int i = currDepth; i > varLocation.depth; i--) 
-    		cb.addOperation(String.format("getfield frame_%d/sl Lframe_%d;", i, i - 1));
+    	cb.addOperation("aload_1");
+    	Frame f = cb.getActiveFrame();
+    	for (int i = currDepth; i > varLocation.depth; i--) {
+    		cb.addOperation(String.format("getfield %s/sl L%s;", f.name, f.parent.name));
+    		f = f.parent;
+    	}
     	cb.addOperation(
-    			String.format("getfield frame_%d/v%d I", varLocation.depth, varLocation.frameIndex));
+    			String.format("getfield %s/v%d I", f.name, varLocation.frameIndex));
     }
 }

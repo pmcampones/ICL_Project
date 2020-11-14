@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.util.Collection;
  
 public class Compiler {
-
+	
+	public static final String DEFAULT_COMPILATION_DIRECTORY = "CompiledPrograms";
+	
+	public static final String DEFAULT_FRAME_DIRECTORY = "Frames";
 
     private static final String FILE_STUB =
             ".class public %s\n" +
@@ -40,6 +43,20 @@ public class Compiler {
                     "\n" +
                     ".end method";
     
+    private final CodeBlock cb;
+    
+    private final String codeDirectory;
+    
+    private final String frameDirectory;
+    
+    public Compiler() {
+    	codeDirectory = DEFAULT_COMPILATION_DIRECTORY;
+    	frameDirectory = String.format("%s/%s", 
+    			DEFAULT_COMPILATION_DIRECTORY, DEFAULT_FRAME_DIRECTORY);
+    	new File(frameDirectory).mkdirs();
+    	cb = new CodeBlock(frameDirectory);
+    }
+    
     private static void writeToFile(String filePath, String fileContent) throws IOException {
     	File f = new File(filePath);
     	try(FileWriter writer = new FileWriter(f, false)) {
@@ -47,24 +64,24 @@ public class Compiler {
     	}
     	
     }
-
-    public static void generateOutputFile(String fileDirectory, String fileName, CodeBlock code) throws IOException {
-        Collection<String> frameCode = code.getFrameCode();
-        
+    
+    public void generateOutputFile(String fileName) throws IOException {
+        Collection<String> frameCode = cb.getFrameCode();
         int index = 0;
         for(String frame: frameCode) {
-        	String frameName = String.format("frame_%d", index++);
-//        	String frameContent = String.format(frame, fileDirectory);
-//        	writeToFile(frameName, frameContent);
-        	writeToFile(frameName, frame);
+        	String framePath = String.format("%s/frame_%d.j", frameDirectory, index++);
+        	writeToFile(framePath, frame);
         }
         
-        String callStackCode = code.getCallStackCode();
-//        String filePath = String.format("%s/%s", fileDirectory, fileName);
-//        String fileContent = String.format(FILE_STUB, filePath, callStackCode);
-        String fileContent = String.format(FILE_STUB, fileName, callStackCode);
-        writeToFile(fileName, fileContent);
-
+        String callStackCode = cb.getCallStackCode();
+        String className = String.format("%s/%s", codeDirectory, fileName);
+        String fileContent = String.format(FILE_STUB, className, callStackCode);
+        String filePath = String.format("%s.j", className);
+        writeToFile(filePath, fileContent);
+    }
+    
+    public CodeBlock getCodeBlock() {
+    	return cb;
     }
 
 }

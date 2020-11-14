@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.Frame;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -31,53 +32,48 @@ public class ASTDef implements ASTNode {
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> prevEnv) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv);
-    	cb.createFrame(variables.size());
-    	assocVarsPos(cb, currEnv);
+    	Frame f = cb.createFrame(variables.size());
+    	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv, f);
+    	assocVarsPos(cb, currEnv, f.name);
     	cb.addOperation("pop");
     	body.compile(cb, currEnv);
-    	closeFrame(cb, currEnv);
+    	closeFrame(cb, currEnv, f);
+    	cb.closeFrame();
     }
     
-    private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv) {
-    	int depth = currEnv.getDepth();
-    	cb.addOperation("aload_3");
-    	String prevFrame = depth == 0 ? 
-    			"java/lang/Object" : "frame_" + (depth - 1);
-    	cb.addOperation(String.format("getfield frame_%d/sl L%s;", depth, prevFrame));
-    	cb.addOperation("astore_3");
+    private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv, Frame currFrame) {
+    	cb.addOperation("aload_1");
+    	cb.addOperation(String.format("getfield %s/sl L%s;", currFrame.name, currFrame.parent.name));
+    	cb.addOperation("astore_1");
     	
     }
     
-    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> env) 
+    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> env, String fName) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	int varIndex = 0;
     	for (Variable v : variables) {
     		cb.addOperation("dup");
     		v.exp.compile(cb, env);
     		cb.addOperation(
-    				String.format("putfield frame_%d/v%d I", 
-    						env.getDepth(), varIndex));
+    				String.format("putfield %s/v%d I", 
+    						fName, varIndex));
     		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex++));
     	}
     }
     
     private Environment<Coordinates> compileBoilerPlate
-    		(CodeBlock cb, Environment<Coordinates> prevEnv) {
+    		(CodeBlock cb, Environment<Coordinates> prevEnv, Frame currFrame) {
     	Environment<Coordinates> currEnv = prevEnv.beginScope();
-    	int depth = currEnv.getDepth();
-    	cb.addOperation(String.format("new frame_%d", depth));
+    	cb.addOperation(String.format("new %s", currFrame.name));
     	cb.addOperation("dup");
     	cb.addOperation(
-    			String.format("invokespecial frame_%d/<init>()V", depth));
+    			String.format("invokespecial %s/<init>()V", currFrame.name));
     	cb.addOperation("dup");
-    	cb.addOperation("aload_3");
-    	String prevFrame = depth == 0 ? 
-    			"java/lang/Object" : "frame_" + (depth - 1);
+    	cb.addOperation("aload_1");
     	cb.addOperation(
-    			String.format("putfield frame_%d/sl L%s;", depth, prevFrame));
+    			String.format("putfield %s/sl L%s;", currFrame.name, currFrame.parent.name));
     	cb.addOperation("dup");
-    	cb.addOperation("astore_3");
+    	cb.addOperation("astore_1");
     	return currEnv;
     }
 
