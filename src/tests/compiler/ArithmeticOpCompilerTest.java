@@ -2,6 +2,9 @@ package tests.compiler;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
 
@@ -23,7 +26,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testNumber() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
         int number = new Random().nextInt(MAX_RAND);
         writeToToken(String.valueOf(number));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
@@ -33,7 +37,7 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testSum() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, UndeclaredIdentifierException {
     	Random r = new Random();
     	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
     	writeToToken(genSameOpStr(nums, "+"));
@@ -44,7 +48,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testSub() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	Random r = new Random();
     	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
     	writeToToken(genSameOpStr(nums, "-"));
@@ -55,7 +60,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testMult() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	Random r = new Random();
     	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
     	writeToToken(genSameOpStr(nums, "*"));
@@ -66,7 +72,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testDiv() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	Random r = new Random();
     	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
     	writeToToken(genSameOpStr(nums, "/"));
@@ -77,7 +84,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testManySums() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	int[] nums = getNumsArray();
     	writeToToken(genSameOpStr(nums, "+"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
@@ -89,7 +97,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testManySubs() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	int[] nums = getNumsArray();
     	writeToToken(genSameOpStr(nums, "-"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
@@ -102,7 +111,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testManyMults() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	int[] nums = getNumsArray();
     	writeToToken(genSameOpStr(nums, "*"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
@@ -117,10 +127,11 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testManyDivs() 
     		throws ParseException, IOException, 
-    		InterruptedException {
-    	int bigNum = Integer.MAX_VALUE;
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
+//    	int bigNum = Integer.MAX_VALUE;
 //        int[] nums = getNumsArray();
-        int[] nums = {1024, 2, 2};
+//        int[] nums = {1024, 2, 2};
 //    	String exp = String.format("%d / %s", bigNum, genSameOpStr(nums, "/"));
         String exp = "1024 / 2 / 2";
         writeToToken(exp);
@@ -133,7 +144,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testBrackets() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	int num = new Random().nextInt(MAX_RAND);
         writeToToken(String.format("( %d )", num));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
@@ -143,7 +155,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testBracketsSum() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("(%d + %d)", first, second);
@@ -155,7 +168,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testSumsAndMultBrackets() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException,
+    		UndeclaredIdentifierException {
     	String exp = "2 * (3 + 4 * (5 + 6) - 1 * (2))";
         int val = 2 * (3 + 4 * (5 + 6) - 1 * 2);
         writeToToken(exp);
@@ -166,7 +180,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testMinusSingle() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException,
+    		UndeclaredIdentifierException {
     	int num = new Random().nextInt(MAX_RAND);
         writeToToken(String.format("-%d", num));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
@@ -176,7 +191,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testMinusTwo() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException,
+    		UndeclaredIdentifierException {
     	Random r = new Random();
         int first = -1 * r.nextInt(MAX_RAND), second = -1 * r.nextInt(MAX_RAND);
         String exp = String.format("-%d + %d\n", first, second);
@@ -188,7 +204,8 @@ public class ArithmeticOpCompilerTest {
     @Test
     public void testMinusExpression() 
     		throws ParseException, IOException, 
-    		InterruptedException {
+    		InterruptedException, IDDeclaredTwiceException,
+    		UndeclaredIdentifierException {
     	String exp = "-(2 * (3 + 4 * (5 + 6) - 1 * (2)))";
         int val = -(2 * (3 + 4 * (5 + 6) - 1 * 2));
         writeToToken(exp);

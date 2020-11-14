@@ -1,22 +1,26 @@
 package tree;
 
+import compiler.CodeBlock;
+import compiler.Coordinates;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
-import java.util.Queue;
-
 public interface ASTNode {
 
-    int eval(Environment e)
+    int eval(Environment<Integer> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException;
 
-    void compile(Queue<String> codeBlock);
+    void compile(CodeBlock codeBlock, Environment<Coordinates> env) 
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException;
 
-    static void pushNodes(ASTNode l, ASTNode r, Queue<String> codeBlock, String operation) {
-        l.compile(codeBlock);
-        r.compile(codeBlock);
-        codeBlock.add(operation);
+    static void pushNodes(ASTNode l, ASTNode r, 
+    		CodeBlock codeBlock, String operation,
+    		Environment<Coordinates> env) 
+    				throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+        l.compile(codeBlock, env);
+        r.compile(codeBlock, env);
+        codeBlock.addOperation(operation);
     }
     
 }

@@ -38,3 +38,4 @@ src/Parser*
 
 #Tests
 src/compiledPrograms/unitTests/*
+CompiledPrograms/*
