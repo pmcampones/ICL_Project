@@ -87,7 +87,7 @@ public class CodeBlock {
 	}
 	
 	List<String> getFrameCode() {
-		assert(activeFrames.isEmpty());
+		assert(activeFrames.size() == 1);
 		List<String> frameCode = new LinkedList<String>();
 		frames.forEach(f -> frameCode.add(createClass(f)));
 		return frameCode;

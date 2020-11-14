@@ -170,4 +170,15 @@ class DefVarsCompilerTest {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
     	assertEquals(10, compileAndGetResults(methodName, 2));
     }
+    
+    @Test
+    public void testTwoFramesSameScope() 
+    		throws ParseException, IOException, 
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
+    	String exp = "4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end";
+    	writeToToken(exp);
+    	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
+    	assertEquals(20, compileAndGetResults(methodName, 3));
+    }
 }

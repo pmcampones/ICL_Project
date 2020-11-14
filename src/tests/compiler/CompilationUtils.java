@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-import compiler.CodeBlock;
 import compiler.Compiler;
 import compiler.Coordinates;
 import environment.Environment;
@@ -16,9 +15,11 @@ import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
 
+import static compiler.Compiler.*;
+
 public class CompilationUtils {
 	
-	private static final String ASSEMBLED_FILE_DIRECTORY = "src/compiledPrograms/unitTests";
+//	private static final String ASSEMBLED_FILE_DIRECTORY = "src/compiledPrograms/unitTests";
 	
 	static int compileAndGetResults(String methodName) 
 			throws ParseException, IOException, 
@@ -31,41 +32,44 @@ public class CompilationUtils {
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
 			UndeclaredIdentifierException {
-		String assembledFilePath = String.format("%s/%s", ASSEMBLED_FILE_DIRECTORY, methodName);
-		generateAssembledFile(methodName);
-		compileAssembledFile(assembledFilePath, scopesCreated);
-		return runJVMCompiledFile(assembledFilePath);
+//		String assembledFilePath = String.format("%s/%s", ASSEMBLED_FILE_DIRECTORY, methodName);
+		Compiler comp = new Compiler(DEFAULT_COMPILATION_DIRECTORY + "/UnitTests", DEFAULT_FRAME_DIRECTORY);
+		String assembledFilePath = generateAssembledFile(methodName, comp);
+		String compiledFilePath = compileAssembledFile(assembledFilePath, scopesCreated, comp);
+		return runJVMCompiledFile(comp.codeDirectory, methodName);
 	}
 	
-	private static void generateAssembledFile(String fileName) 
+	private static String generateAssembledFile(String fileName, Compiler comp) 
 			throws ParseException, IOException, 
 			IDDeclaredTwiceException, UndeclaredIdentifierException {
-		CodeBlock cb = new CodeBlock();
-        Parser.Start().compile(cb, new Environment<Coordinates>());
-        Compiler.generateOutputFile(ASSEMBLED_FILE_DIRECTORY, fileName, cb);
+        Parser.Start().compile(comp.getCodeBlock(), new Environment<Coordinates>());
+        return comp.generateOutputFile(fileName);
 	}
 	
-	private static void compileAssembledFile(String assembledFilePath, int scopesCreated) 
+	private static String compileAssembledFile(String assembledFilePath, int scopesCreated, Compiler comp) 
 			throws IOException, InterruptedException {
 		List<String> commands = new LinkedList<>();
 		commands.add("java");
 		commands.add("-jar");
 		String programDirectory = new File(".").getCanonicalPath();
-//        String jasminLocation = String.format("%s/jasmin.jar", programDirectory);
         commands.add(String.format("%s/jasmin.jar", programDirectory));
-//        String assembledFullPath = String.format("%s/%s", programDirectory, methodName);
         commands.add(String.format("%s/%s", programDirectory, assembledFilePath));
-//        Process compiling = new ProcessBuilder("java", "-jar", jasminLocation, assembledFullPath)
         for (int i = 0; i < scopesCreated; i++) {
-        	commands.add(String.format("%s/frame_%d", ASSEMBLED_FILE_DIRECTORY, i));
+        	commands.add(String.format("%s/%s/frame_%d.j", programDirectory, comp.frameDirectory, i));
         }
         Process compiling = new ProcessBuilder(commands)
         .start();
         compiling.waitFor();
+        return assembledFilePath.substring(0, assembledFilePath.length() - 1);
 	}
 	
-	private static int runJVMCompiledFile(String assembledFilePath) throws IOException {
-		Process p = new ProcessBuilder("java", assembledFilePath).start();
+	private static int runJVMCompiledFile(String directory, String file) throws IOException {
+		String[] pathComponents = directory.split("/");
+		StringBuilder builder = new StringBuilder();
+		for (String s : pathComponents)
+			builder.append(s).append(".");
+		builder.append(file);
+		Process p = new ProcessBuilder("java", builder.toString()).start();
         try(InputStreamReader in = new InputStreamReader(p.getInputStream());
         		BufferedReader reader = new BufferedReader(in)) {
         	return Integer.valueOf(reader.readLine());

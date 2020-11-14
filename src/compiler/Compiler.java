@@ -45,15 +45,21 @@ public class Compiler {
     
     private final CodeBlock cb;
     
-    private final String codeDirectory;
+    public final String codeDirectory;
     
-    private final String frameDirectory;
+    public final String frameDirectory;
+    
+    
     
     public Compiler() {
-    	codeDirectory = DEFAULT_COMPILATION_DIRECTORY;
-    	frameDirectory = String.format("%s/%s", 
-    			DEFAULT_COMPILATION_DIRECTORY, DEFAULT_FRAME_DIRECTORY);
-    	new File(frameDirectory).mkdirs();
+    	this(DEFAULT_COMPILATION_DIRECTORY, DEFAULT_FRAME_DIRECTORY);
+    }
+    
+    public Compiler(String codeDirectory, String frameDirectory) {
+    	this.codeDirectory = codeDirectory;
+    	this.frameDirectory = String.format("%s/%s", 
+    			codeDirectory, frameDirectory);
+    	new File(this.frameDirectory).mkdirs();
     	cb = new CodeBlock(frameDirectory);
     }
     
@@ -65,7 +71,12 @@ public class Compiler {
     	
     }
     
-    public void generateOutputFile(String fileName) throws IOException {
+    /**
+     * Compiles a program given its name
+     * @param fileName The name of the file to be compiled
+     * @return The pathname of the file relative to the project root
+     */
+    public String generateOutputFile(String fileName) throws IOException {
         Collection<String> frameCode = cb.getFrameCode();
         int index = 0;
         for(String frame: frameCode) {
@@ -78,6 +89,7 @@ public class Compiler {
         String fileContent = String.format(FILE_STUB, className, callStackCode);
         String filePath = String.format("%s.j", className);
         writeToFile(filePath, fileContent);
+        return filePath;
     }
     
     public CodeBlock getCodeBlock() {

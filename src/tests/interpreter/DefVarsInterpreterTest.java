@@ -1,19 +1,20 @@
 package tests.interpreter;
 
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import parser.ParseException;
-import parser.Parser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.TestUtils.MAX_RAND;
+import static tests.TestUtils.writeToToken;
+import static tests.interpreter.InterpreterTestUtil.run;
 
 import java.io.ByteArrayInputStream;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
-import static tests.TestUtils.*;
-import static tests.interpreter.InterpreterTestUtil.run;
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
+import parser.ParseException;
+import parser.Parser;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DefVarsInterpreterTest {
@@ -132,6 +133,15 @@ public class DefVarsInterpreterTest {
         String exp = "def x = 2 y = x+2 in def z = 3 in def y = x+1 in x + y + z end end end";
         writeToToken(exp);
         assertEquals(8, run());
+    }
+    
+    @Test
+    public void testTwoFramesSameScope() 
+    		throws ParseException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
+    	String exp = "4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end";
+    	writeToToken(exp);
+    	assertEquals(20, run());
     }
 
 }
