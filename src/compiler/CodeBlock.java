@@ -34,7 +34,7 @@ public class CodeBlock {
 	}
 	
 	public void addOperation(String op) {
-		callStackOperations.add(String.format("%s\n", op));
+		callStackOperations.add(op);
 	}
 	
 	public void createFrame(int numVars) {
@@ -80,7 +80,8 @@ public class CodeBlock {
 	
 	String getCallStackCode() {
 		StringBuilder builder = new StringBuilder();
-        callStackOperations.forEach(builder::append);
+        callStackOperations.forEach(op ->
+        	builder.append("\t").append(op).append("\n"));
         return builder.toString();
 	}
 

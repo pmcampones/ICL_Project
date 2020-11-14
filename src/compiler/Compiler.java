@@ -11,9 +11,6 @@ public class Compiler {
     private static final String FILE_STUB =
             ".class public %s\n" +
                     ".super java/lang/Object\n" +
-                    "\n" +
-                    ";\n" +
-                    "; standard initializer\n" +
                     ".method public <init>()V\n" +
                     "   aload_0\n" +
                     "   invokenonvirtual java/lang/Object/<init>()V\n" +
@@ -25,17 +22,14 @@ public class Compiler {
                     "       .limit locals  2\n" +
                     "       .limit stack 256\n" +
                     "\n" +
-                    "       ; setup local variables:\n" +
-                    "\n" +
                     "       ;    1 - the PrintStream object held in java.lang.System.out\n" +
                     "       getstatic java/lang/System/out Ljava/io/PrintStream;\n" +
                     "\n" +
-                    "       ; place your bytecodes here\n" +
-                    "       ; START\n" +
-                          "\n" +
-                          "%s" +                  	//CODE
-                    "       ; END\n" +
-                    "\n" +
+                    "	new java/lang/Object\n" +
+                    "	dup\n" +
+                    "	invokespecial java/lang/Object/<init>()V\n" +
+                    "	astore_1\n" +
+                    "%s" +						//CODE
                     "\n" +
                     "       ; convert to String;\n" +
                     "       invokestatic java/lang/String/valueOf(I)Ljava/lang/String;\n" +
