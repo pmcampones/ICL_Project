@@ -5,6 +5,12 @@ import parser.Parser;
 import java.io.ByteArrayInputStream;
 import java.util.Random;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class TestUtils {
 
     public static final int DEFAULT_LEN = 20;

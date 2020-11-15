@@ -16,6 +16,12 @@ import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DefVarsInterpreterTest {
 

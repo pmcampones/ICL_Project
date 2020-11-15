@@ -1,5 +1,11 @@
 package tree.exceptions;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class VariableValueAssociatedWithUnprocessedExpressionException extends RuntimeException {
 
     private static final String VARIABLE_VALUE_ASSOCIATED_WITH_UNPROCESSED_EXPRESSION_DEFAULT_MESSAGE =

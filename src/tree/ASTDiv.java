@@ -6,6 +6,12 @@ import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class ASTDiv implements ASTNode {
 
     private static final String DIVISION_OPERATION_COMPILER = "idiv";

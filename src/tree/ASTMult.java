@@ -7,6 +7,12 @@ import environment.exceptions.UndeclaredIdentifierException;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class ASTMult implements ASTNode {
 
     private static final String MULTIPLY_OPERATION_COMPILER = "imul";

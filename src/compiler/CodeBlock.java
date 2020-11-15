@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class CodeBlock {
 	
 	private static final String INIT_METHOD =

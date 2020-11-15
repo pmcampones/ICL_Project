@@ -17,6 +17,12 @@ import parser.Parser;
 
 import static compiler.Compiler.*;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class CompilationUtils {
 	
 //	private static final String ASSEMBLED_FILE_DIRECTORY = "src/compiledPrograms/unitTests";

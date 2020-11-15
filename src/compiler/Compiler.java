@@ -4,7 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
- 
+
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class Compiler {
 	
 	public static final String DEFAULT_COMPILATION_DIRECTORY = "CompiledPrograms";

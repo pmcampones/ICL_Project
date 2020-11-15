@@ -1,4 +1,5 @@
 package parser;/* Parser.java */
+
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -16,6 +17,12 @@ import tree.ASTPlus;
 import tree.ASTSub;
 import tree.ASTVariable;
 import tree.Variable;
+
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
 
 public class Parser implements ParserConstants {
 

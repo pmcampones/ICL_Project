@@ -6,6 +6,12 @@ import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class ASTSub implements ASTNode {
 
     private static final String SUBTRACTION_OPERATION_COMPILER = "isub";

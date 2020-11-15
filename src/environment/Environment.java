@@ -6,6 +6,12 @@ import environment.exceptions.UndeclaredIdentifierException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class Environment<V> {
 
     private final Environment<V> parentEnv;

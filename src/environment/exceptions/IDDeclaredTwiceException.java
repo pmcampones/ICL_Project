@@ -1,5 +1,11 @@
 package environment.exceptions;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class IDDeclaredTwiceException extends Exception {
 
     private static final String ID_DECLARED_TWICE_DEFAULT_MESSAGE =

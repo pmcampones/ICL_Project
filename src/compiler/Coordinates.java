@@ -1,5 +1,11 @@
 package compiler;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class Coordinates {
 	
 	public final int depth;

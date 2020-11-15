@@ -16,6 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static tests.TestUtils.*;
 import static tests.compiler.CompilationUtils.compileAndGetResults;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ArithmeticOpCompilerTest {
 

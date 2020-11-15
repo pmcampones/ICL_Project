@@ -6,6 +6,12 @@ import compiler.Frame;
 import environment.Environment;
 import environment.exceptions.UndeclaredIdentifierException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Camponês - 50051
+**/
+
 public class ASTVariable implements ASTNode {
 
     private final String id;
