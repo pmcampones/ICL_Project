@@ -41,6 +41,7 @@ SKIP :
   " "
 | "\t"
 | "\r"
+| ";"
 }
 
 TOKEN :
@@ -122,13 +123,13 @@ ASTNode Fact() :
 ASTNode Def() :
 {   Token id;
     ASTNode init, body;
-    Collection<ASTDef.Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
+    Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 } {
     (
         (id = <Id>
         <EQUALS>
         init = Exp())
-        {variables.add(new Variable(id, init));}
+        {variables.add(new Variable(id.toString(), init));}
     )+
     <IN>
     body = Exp()
