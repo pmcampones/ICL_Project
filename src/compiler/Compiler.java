@@ -63,9 +63,11 @@ public class Compiler {
     
     public Compiler(String codeDirectory, String frameDirectory) {
     	this.codeDirectory = codeDirectory;
-    	this.frameDirectory = String.format("%s/%s", 
+    	this.frameDirectory = codeDirectory.equals("") ? 
+    			frameDirectory :
+    			String.format("%s/%s", 
     			codeDirectory, frameDirectory);
-    	new File(this.frameDirectory).mkdirs();
+    	new File(this.frameDirectory + "/.").mkdirs();
     	cb = new CodeBlock(this.frameDirectory);
     }
     
