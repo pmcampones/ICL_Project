@@ -101,10 +101,20 @@ public class CodeBlock {
 		return frameCode;
 	}
 	
+	int getMaxStackSize() {
+		int max = 3;
+		int current = 1;
+		for (Operation op : callStackOperations) {
+			current += op.getStackChange();
+			max = Math.max(max, current);
+		}
+		return max;
+	}
+	
 	String getCallStackCode() {
 		StringBuilder builder = new StringBuilder();
         callStackOperations.forEach(op ->
-        	builder.append("\t").append(op).append("\n"));
+        	builder.append("\t").append(op.getOperationStr()).append("\n"));
         return builder.toString();
 	}
 

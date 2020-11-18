@@ -27,6 +27,8 @@ public class ASTPlus implements ASTNode {
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    	l.compile(cb, env);
+    	r.compile(cb, env);
     	cb.addOperation(new AddOp());
     }
 

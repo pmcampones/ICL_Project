@@ -28,8 +28,8 @@ public class Compiler {
                     "\n" +
                     ".method public static main([Ljava/lang/String;)V\n" +
                     "       ; set limits used by this method\n" +
-                    "       .limit locals  2\n" +
-                    "       .limit stack 256\n" +
+                    "       .limit locals 2\n" +
+                    "       .limit stack %d\n" +
                     "\n" +
                     "       ;    1 - the PrintStream object held in java.lang.System.out\n" +
                     "       getstatic java/lang/System/out Ljava/io/PrintStream;\n" +
@@ -92,7 +92,8 @@ public class Compiler {
         
         String callStackCode = cb.getCallStackCode();
         String className = String.format("%s/%s", codeDirectory, fileName);
-        String fileContent = String.format(FILE_STUB, className, callStackCode);
+        int stackSize = cb.getMaxStackSize();
+        String fileContent = String.format(FILE_STUB, className, stackSize, callStackCode);
         String filePath = String.format("%s.j", className);
         writeToFile(filePath, fileContent);
         return filePath;

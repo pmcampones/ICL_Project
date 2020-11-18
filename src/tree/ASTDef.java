@@ -57,7 +57,9 @@ public class ASTDef implements ASTNode {
     
     private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv, Frame currFrame) {
     	cb.addOperation(new LoadOp());
-    	cb.addOperation(new GetFieldOp(currFrame.name, currFrame.parent.name));
+    	String fieldName = String.format("%s/sl", currFrame.name);
+    	String type = String.format("L%s;", currFrame.parent.name);
+    	cb.addOperation(new GetFieldOp(fieldName, type));
     	cb.addOperation(new StoreOp());
     	
     }
@@ -83,7 +85,7 @@ public class ASTDef implements ASTNode {
     	cb.addOperation(new DupOp());
     	cb.addOperation(new LoadOp());
     	String fieldName = String.format("%s/sl", currFrame.name);
-    	String type = String.format("L%s", currFrame.parent.name);
+    	String type = String.format("L%s;", currFrame.parent.name);
     	cb.addOperation(new PutFieldOp(fieldName, type));
     	cb.addOperation(new DupOp());
     	cb.addOperation(new StoreOp());
