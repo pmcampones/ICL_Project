@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class Compiler {
@@ -28,8 +28,8 @@ public class Compiler {
                     "\n" +
                     ".method public static main([Ljava/lang/String;)V\n" +
                     "       ; set limits used by this method\n" +
-                    "       .limit locals  2\n" +
-                    "       .limit stack 256\n" +
+                    "       .limit locals 2\n" +
+                    "       .limit stack %d\n" +
                     "\n" +
                     "       ;    1 - the PrintStream object held in java.lang.System.out\n" +
                     "       getstatic java/lang/System/out Ljava/io/PrintStream;\n" +
@@ -66,7 +66,7 @@ public class Compiler {
     	this.frameDirectory = String.format("%s/%s", 
     			codeDirectory, frameDirectory);
     	new File(this.frameDirectory).mkdirs();
-    	cb = new CodeBlock(frameDirectory);
+    	cb = new CodeBlock(this.frameDirectory);
     }
     
     private static void writeToFile(String filePath, String fileContent) throws IOException {
@@ -92,7 +92,8 @@ public class Compiler {
         
         String callStackCode = cb.getCallStackCode();
         String className = String.format("%s/%s", codeDirectory, fileName);
-        String fileContent = String.format(FILE_STUB, className, callStackCode);
+        int stackSize = cb.getMaxStackSize();
+        String fileContent = String.format(FILE_STUB, className, stackSize, callStackCode);
         String filePath = String.format("%s.j", className);
         writeToFile(filePath, fileContent);
         return filePath;

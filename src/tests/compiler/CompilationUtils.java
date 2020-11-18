@@ -20,7 +20,7 @@ import static compiler.Compiler.*;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class CompilationUtils {

@@ -2,17 +2,16 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.PushValueOp;
 import environment.Environment;
 
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class ASTNum implements ASTNode {
-
-    private static final String PUSH_NUMBER_COMPILER = "sipush %d";
 
     private final int val;
 
@@ -22,7 +21,7 @@ public class ASTNum implements ASTNode {
 
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) {
-        cb.addOperation(String.format(PUSH_NUMBER_COMPILER, val));
+    	cb.addOperation(new PushValueOp(String.valueOf(val)));
     }
 
 }
