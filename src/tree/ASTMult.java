@@ -6,16 +6,15 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.MulOp;
 
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class ASTMult implements ASTNode {
-
-    private static final String MULTIPLY_OPERATION_COMPILER = "imul";
 
     private final ASTNode l, r;
 
@@ -30,7 +29,7 @@ public class ASTMult implements ASTNode {
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        ASTNode.pushNodes(l, r, cb, MULTIPLY_OPERATION_COMPILER, env);
+    	cb.addOperation(new MulOp());
     }
 
 }

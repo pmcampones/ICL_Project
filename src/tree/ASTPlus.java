@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.AddOp;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -9,12 +10,10 @@ import environment.exceptions.UndeclaredIdentifierException;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class ASTPlus implements ASTNode {
-
-    private static final String ADD_OPERATION_COMPILER = "iadd";
 
     private final ASTNode l, r;
 
@@ -28,7 +27,7 @@ public class ASTPlus implements ASTNode {
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        ASTNode.pushNodes(l, r, cb, ADD_OPERATION_COMPILER, env);
+    	cb.addOperation(new AddOp());
     }
 
 }

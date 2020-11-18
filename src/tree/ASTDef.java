@@ -5,6 +5,14 @@ import java.util.Collection;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.Frame;
+import compiler.operations.DupOp;
+import compiler.operations.GetFieldOp;
+import compiler.operations.InvokeSpecialOp;
+import compiler.operations.LoadOp;
+import compiler.operations.NewOp;
+import compiler.operations.PopOp;
+import compiler.operations.PutFieldOp;
+import compiler.operations.StoreOp;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -12,7 +20,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class ASTDef implements ASTNode {
@@ -41,16 +49,16 @@ public class ASTDef implements ASTNode {
     	Frame f = cb.createFrame(variables.size());
     	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv, f);
     	assocVarsPos(cb, currEnv, f.name);
-    	cb.addOperation("pop");
+    	cb.addOperation(new PopOp());
     	body.compile(cb, currEnv);
     	closeFrame(cb, currEnv, f);
     	cb.closeFrame();
     }
     
     private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv, Frame currFrame) {
-    	cb.addOperation("aload_1");
-    	cb.addOperation(String.format("getfield %s/sl L%s;", currFrame.name, currFrame.parent.name));
-    	cb.addOperation("astore_1");
+    	cb.addOperation(new LoadOp());
+    	cb.addOperation(new GetFieldOp(currFrame.name, currFrame.parent.name));
+    	cb.addOperation(new StoreOp());
     	
     }
     
@@ -58,11 +66,10 @@ public class ASTDef implements ASTNode {
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	int varIndex = 0;
     	for (Variable v : variables) {
-    		cb.addOperation("dup");
+    		cb.addOperation(new DupOp());
     		v.exp.compile(cb, env);
-    		cb.addOperation(
-    				String.format("putfield %s/v%d I", 
-    						fName, varIndex));
+    		String fieldName = String.format("%s/v%d", fName, varIndex);
+    		cb.addOperation(new PutFieldOp(fieldName, "I"));
     		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex++));
     	}
     }
@@ -70,16 +77,16 @@ public class ASTDef implements ASTNode {
     private Environment<Coordinates> compileBoilerPlate
     		(CodeBlock cb, Environment<Coordinates> prevEnv, Frame currFrame) {
     	Environment<Coordinates> currEnv = prevEnv.beginScope();
-    	cb.addOperation(String.format("new %s", currFrame.name));
-    	cb.addOperation("dup");
-    	cb.addOperation(
-    			String.format("invokespecial %s/<init>()V", currFrame.name));
-    	cb.addOperation("dup");
-    	cb.addOperation("aload_1");
-    	cb.addOperation(
-    			String.format("putfield %s/sl L%s;", currFrame.name, currFrame.parent.name));
-    	cb.addOperation("dup");
-    	cb.addOperation("astore_1");
+    	cb.addOperation(new NewOp(currFrame.name));
+    	cb.addOperation(new DupOp());
+    	cb.addOperation(new InvokeSpecialOp(String.format("%s/<init>()V", currFrame.name)));
+    	cb.addOperation(new DupOp());
+    	cb.addOperation(new LoadOp());
+    	String fieldName = String.format("%s/sl", currFrame.name);
+    	String type = String.format("L%s", currFrame.parent.name);
+    	cb.addOperation(new PutFieldOp(fieldName, type));
+    	cb.addOperation(new DupOp());
+    	cb.addOperation(new StoreOp());
     	return currEnv;
     }
 

@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import compiler.operations.Operation;
+
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class CodeBlock {
@@ -32,7 +34,7 @@ public class CodeBlock {
 	/*
 	 * Code to be written in the call stack
 	 */
-	private final Queue<String> callStackOperations = new LinkedList<>();
+	private final Queue<Operation> callStackOperations = new LinkedList<>();
 	
 	
 	private final Stack<Frame> activeFrames = new Stack<>();
@@ -50,7 +52,7 @@ public class CodeBlock {
 		activeFrames.add(new Frame());
 	}
 	
-	public void addOperation(String op) {
+	public void addOperation(Operation op) {
 		callStackOperations.add(op);
 	}
 	
