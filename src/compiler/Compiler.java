@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class Compiler {
@@ -66,7 +66,7 @@ public class Compiler {
     	this.frameDirectory = String.format("%s/%s", 
     			codeDirectory, frameDirectory);
     	new File(this.frameDirectory).mkdirs();
-    	cb = new CodeBlock(frameDirectory);
+    	cb = new CodeBlock(this.frameDirectory);
     }
     
     private static void writeToFile(String filePath, String fileContent) throws IOException {
