@@ -1,30 +1,57 @@
-# ICL Project
+# ICL Project - Interpreter and Compiler for the  CALC Language
 
-This is a Java compiler and interpreter. 
+This project consists on the implementation of an interpreter and compiler for the programming language CALC, created specifically for this purpose.
 
 ## How to Run
 
-### Windows
+The project can be run as either an interpreter or a compiler.
 
-_To Compile:_ `javac -Xlint Parser.java`
+### Interpreter: 
+`java InterpreterMain`
 
-_To Run Interpreter:_ `java Parser`
+The file InterpreterMain runs the program as an interpreter. Upon running it a shell is opened and the user can input an indefinate number of expressions; the interpreter reads the user input written according to the CALC sintax and produces the result.
 
-### Linux
+### Compiler:
+`java CompilerMain fileName [directory] [framesDirectory]`
 
-_To Compile:_ `TODO`
+The file CompilerMain runs the program as a compiler. Upon running it a shell is opened and the user inputs a single expression. This expression is compied into Java Bytecode.
 
-_To Run Interpreter:_ `TODO`
+The name of the compiled file is received as an argument of the program. This is the only mandatory argument. The name in the arguments mustn't include the termination type of the file. Eg.expression0 is correct but expression0.j is incorrect.
+
+The remaining optional arguments are "directory" and "framesDirectory". 
+The first optional argument specifies the directory of the compiled program, relative to the project working directory.
+The last argument specifies the directory where the Frame auxiliary classes are to be compiled, relative to the directory specified in the previous argument.
+
+If the optional arguments are not given, default directories are used for the compiled programs and the Frames.
+The default directory for the compiled files is CompiledPrograms, and the default frames directory is CompiledPrograms/Frames
+If the user wants to have all programs in the project root directory, the optional arguments should have the value "."
+
+Upon having the Java bytecodes, these can be assembled into JVM .class programs throught the use of the Jasmin assembler.
+
+_Assemble_: `java -jar jasmin.jar CompiledPrograms/compiledFile.j CompiledPrograms/Frames/frame_0.j CompiledPrograms/Frames/frame_1.j`
 
 ## Features
 
-The interpreter has support for:
-* **Basic Aritmetic Operations** (Addition, Subtraction, Multiplication and Division);
-* **Definitions**
+Currently the language suports the computation of complex arithmetic operations and the definition of imutable variables in several scopes.
+Some of the project's highlights:
 
-It also includes **Unit Tests** for all supported operations.
+### Left to Right Evaluation of Expressions:
+Operations such as 1024/2/2 are evaluated as (1024/2)/2 = 256. This order of the operations coincides with the evaluation done by most machines and is not the default behaviour given in the project's genesis.
 
-### Examples of Supported Operations
-* `1+1`
-* `def x = 1 in x end`
-* `def x = 1 y = 2 in def z = x + y in z + 5 end end`
+### Correct use of Spagheti Stack for Frame ordering
+Our program supports expressions such as:
+* `def x = 1 y = 2 in x + y + (def x = x + 1 in 2 * x end) + (def w = x + y in w + 2 end) end
+
+This operation contains 3 frames, however, the last two of these have the same frame as their static link. This differs from most examples where a frame's static link is always the previously declared frame.
+
+Another highlight of the program is the fact that the same identifier can be declared once per scope, instead of once per program. the identifier `x` in the example is defined in two scopes.
+
+### Extensive JUnit testing
+
+There is a variety of JUnit tests for both the interpreter and the compiler.
+The compiler tests have only been successfully experimented on a Linux system with a bash terminal. The tests compile the expressions into Java bytecodes and assemble the results using Jasmin. It is assumed `jasmin.jar` is in the project root; the failure to comply to this assumption leads to an error in the tests.
+
+### Dinamic Stack Allocation
+
+For any given expression, the compiler identifies the maximum memory the program will require and will allocate a stack with that exact size.
+This is accomplished by attributing each operation a value representing its induced variation in the stack. Eg: stackChange(push) = +1  stackChange(pop) = -1.
