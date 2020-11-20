@@ -40,7 +40,7 @@ Operations such as _1024/2/2_ are evaluated as _(1024/2)/2 = 256_. This order of
 
 ### Correct Use of Spagheti Stack for Frame Ordering
 Our program supports expressions such as:
-* `def x = 1 y = 2 in x + y + (def x = x + 1 in 2 * x end) + (def w = x + y in w + 2 end) end
+* `def x = 1 y = 2 in x + y + (def x = x + 1 in 2 * x end) + (def w = x + y in w + 2 end) end`
 
 This operation contains 3 frames, however, the last two of these have the same frame as their static link. This differs from most examples where a frame's static link is always the previously declared frame.
 
@@ -54,4 +54,4 @@ The compiler tests have only been successfully experimented on a Linux system wi
 ### Dinamic Stack Allocation
 
 For any given expression, the compiler identifies the maximum memory the program will require and will allocate a stack with that exact size.
-This is accomplished by attributing each operation a value representing its induced variation in the stack. Eg: _stackChange(push) = +1  stackChange(pop) = -1_.
+This is accomplished by attributing each operation a value representing its induced variation in the stack. Eg: `stackChange(push) = +1  stackChange(pop) = -1`.
