@@ -13,8 +13,8 @@ public class ASTDeref implements ASTNode {
 	
 	private final ASTVariable node;
 	
-	public ASTDeref(ASTVariable node) {
-		this.node = node;
+	public ASTDeref(String id) {
+		this.node = new ASTVariable(id);
 	}
 
 	@Override

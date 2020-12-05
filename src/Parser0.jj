@@ -39,7 +39,6 @@ SKIP :
   " "
 | "\t"
 | "\r"
-| ";"
 }
 
 TOKEN :
@@ -77,6 +76,8 @@ TOKEN :
   < DEREF: "!" >
   |
   < ATTR: ":=" >
+  |
+  < SEMI: ";" > 
 }
 
 ASTNode Start():
@@ -88,9 +89,9 @@ ASTNode Start():
 
 ASTNode Exp() :
 { Token op;
-  ASTNode t1, t2; }
+  ASTNode t1 = null, t2; }
 {
-   ((< NEW > t1 = Exp()
+   (     (<SEMI>)* ((< NEW > t1 = Exp()
    {
 		t1 = new ASTNew(t1);
 
@@ -102,8 +103,10 @@ ASTNode Exp() :
                          t1 = new ASTPlus(t1,t2);
                    else  t1 = new ASTSub(t1,t2);
                  } 
-               ) *))
-     { return t1; } 
+               )*)) (<SEMI>)*
+   )*
+               { return t1; }
+      
 }
 
 ASTNode Term() :
@@ -128,7 +131,7 @@ ASTNode Fact() :
    ( n = <NUM>    {t = new ASTNum(Integer.parseInt(n.image));}
    | n = <MINUS>  {t = new ASTNeg(Fact());}
    | n = <DEF>    { t = Def(); }
-   | n = <DEREF> n = <ID> { t = new ASTDeref(n.image); }
+   | <DEREF> n = <ID> { t = new ASTDeref(n.image); }
    | n = <ID>      t = Var(n)
    | <LPAR>        t = Exp() <RPAR>)
    { return t; }
@@ -139,7 +142,7 @@ ASTNode Var(Token id) :
   ASTNode t;
 }
 {
-  {t = new ASTVariable(n.image);} (<ATTR> {t = new ASTAttr(t, Exp());})?
+  {t = new ASTVariable(id.image);} (<ATTR> {t = new ASTAttr(t, Exp());})?
 
   {
     return t;

@@ -27,7 +27,7 @@ public class ASTNeg implements ASTNode {
     	IValue res = node.eval(e);
     	if (res instanceof VInt)
     		return new VInt(-((VInt)res).getVal());
-    	throw new TypeErrorException("Expression is not an Integer");
+    	throw new TypeErrorException("Expression is not an integer");
     }
 
     @Override
