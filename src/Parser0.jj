@@ -50,9 +50,11 @@ TOKEN :
   |
   < END: "end" >
   |
-  < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+  < NEW: "new" >
   |
-  < Num: (["0"-"9"]) + >
+  < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+  |
+  < NUM: (["0"-"9"]) + >
   |
   < PLUS : "+" >
   |
@@ -62,6 +64,8 @@ TOKEN :
   |
   < DIV : "/">
   |
+  < REMAINDER: "%" >
+  |
   < LPAR : "(" >
   |
   < RPAR : ")" >
@@ -70,7 +74,9 @@ TOKEN :
   |
   < EQUALS: "=" >
   |
-  < REMAINDER: "%" >
+  < DEREF: "!" >
+  |
+  < ATTR: ":=" >
 }
 
 ASTNode Start():
@@ -84,13 +90,19 @@ ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
+   ((< NEW > t1 = Exp()
+   {
+		t1 = new ASTNew(t1);
+
+   })
+   |
+   (t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
                  {
                     if (op.kind == PLUS)
                          t1 = new ASTPlus(t1,t2);
                    else  t1 = new ASTSub(t1,t2);
                  } 
-               ) *
+               ) *))
      { return t1; } 
 }
 
@@ -113,12 +125,25 @@ ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( n = <Num>    {t = new ASTNum(Integer.parseInt(n.image));}
+   ( n = <NUM>    {t = new ASTNum(Integer.parseInt(n.image));}
    | n = <MINUS>  {t = new ASTNeg(Fact());}
-   | n = <DEF>     t = Def()
-   | n = <Id>     {t = new ASTVariable(n.image);}
+   | n = <DEF>    { t = Def(); }
+   | <DEREF> n = <ID> { t = new ASTDeref(n.image); }
+   | n = <ID>      t = Var(n)
    | <LPAR>        t = Exp() <RPAR>)
    { return t; }
+}
+
+ASTNode Var(Token id) :
+{
+  ASTNode t;
+}
+{
+  t = new ASTVariable(n.image) (<ATTR> t = new ASTAttr(t, Exp()))?
+
+  {
+    return t;
+  }
 }
 
 ASTNode Def() :
@@ -127,7 +152,7 @@ ASTNode Def() :
     Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 } {
     (
-        (id = <Id>
+        (id = <ID>
         <EQUALS>
         init = Exp())
         {variables.add(new Variable(id.toString(), init));}
