@@ -15,8 +15,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 public class Parser {
 
-    //private static Environment env = new Environment();
-
   /** Main entry point. */
   public static void main(String[] args) {
     Parser parser = new Parser(System.in);
@@ -71,6 +69,8 @@ TOKEN :
   < EL: "\n" >
   |
   < EQUALS: "=" >
+  |
+  < REMAINDER: "%" >
 }
 
 ASTNode Start():
@@ -98,9 +98,10 @@ ASTNode Term() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Fact()
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> | op=<REMAINDER> ) t2 = Fact()
  		 {
             if (op.kind == TIMES) t1 = new ASTMult(t1, t2);
+            else if (op.kind == REMAINDER) t1 = new ASTRem(t1, t2);
             else t1 = new ASTDiv(t1, t2);
      }
 		)*
