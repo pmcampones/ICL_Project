@@ -2,6 +2,9 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import dataTypes.IValue;
+import dataTypes.TypeErrorException;
+import dataTypes.VInt;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -9,7 +12,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class ASTNeg implements ASTNode {
@@ -19,9 +22,12 @@ public class ASTNeg implements ASTNode {
     public ASTNeg(ASTNode node) {this.node = node;}
 
     @Override
-    public int eval(Environment<Integer> e)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        return -node.eval(e);
+    public IValue eval(Environment<IValue> e)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+    	IValue res = node.eval(e);
+    	if (res instanceof VInt)
+    		return new VInt(-((VInt)res).getVal());
+    	throw new TypeErrorException("Expression is not an Integer");
     }
 
     @Override

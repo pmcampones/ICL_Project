@@ -11,6 +11,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
@@ -19,7 +20,7 @@ import parser.Parser;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -32,7 +33,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefWithoutUsingSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("def x = 1 in %d + %d end", first, second);
@@ -43,7 +44,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefWithoutUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         Random r = new Random();
         int[] nums = new int[5];
         for(int i = 0; i < nums.length; i++)
@@ -56,7 +57,9 @@ public class DefVarsInterpreterTest {
     }
 
     @Test
-    public void testDefUsingSimple() throws ParseException, IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void testDefUsingSimple() 
+    		throws ParseException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException, TypeErrorException {
         Random r = new Random();
         int attr = r.nextInt(MAX_RAND);
         int num = r.nextInt(MAX_RAND);
@@ -69,7 +72,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         Random r = new Random();
         int attr = r.nextInt(MAX_RAND);
         int[] nums = new int[3];
@@ -85,7 +88,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefNestedSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         Random r = new Random();
         int attr1 = r.nextInt(MAX_RAND), attr2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d in def y = %d in x * (-y + x) end end",
@@ -98,7 +101,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefNestedCaires1()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         String exp = "def x = 1 in def y = x + x in x + y end end";
         writeToToken(exp);
         assertEquals(3, run());
@@ -107,7 +110,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefNestedCaires2()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         int x = 2, z = x + 1, y = z + z;
         String exp = "def x = 2 in def y = def z = x + 1 in z + z end in x * y end end";
         writeToToken(exp);
@@ -116,8 +119,8 @@ public class DefVarsInterpreterTest {
 
     @Test
     public void testDefSameVarDifferentScopesSimple()
-            throws ParseException,
-            IDDeclaredTwiceException, UndeclaredIdentifierException {
+            throws ParseException, IDDeclaredTwiceException, 
+            UndeclaredIdentifierException, TypeErrorException {
         String exp = "def x = 2 in def x = 1 in x end end";
         writeToToken(exp);
         assertEquals(1, run());
@@ -126,7 +129,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefSameVarDifferentScopesComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         String exp = "def x = 2 in def y = def x = x+1 in x+x end in x * y end end";
         writeToToken(exp);
         assertEquals(12, run());
@@ -135,7 +138,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testDefDifferentVarsSameScope()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
+            UndeclaredIdentifierException, TypeErrorException {
         String exp = "def x = 2 y = x+2 in def z = 3 in def y = x+1 in x + y + z end end end";
         writeToToken(exp);
         assertEquals(8, run());
@@ -144,7 +147,7 @@ public class DefVarsInterpreterTest {
     @Test
     public void testTwoFramesSameScope() 
     		throws ParseException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String exp = "4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end";
     	writeToToken(exp);
     	assertEquals(20, run());

@@ -3,6 +3,8 @@ package tree;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.PushValueOp;
+import dataTypes.IValue;
+import dataTypes.VInt;
 import environment.Environment;
 
 /**
@@ -13,11 +15,11 @@ import environment.Environment;
 
 public class ASTNum implements ASTNode {
 
-    private final int val;
+    private final IValue val;
 
-    public ASTNum(int val) {this.val = val;}
+    public ASTNum(int val) {this.val = new VInt(val);}
 
-    public int eval(Environment<Integer> e) {return val;}
+    public IValue eval(Environment<IValue> e) {return val;}
 
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) {

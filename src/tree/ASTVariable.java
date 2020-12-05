@@ -5,6 +5,7 @@ import compiler.Coordinates;
 import compiler.Frame;
 import compiler.operations.GetFieldOp;
 import compiler.operations.LoadOp;
+import dataTypes.IValue;
 import environment.Environment;
 import environment.exceptions.UndeclaredIdentifierException;
 
@@ -21,7 +22,7 @@ public class ASTVariable implements ASTNode {
     public ASTVariable(String id) {this.id = id;}
 
     @Override
-    public int eval(Environment<Integer> e) throws UndeclaredIdentifierException {
+    public IValue eval(Environment<IValue> e) throws UndeclaredIdentifierException {
         return e.find(id);
     }
 

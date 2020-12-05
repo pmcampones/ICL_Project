@@ -2,6 +2,8 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import dataTypes.IValue;
+import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -14,8 +16,9 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 public interface ASTNode {
 
-    int eval(Environment<Integer> e)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException;
+    IValue eval(Environment<IValue> e)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
+            TypeErrorException;
 
     void compile(CodeBlock codeBlock, Environment<Coordinates> env) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException;

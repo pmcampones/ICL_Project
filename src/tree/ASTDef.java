@@ -13,6 +13,8 @@ import compiler.operations.NewOp;
 import compiler.operations.PopOp;
 import compiler.operations.PutFieldOp;
 import compiler.operations.StoreOp;
+import dataTypes.IValue;
+import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -35,9 +37,10 @@ public class ASTDef implements ASTNode {
     }
     
     @Override
-    public int eval(Environment<Integer> prevEnv)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        Environment<Integer> currEnv = prevEnv.beginScope();
+    public IValue eval(Environment<IValue> prevEnv)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
+            TypeErrorException {
+        Environment<IValue> currEnv = prevEnv.beginScope();
         for (Variable v : variables)
             currEnv.assoc(v.id, v.exp.eval(currEnv));
         return body.eval(currEnv);

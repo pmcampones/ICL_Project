@@ -3,6 +3,9 @@ package tree;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.DivOp;
+import dataTypes.IValue;
+import dataTypes.TypeErrorException;
+import dataTypes.VInt;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -20,10 +23,13 @@ public class ASTRem implements ASTNode {
     public ASTRem(ASTNode l, ASTNode r) {this.l = l; this.r = r;}
 
     @Override
-    public int eval(Environment<Integer> e)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        return l.eval(e) % r.eval(e);
-    }
+    public IValue eval(Environment<IValue> e)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
+            TypeErrorException {
+    	IValue lRes, rRes;
+    	if ((lRes = l.eval(e)) instanceof VInt && (rRes = r.eval(e)) instanceof VInt)
+    		return new VInt(((VInt)lRes).getVal() % ((VInt)rRes).getVal());
+        throw new TypeErrorException("Expressions are not integers");    }
 
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) 

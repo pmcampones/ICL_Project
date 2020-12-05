@@ -7,18 +7,22 @@ import parser.ParseException;
 
 import static parser.Parser.Start;
 
+import dataTypes.IValue;
+import dataTypes.TypeErrorException;
+import dataTypes.VInt;
+
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class InterpreterTestUtil {
 
     static int run()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
-        return Start().eval(new Environment());
+            UndeclaredIdentifierException, TypeErrorException {
+        return ((VInt)Start().eval(new Environment<IValue>())).getVal();
     }
     
 }
