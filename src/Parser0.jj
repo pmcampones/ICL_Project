@@ -1,7 +1,7 @@
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 PARSER_BEGIN(Parser)
@@ -128,7 +128,7 @@ ASTNode Fact() :
    ( n = <NUM>    {t = new ASTNum(Integer.parseInt(n.image));}
    | n = <MINUS>  {t = new ASTNeg(Fact());}
    | n = <DEF>    { t = Def(); }
-   | <DEREF> n = <ID> { t = new ASTDeref(n.image); }
+   | n = <DEREF> n = <ID> { t = new ASTDeref(n.image); }
    | n = <ID>      t = Var(n)
    | <LPAR>        t = Exp() <RPAR>)
    { return t; }
@@ -139,7 +139,7 @@ ASTNode Var(Token id) :
   ASTNode t;
 }
 {
-  t = new ASTVariable(n.image) (<ATTR> t = new ASTAttr(t, Exp()))?
+  {t = new ASTVariable(n.image);} (<ATTR> {t = new ASTAttr(t, Exp());})?
 
   {
     return t;
