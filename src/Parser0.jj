@@ -43,19 +43,31 @@ SKIP :
 
 TOKEN :
 {
-  < DEF: "def" >
+  < DEF: "def">
   |
-  < IN: "in" >
+  < IN: "in">
   |
-  < END: "end" >
+  < END: "end">
   |
-  < NEW: "new" >
+  < NEW: "new">
   |
-  < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
+  < BOOL: "true" | "false" | "True" | "False">
   |
-  < NUM: (["0"-"9"]) + >
+  <IF : "if">
   |
-  < PLUS : "+" >
+  <THEN : "then">
+  |
+  <ELSE : "else">
+  |
+  <WHILE : "while">
+  |
+  <DO : "do">
+  |
+  < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )*>
+  |
+  < NUM: (["0"-"9"])+>
+  |
+  < PLUS : "+">
   |
   < MINUS : "-">
   |
@@ -63,90 +75,94 @@ TOKEN :
   |
   < DIV : "/">
   |
-  < REMAINDER: "%" >
+  < REMAINDER: "%">
   |
-  < LPAR : "(" >
+  < LPAR : "(">
   |
-  < RPAR : ")" >
+  < RPAR : ")">
   |
-  < EL: "\n" >
+  < EL: "\n">
   |
-  < EQUALS: "=" >
+  < EQUALS: "==">
   |
-  < DEREF: "!" >
+  < ATTR_ID: "=">
   |
-  < ATTR: ":=" >
+  < DEREF: "!">
   |
-  < SEMI: ";" > 
+  < ATTR_VAL: ":=">
+  |
+  < SEMI: ";">
 }
 
 ASTNode Start():
 { ASTNode t; }
 {
-   t = Exp() <EL>
+   (<SEMI>)* t = ExpSeq() (<SEMI>)* <EL>
    { return t; }
 }
 
-ASTNode Exp() :
-{ Token op;
-  ASTNode t1 = null, t2; }
+/*
+*   Sequence of expressions, the value returned is that of the last expression
+*/
+ASTNode ExpSeq() :
 {
-   (     (<SEMI>)* ((< NEW > t1 = Exp()
-   {
-		t1 = new ASTNew(t1);
+    ASTNode lastExp;
+} {
+    lastExp = Exp() ((<SEMI>)* lastExp = Exp())*
+    {return lastExp;}
+}
 
-   })
-   |
-   (t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
-                 {
-                    if (op.kind == PLUS)
-                         t1 = new ASTPlus(t1,t2);
-                   else  t1 = new ASTSub(t1,t2);
-                 } 
-               )*)) (<SEMI>)*
-   )*
-               { return t1; }
-      
+ASTNode Exp() :
+{
+    ASTNode expRes;
+} {
+    expRes = FunctionalExp() (
+        <EQUALS>   {expRes = new ASTEquals(expRes, FunctionalExp());}   //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
+      | <ATTR_VAL> {expRes = new ASTAttr(expRes, FunctionalExp());}
+    )?
+    {return expRes;}
+}
+
+/*
+* Function that will return a value at the end
+ */
+ASTNode FunctionalExp() :
+{
+    ASTNode termRes;
+} {
+    termRes = Term() (
+          <PLUS> {termRes = new ASTPlus(termRes, Term());}
+        | <MINUS> {termRes = new ASTSub(termRes, Term());}
+    )*
+    {return termRes;}
 }
 
 ASTNode Term() :
-{Token op;
-  ASTNode t1, t2;}
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> | op=<REMAINDER> ) t2 = Fact()
- 		 {
-            if (op.kind == TIMES) t1 = new ASTMult(t1, t2);
-            else if (op.kind == REMAINDER) t1 = new ASTRem(t1, t2);
-            else t1 = new ASTDiv(t1, t2);
-     }
-		)*
-     { return t1; } 
+    ASTNode factRes;
+} {
+    factRes = Fact() (
+          <TIMES> {factRes = new ASTMult(factRes, Fact());}
+        | <DIV> {factRes = new ASTDiv(factRes, Fact());}
+        | <REMAINDER> {factRes = new ASTRem(factRes, Fact());}
+    )*
+    {return factRes;}
 }
-
 
 ASTNode Fact() :
 { Token n; 
   ASTNode t;}
 {
-   ( n = <NUM>    {t = new ASTNum(Integer.parseInt(n.image));}
-   | n = <MINUS>  {t = new ASTNeg(Fact());}
-   | n = <DEF>    { t = Def(); }
-   | <DEREF> n = <ID> { t = new ASTDeref(n.image); }
-   | n = <ID>      t = Var(n)
-   | <LPAR>        t = Exp() <RPAR>)
+   ( n = <NUM>      {t = new ASTNum(Integer.parseInt(n.image));}
+   | n = <BOOL>     {t = new ASTBool(n.image);}
+   | n = <ID>       {t = new ASTVariable(n.image);}
+   | <MINUS>            {t = new ASTNeg(Fact());}
+   | <DEREF> n = <ID>   {t = new ASTDeref(n.image);}
+   | <WHILE> t = FunctionalExp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
+   | <DEF>          t = Def()
+   | <LPAR> t = ExpSeq() <RPAR>
+   | <IF>           t = If())
    { return t; }
-}
-
-ASTNode Var(Token id) :
-{
-  ASTNode t;
-}
-{
-  {t = new ASTVariable(id.image);} (<ATTR> {t = new ASTAttr(t, Exp());})?
-
-  {
-    return t;
-  }
 }
 
 ASTNode Def() :
@@ -154,14 +170,18 @@ ASTNode Def() :
     ASTNode init, body;
     Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 } {
-    (
-        (id = <ID>
-        <EQUALS>
-        init = Exp())
-        {variables.add(new Variable(id.toString(), init));}
-    )+
+    (id = <ID> <ATTR_ID> {variables.add(new Variable(id.toString(), FunctionalExp()));})+
     <IN>
-    body = Exp()
+    body = ExpSeq()
     <END>
-{return new ASTDef(variables, body);}
+    {return new ASTDef(variables, body);}
+}
+
+ASTNode If() :
+{
+    ASTNode ifRes, thenRes, elseRes;
+} {
+    {elseRes = new ASTVoid();}
+    ifRes = FunctionalExp() <THEN> thenRes = ExpSeq() (<ELSE> elseRes = ExpSeq())? <END>
+    {return new ASTIf(ifRes, thenRes, elseRes);}
 }

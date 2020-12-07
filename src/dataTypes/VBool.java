@@ -1,6 +1,6 @@
 package dataTypes;
 
-public class VBool {
+public class VBool implements IValue{
 	
 	private final boolean val;
 	

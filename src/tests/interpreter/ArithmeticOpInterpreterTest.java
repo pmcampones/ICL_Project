@@ -1,20 +1,23 @@
 package tests.interpreter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.TestUtils.MAX_RAND;
+import static tests.TestUtils.genSameOpStr;
+import static tests.TestUtils.getNumsArray;
+import static tests.TestUtils.writeToToken;
+import static tests.interpreter.InterpreterTestUtil.run;
+
 import java.io.ByteArrayInputStream;
 import java.util.Random;
 
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import dataTypes.TypeErrorException;
+import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.TestUtils.*;
-import static tests.interpreter.InterpreterTestUtil.run;
 
 /**
 * MIEI
