@@ -66,6 +66,7 @@ public class Parser implements ParserConstants {
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case DEF:
+      case NEW:
       case BOOL:
       case IF:
       case WHILE:
@@ -236,8 +237,12 @@ t = new ASTNeg(Fact());
       }
     case DEREF:{
       jj_consume_token(DEREF);
-      n = jj_consume_token(ID);
-t = new ASTDeref(n.image);
+t = new ASTDeref(Fact());
+      break;
+      }
+    case NEW:{
+      jj_consume_token(NEW);
+t = new ASTNew(FunctionalExp());
       break;
       }
     case WHILE:{
@@ -335,7 +340,7 @@ elseRes = new ASTVoid();
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x10000000,0x10000000,0x1422d310,0x10000000,0x9000000,0x9000000,0x30000,0x30000,0x1c0000,0x1c0000,0x422d310,0x4000,0x800,};
+	   jj_la1_0 = new int[] {0x10000000,0x10000000,0x1422d390,0x10000000,0x9000000,0x9000000,0x30000,0x30000,0x1c0000,0x1c0000,0x422d390,0x4000,0x800,};
 	}
 
   /** Constructor with InputStream. */

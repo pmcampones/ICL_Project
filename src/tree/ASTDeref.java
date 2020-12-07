@@ -11,10 +11,10 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTDeref implements ASTNode {
 	
-	private final ASTVariable node;
+	private final ASTNode node;
 	
-	public ASTDeref(String id) {
-		this.node = new ASTVariable(id);
+	public ASTDeref(ASTNode node) {
+		this.node = node;
 	}
 
 	@Override

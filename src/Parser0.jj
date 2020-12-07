@@ -157,7 +157,8 @@ ASTNode Fact() :
    | n = <BOOL>     {t = new ASTBool(n.image);}
    | n = <ID>       {t = new ASTVariable(n.image);}
    | <MINUS>            {t = new ASTNeg(Fact());}
-   | <DEREF> n = <ID>   {t = new ASTDeref(n.image);}
+   | <DEREF>        {t = new ASTDeref(Fact());}         //Must not be FunctionalExp() otherwise !x + !y fails
+   | <NEW>          {t = new ASTNew(FunctionalExp());}
    | <WHILE> t = FunctionalExp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
    | <DEF>          t = Def()
    | <LPAR> t = ExpSeq() <RPAR>
