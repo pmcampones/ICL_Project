@@ -4,24 +4,12 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import parser.ParseException;
-import parser.Parser;
-
-import java.io.ByteArrayInputStream;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.TestUtils.MAX_RAND;
-import static tests.TestUtils.writeToToken;
-import static tests.interpreter.InterpreterTestUtil.run;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class NewOperationTests {
-
-    public NewOperationTests() {
-        new Parser(new ByteArrayInputStream(new byte[0]));
-    }
+public class NewOperationTester extends InterpreterTester {
 
     @Test
     public void testNewVarTestNotUsing()

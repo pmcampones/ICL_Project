@@ -1,40 +1,26 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.TestUtils.MAX_RAND;
-import static tests.TestUtils.genSameOpStr;
-import static tests.TestUtils.getNumsArray;
-import static tests.TestUtils.writeToToken;
-import static tests.interpreter.InterpreterTestUtil.run;
-
-import java.io.ByteArrayInputStream;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import parser.Parser;
 
 /**
  * MIEI
  * 
  * @author Ana Josefa Matos - 49938
- * @author Pedro Camponês - 50051
+ * @author Pedro Camponï¿½s - 50051
  **/
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class SemicolonTest {
-
-	public SemicolonTest() {
-		new Parser(new ByteArrayInputStream(new byte[0]));
-	}
+public class SemicolonTest extends InterpreterTester {
 
 	@Test
-	public void testAritmeticSeq()
+	public void testArithmeticSeq()
 			throws ParseException, IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
 		Random r = new Random();
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);

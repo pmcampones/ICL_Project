@@ -5,15 +5,12 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
-import parser.Parser;
 
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.TestUtils.MAX_RAND;
-import static tests.TestUtils.writeToToken;
 
-public class AttrTest extends InterpreterTests {
+public class AttrTest extends InterpreterTester {
 
     @Test
     public void testSimpleAttr()

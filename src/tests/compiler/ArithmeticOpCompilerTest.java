@@ -1,54 +1,41 @@
 package tests.compiler;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import parser.Parser;
+import tests.ArithmeticOpTester;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.TestUtils.*;
-import static tests.compiler.CompilationUtils.compileAndGetResults;
+
+import static tests.ArithmeticOpTester.*;
 
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ArithmeticOpCompilerTest {
-
-    public ArithmeticOpCompilerTest() {
-        new Parser(new ByteArrayInputStream(new byte[0]));
-    }
+public class ArithmeticOpCompilerTest extends CompilationTester implements ArithmeticOpTester {
 
     @Test
     public void testNumber() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-        int number = new Random().nextInt(MAX_RAND);
-        writeToToken(String.valueOf(number));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(number, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestNumber(), compileAndGetResults(methodName));
     }
     
     @Test
     public void testSum() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	Random r = new Random();
-    	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
-    	writeToToken(genSameOpStr(nums, "+"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(nums[0] + nums[1], compileAndGetResults(methodName));
+    	assertEquals(getExpectedTestSum(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -56,11 +43,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	Random r = new Random();
-    	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
-    	writeToToken(genSameOpStr(nums, "-"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(nums[0] - nums[1], compileAndGetResults(methodName));
+    	assertEquals(getExpectedTestSub(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -68,11 +52,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	Random r = new Random();
-    	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
-    	writeToToken(genSameOpStr(nums, "*"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(nums[0] * nums[1], compileAndGetResults(methodName));
+    	assertEquals(getExpectedTestMult(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -80,11 +61,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	Random r = new Random();
-    	int[] nums = {r.nextInt(MAX_RAND), r.nextInt(MAX_RAND)};
-    	writeToToken(genSameOpStr(nums, "/"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(nums[0] / nums[1], compileAndGetResults(methodName));
+    	assertEquals(getExpectedTestDiv(), compileAndGetResults(methodName));
     }
 
     @Test
@@ -92,12 +70,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	int[] nums = getNumsArray();
-    	writeToToken(genSameOpStr(nums, "+"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	int sum = 0;
-        for (int num : nums) sum += num;
-        assertEquals(sum, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestManySums(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -105,13 +79,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	int[] nums = getNumsArray();
-    	writeToToken(genSameOpStr(nums, "-"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	int accum = nums[0];
-    	for (int i = 1; i < nums.length; i++)
-    		accum -= nums[i];
-        assertEquals(accum, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestManySubs(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -119,12 +88,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	int[] nums = getNumsArray();
-    	writeToToken(genSameOpStr(nums, "*"));
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	int accum = 1;
-        for (int num : nums) accum *= num;
-        assertEquals(accum, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestManyMults(), compileAndGetResults(methodName));
     }
     
     /*
@@ -152,10 +117,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	int num = new Random().nextInt(MAX_RAND);
-        writeToToken(String.format("( %d )", num));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(num, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestBrackets(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -163,12 +126,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	Random r = new Random();
-        int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
-        String exp = String.format("(%d + %d)", first, second);
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(first + second, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestBracketsSum(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -176,11 +135,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
     		UndeclaredIdentifierException {
-    	String exp = "2 * (3 + 4 * (5 + 6) - 1 * (2))";
-        int val = 2 * (3 + 4 * (5 + 6) - 1 * 2);
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(val, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestSumsAndMultsBrackets(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -188,10 +144,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
     		UndeclaredIdentifierException {
-    	int num = new Random().nextInt(MAX_RAND);
-        writeToToken(String.format("-%d", num));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(-num, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestMinusSingle(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -199,12 +153,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
     		UndeclaredIdentifierException {
-    	Random r = new Random();
-        int first = -1 * r.nextInt(MAX_RAND), second = -1 * r.nextInt(MAX_RAND);
-        String exp = String.format("-%d + %d\n", first, second);
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(-first + second, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestMinusTwo(), compileAndGetResults(methodName));
     }
     
     @Test
@@ -212,11 +162,8 @@ public class ArithmeticOpCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
     		UndeclaredIdentifierException {
-    	String exp = "-(2 * (3 + 4 * (5 + 6) - 1 * (2)))";
-        int val = -(2 * (3 + 4 * (5 + 6) - 1 * 2));
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(val, compileAndGetResults(methodName));
+        assertEquals(getExpectedTestMinusExpression(), compileAndGetResults(methodName));
     }
     
 }

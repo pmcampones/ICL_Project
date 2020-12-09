@@ -1,48 +1,34 @@
 package tests.compiler;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static tests.TestUtils.MAX_RAND;
-import static tests.TestUtils.writeToToken;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import parser.Parser;
+import tests.DefVarsTester;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.compiler.CompilationUtils.compileAndGetResults;
+
+import static tests.DefVarsTester.*;
 
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class DefVarsCompilerTest {
-	
-	public DefVarsCompilerTest() {
-        new Parser(new ByteArrayInputStream(new byte[0]));
-    }
+class DefVarsCompilerTest extends CompilationTester implements DefVarsTester {
 
     @Test
     public void testDefWithoutUsingSimple()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        Random r = new Random();
-        int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = 1 in %d + %d end", first, second);
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(first + second, compileAndGetResults(methodName, 1));
+        assertEquals(getExpectedTestDefWithoutUsingSimple(), compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -50,16 +36,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        Random r = new Random();
-        int[] nums = new int[5];
-        for(int i = 0; i < nums.length; i++)
-            nums[i] = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = 1 in %d * (-%d + %d * (%d - %d)) end",
-                nums[0], nums[1], nums[2], nums[3], nums[4]);
-        writeToToken(exp);
-        int expected = nums[0] * (-nums[1] + nums[2] * (nums[3] - nums[4]));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(expected, compileAndGetResults(methodName, 1));
+        assertEquals(getExpectedTestDefWithoutUsingComplex(), compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -67,14 +45,8 @@ class DefVarsCompilerTest {
     		throws ParseException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException, IOException,
     		InterruptedException {
-        Random r = new Random();
-        int attr = r.nextInt(MAX_RAND);
-        int num = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = %d in x * %d end",
-                attr, num);
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(attr * num, compileAndGetResults(methodName, 1));
+        assertEquals(getExpectedTestDefUsingSimple(), compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -82,17 +54,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        Random r = new Random();
-        int attr = r.nextInt(MAX_RAND);
-        int[] nums = new int[3];
-        for (int i = 0; i < nums.length; i++)
-            nums[i] = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = %d in %d * (-x + %d * (x - %d)) end",
-                attr, nums[0], nums[1], nums[2]);
-        writeToToken(exp);
-        int expected = nums[0] * (-attr + nums[1] * (attr  - nums[2]));
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(expected, compileAndGetResults(methodName, 1));
+        assertEquals(getExpectedTestDefUsingComplex(), compileAndGetResults(methodName, 1));
     }
 
     @Test
@@ -100,14 +63,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        Random r = new Random();
-        int attr1 = r.nextInt(MAX_RAND), attr2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = %d in def y = %d in x * (-y + x) end end",
-                attr1, attr2);
-        writeToToken(exp);
-        int expected = attr1 * (-attr2 + attr1);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(expected, compileAndGetResults(methodName, 2));
+        assertEquals(getExpectedTestDefNestedSimple(), compileAndGetResults(methodName, 2));
     }
 
     @Test
@@ -115,10 +72,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        String exp = "def x = 1 in def y = x + x in x + y end end";
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(3, compileAndGetResults(methodName, 2));
+        assertEquals(getExpectedTestDefNestedCaires1(), compileAndGetResults(methodName, 2));
     }
 
     @Test
@@ -126,11 +81,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        int x = 2, z = x + 1, y = z + z;
-        String exp = "def x = 2 in def y = def z = x + 1 in z + z end in x * y end end";
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(x * y, compileAndGetResults(methodName, 3));
+        assertEquals(getExpectedTestDefNestedCaires2(), compileAndGetResults(methodName, 3));
     }
 
     @Test
@@ -138,10 +90,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException, 
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        String exp = "def x = 2 in def x = 1 in x end end";
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(1, compileAndGetResults(methodName, 2));
+        assertEquals(getExpectedTestDefSameVarDifferentScopesSimple(), compileAndGetResults(methodName, 2));
     }
 
     @Test
@@ -149,10 +99,8 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        String exp = "def x = 2 in def y = def x = x+1 in x+x end in x * y end end";
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(12, compileAndGetResults(methodName, 3));
+        assertEquals(getExpectedTestDefSameVarDifferentScopesComplex(), compileAndGetResults(methodName, 3));
     }
 
     @Test
@@ -160,14 +108,12 @@ class DefVarsCompilerTest {
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, IOException,
             InterruptedException {
-        String exp = "def x = 2 y = x+2 in def z = 3 in def y = x+1 in x + y + z end end end";
-        writeToToken(exp);
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-        assertEquals(8, compileAndGetResults(methodName, 3));
+        assertEquals(getExpectedTestDefDifferentVarsSameScope(), compileAndGetResults(methodName, 3));
     }
     
     @Test
-    public void testSameAsTheProjectAssignement() 
+    public void testSameAsTheProjectAssignment()
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
@@ -182,9 +128,7 @@ class DefVarsCompilerTest {
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException {
-    	String exp = "4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end";
-    	writeToToken(exp);
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(20, compileAndGetResults(methodName, 3));
+    	assertEquals(getExpectedTestTwoFramesSameScope(), compileAndGetResults(methodName, 3));
     }
 }

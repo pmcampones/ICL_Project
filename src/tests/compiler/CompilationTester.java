@@ -8,12 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import compiler.Compiler;
-import compiler.Coordinates;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
+import tests.GenericTester;
 
 import static compiler.Compiler.*;
 
@@ -23,7 +23,8 @@ import static compiler.Compiler.*;
 * @author Pedro Campon�s - 50051
 **/
 
-public class CompilationUtils {
+public class CompilationTester extends GenericTester {
+
 	
 //	private static final String ASSEMBLED_FILE_DIRECTORY = "src/compiledPrograms/unitTests";
 	
@@ -41,18 +42,18 @@ public class CompilationUtils {
 //		String assembledFilePath = String.format("%s/%s", ASSEMBLED_FILE_DIRECTORY, methodName);
 		Compiler comp = new Compiler(DEFAULT_COMPILATION_DIRECTORY + "/UnitTests", DEFAULT_FRAME_DIRECTORY);
 		String assembledFilePath = generateAssembledFile(methodName, comp);
-		String compiledFilePath = compileAssembledFile(assembledFilePath, scopesCreated, comp);
+		compileAssembledFile(assembledFilePath, scopesCreated, comp);
 		return runJVMCompiledFile(comp.codeDirectory, methodName);
 	}
 	
 	private static String generateAssembledFile(String fileName, Compiler comp) 
 			throws ParseException, IOException, 
 			IDDeclaredTwiceException, UndeclaredIdentifierException {
-        Parser.Start().compile(comp.getCodeBlock(), new Environment<Coordinates>());
+        Parser.Start().compile(comp.getCodeBlock(), new Environment<>());
         return comp.generateOutputFile(fileName);
 	}
 	
-	private static String compileAssembledFile(String assembledFilePath, int scopesCreated, Compiler comp) 
+	private static void compileAssembledFile(String assembledFilePath, int scopesCreated, Compiler comp)
 			throws IOException, InterruptedException {
 		List<String> commands = new LinkedList<>();
 		commands.add("java");
@@ -66,7 +67,7 @@ public class CompilationUtils {
         Process compiling = new ProcessBuilder(commands)
         .start();
         compiling.waitFor();
-        return assembledFilePath.substring(0, assembledFilePath.length() - 1);
+        //return assembledFilePath.substring(0, assembledFilePath.length() - 1);
 	}
 	
 	private static int runJVMCompiledFile(String directory, String file) throws IOException {
@@ -78,7 +79,7 @@ public class CompilationUtils {
 		Process p = new ProcessBuilder("java", builder.toString()).start();
         try(InputStreamReader in = new InputStreamReader(p.getInputStream());
         		BufferedReader reader = new BufferedReader(in)) {
-        	return Integer.valueOf(reader.readLine());
+        	return Integer.parseInt(reader.readLine());
         }
 	}
 
