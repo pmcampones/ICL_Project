@@ -105,28 +105,13 @@ public class Parser implements ParserConstants {
   static final public ASTNode Exp() throws ParseException {ASTNode expRes;
     expRes = FunctionalExp();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case EQUALS:
-    case ATTR_VAL:{
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case EQUALS:{
-        jj_consume_token(EQUALS);
+    case EQUALS:{
+      jj_consume_token(EQUALS);
 expRes = new ASTEquals(expRes, FunctionalExp());
-        break;
-        }
-      case ATTR_VAL:{
-        jj_consume_token(ATTR_VAL);
-expRes = new ASTAttr(expRes, FunctionalExp());
-        break;
-        }
-      default:
-        jj_la1[4] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
       break;
       }
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[4] = jj_gen;
       ;
     }
 {if ("" != null) return expRes;}
@@ -147,7 +132,7 @@ expRes = new ASTAttr(expRes, FunctionalExp());
         break;
         }
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[5] = jj_gen;
         break label_5;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -162,7 +147,7 @@ termRes = new ASTSub(termRes, Term());
         break;
         }
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[6] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -172,7 +157,7 @@ termRes = new ASTSub(termRes, Term());
 }
 
   static final public ASTNode Term() throws ParseException {ASTNode factRes;
-    factRes = Fact();
+    factRes = AttrOp();
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -183,30 +168,50 @@ termRes = new ASTSub(termRes, Term());
         break;
         }
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[7] = jj_gen;
         break label_6;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case TIMES:{
         jj_consume_token(TIMES);
-factRes = new ASTMult(factRes, Fact());
+factRes = new ASTMult(factRes, AttrOp());
         break;
         }
       case DIV:{
         jj_consume_token(DIV);
-factRes = new ASTDiv(factRes, Fact());
+factRes = new ASTDiv(factRes, AttrOp());
         break;
         }
       case REMAINDER:{
         jj_consume_token(REMAINDER);
-factRes = new ASTRem(factRes, Fact());
+factRes = new ASTRem(factRes, AttrOp());
+        break;
+        }
+      default:
+        jj_la1[8] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+{if ("" != null) return factRes;}
+    throw new Error("Missing return statement in function");
+}
+
+  static final public ASTNode AttrOp() throws ParseException {ASTNode factRes;
+    factRes = Fact();
+    label_7:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ATTR_VAL:{
+        ;
         break;
         }
       default:
         jj_la1[9] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        break label_7;
       }
+      jj_consume_token(ATTR_VAL);
+factRes = new ASTAttr(factRes, FunctionalExp());
     }
 {if ("" != null) return factRes;}
     throw new Error("Missing return statement in function");
@@ -282,7 +287,7 @@ t = new ASTWhile(t, ExpSeq());
     ASTNode init, body;
     Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 
-    label_7:
+    label_8:
     while (true) {
       id = jj_consume_token(ID);
       jj_consume_token(ATTR_ID);
@@ -294,7 +299,7 @@ variables.add(new Variable(id.toString(), FunctionalExp()));
         }
       default:
         jj_la1[11] = jj_gen;
-        break label_7;
+        break label_8;
       }
     }
     jj_consume_token(IN);
@@ -340,7 +345,7 @@ elseRes = new ASTVoid();
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x10000000,0x10000000,0x1422d390,0x10000000,0x9000000,0x9000000,0x30000,0x30000,0x1c0000,0x1c0000,0x422d390,0x4000,0x800,};
+	   jj_la1_0 = new int[] {0x10000000,0x10000000,0x1422d390,0x10000000,0x1000000,0x30000,0x30000,0x1c0000,0x1c0000,0x8000000,0x422d390,0x4000,0x800,};
 	}
 
   /** Constructor with InputStream. */

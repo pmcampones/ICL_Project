@@ -26,9 +26,9 @@ import parser.Parser;
 **/
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ArithmeticOpInterpreterTest {
+public class ArithmeticOpInterpreterTests {
 
-    public ArithmeticOpInterpreterTest() {
+    public ArithmeticOpInterpreterTests() {
         new Parser(new ByteArrayInputStream(new byte[0]));
     }
 

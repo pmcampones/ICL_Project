@@ -24,9 +24,9 @@ import parser.Parser;
 **/
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class DefVarsInterpreterTest {
+public class DefVarsInterpreterTests {
 
-    public DefVarsInterpreterTest() {
+    public DefVarsInterpreterTests() {
         new Parser(new ByteArrayInputStream(new byte[0]));
     }
 

@@ -118,7 +118,7 @@ ASTNode Exp() :
 } {
     expRes = FunctionalExp() (
         <EQUALS>   {expRes = new ASTEquals(expRes, FunctionalExp());}   //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
-      | <ATTR_VAL> {expRes = new ASTAttr(expRes, FunctionalExp());}
+      /*| <ATTR_VAL> {expRes = new ASTAttr(expRes, FunctionalExp());}*/
     )?
     {return expRes;}
 }
@@ -139,13 +139,21 @@ ASTNode FunctionalExp() :
 
 ASTNode Term() :
 {
+    ASTNode attrRes;
+} {
+    attrRes = AttrOp() (
+          <TIMES> {attrRes = new ASTMult(attrRes, AttrOp());}
+        | <DIV> {attrRes = new ASTDiv(attrRes, AttrOp());}
+        | <REMAINDER> {attrRes = new ASTRem(attrRes, AttrOp());}
+    )*
+    {return attrRes;}
+}
+
+ASTNode AttrOp() :
+{
     ASTNode factRes;
 } {
-    factRes = Fact() (
-          <TIMES> {factRes = new ASTMult(factRes, Fact());}
-        | <DIV> {factRes = new ASTDiv(factRes, Fact());}
-        | <REMAINDER> {factRes = new ASTRem(factRes, Fact());}
-    )*
+    factRes = Fact() (<ATTR_VAL> {factRes = new ASTAttr(factRes, FunctionalExp());})*
     {return factRes;}
 }
 
