@@ -275,7 +275,7 @@ t = new ASTNew(FunctionalExp());
       }
     case WHILE:{
       jj_consume_token(WHILE);
-      t = FunctionalExp();
+      t = Exp();
       jj_consume_token(DO);
 t = new ASTWhile(t, ExpSeq());
       jj_consume_token(END);
@@ -334,7 +334,7 @@ variables.add(new Variable(id.toString(), Exp()));
 
   static final public ASTNode If() throws ParseException {ASTNode ifRes, thenRes, elseRes;
 elseRes = new ASTVoid();
-    ifRes = FunctionalExp();
+    ifRes = Exp();
     jj_consume_token(THEN);
     thenRes = ExpSeq();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {

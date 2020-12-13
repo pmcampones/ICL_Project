@@ -66,4 +66,17 @@ public class IfThenElseTester extends InterpreterTester {
         assertEquals(String.valueOf(val), run());
     }
 
+    @Test
+    public void testRunningExpressionIf()
+            throws TypeErrorException, UndeclaredIdentifierException,
+            ParseException, IDDeclaredTwiceException {
+        int mid = MAX_RAND / 2;
+        Random r = new Random();
+        int ifVal = r.nextInt(MAX_RAND);
+        int thenVal = r.nextInt(MAX_RAND), elseVal = r.nextInt(MAX_RAND);
+        String exp = String.format("if %d < %d then %d else %d end", ifVal, mid, thenVal, elseVal);
+        writeToToken(exp);
+        assertEquals(String.valueOf(ifVal < mid ? thenVal : elseVal), run());
+    }
+
 }

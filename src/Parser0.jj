@@ -178,7 +178,7 @@ ASTNode Fact() :
    | <MINUS>            {t = new ASTNeg(Fact());}
    | <DEREF>        {t = new ASTDeref(Fact());}         //Must not be FunctionalExp() otherwise !x + !y fails
    | <NEW>          {t = new ASTNew(FunctionalExp());}
-   | <WHILE> t = FunctionalExp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
+   | <WHILE> t = Exp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
    | <DEF>          t = Def()
    | <LPAR> t = ExpSeq() <RPAR>
    | <IF>           t = If())
@@ -202,6 +202,6 @@ ASTNode If() :
     ASTNode ifRes, thenRes, elseRes;
 } {
     {elseRes = new ASTVoid();}
-    ifRes = FunctionalExp() <THEN> thenRes = ExpSeq() (<ELSE> elseRes = ExpSeq())? <END>
+    ifRes = Exp() <THEN> thenRes = ExpSeq() (<ELSE> elseRes = ExpSeq())? <END>
     {return new ASTIf(ifRes, thenRes, elseRes);}
 }
