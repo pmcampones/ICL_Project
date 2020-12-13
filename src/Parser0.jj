@@ -108,7 +108,7 @@ ASTNode ExpSeq() :
 {
     ASTNode lastExp;
 } {
-    lastExp = Exp() ((<SEMI>)* lastExp = Exp())*
+    lastExp = Exp() ((<SEMI>)+ {lastExp = new ASTSemi(lastExp, Exp());})*
     {return lastExp;}
 }
 

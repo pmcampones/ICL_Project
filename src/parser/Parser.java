@@ -65,16 +65,6 @@ public class Parser implements ParserConstants {
     label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case DEF:
-      case NEW:
-      case BOOL:
-      case IF:
-      case WHILE:
-      case ID:
-      case NUM:
-      case MINUS:
-      case LPAR:
-      case DEREF:
       case SEMI:{
         ;
         break;
@@ -85,6 +75,7 @@ public class Parser implements ParserConstants {
       }
       label_4:
       while (true) {
+        jj_consume_token(SEMI);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case SEMI:{
           ;
@@ -94,9 +85,8 @@ public class Parser implements ParserConstants {
           jj_la1[3] = jj_gen;
           break label_4;
         }
-        jj_consume_token(SEMI);
       }
-      lastExp = Exp();
+lastExp = new ASTSemi(lastExp, Exp());
     }
 {if ("" != null) return lastExp;}
     throw new Error("Missing return statement in function");
@@ -156,8 +146,8 @@ termRes = new ASTSub(termRes, Term());
     throw new Error("Missing return statement in function");
 }
 
-  static final public ASTNode Term() throws ParseException {ASTNode factRes;
-    factRes = AttrOp();
+  static final public ASTNode Term() throws ParseException {ASTNode attrRes;
+    attrRes = AttrOp();
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -174,17 +164,17 @@ termRes = new ASTSub(termRes, Term());
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case TIMES:{
         jj_consume_token(TIMES);
-factRes = new ASTMult(factRes, AttrOp());
+attrRes = new ASTMult(attrRes, AttrOp());
         break;
         }
       case DIV:{
         jj_consume_token(DIV);
-factRes = new ASTDiv(factRes, AttrOp());
+attrRes = new ASTDiv(attrRes, AttrOp());
         break;
         }
       case REMAINDER:{
         jj_consume_token(REMAINDER);
-factRes = new ASTRem(factRes, AttrOp());
+attrRes = new ASTRem(attrRes, AttrOp());
         break;
         }
       default:
@@ -193,7 +183,7 @@ factRes = new ASTRem(factRes, AttrOp());
         throw new ParseException();
       }
     }
-{if ("" != null) return factRes;}
+{if ("" != null) return attrRes;}
     throw new Error("Missing return statement in function");
 }
 
@@ -345,7 +335,7 @@ elseRes = new ASTVoid();
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x10000000,0x10000000,0x1422d390,0x10000000,0x1000000,0x30000,0x30000,0x1c0000,0x1c0000,0x8000000,0x422d390,0x4000,0x800,};
+	   jj_la1_0 = new int[] {0x10000000,0x10000000,0x10000000,0x10000000,0x1000000,0x30000,0x30000,0x1c0000,0x1c0000,0x8000000,0x422d390,0x4000,0x800,};
 	}
 
   /** Constructor with InputStream. */

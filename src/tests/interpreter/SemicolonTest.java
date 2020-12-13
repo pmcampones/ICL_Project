@@ -122,7 +122,8 @@ public class SemicolonTest extends InterpreterTester {
         writeToToken(String.format(";;;;;;;;;;;%d", number));
         assertEquals(number, run());
     }
-    
+
+    //TODO Fix Ana pls.
     @Test
     public void testMultipleSemicolonsEnd()
             throws ParseException, IDDeclaredTwiceException,
@@ -141,7 +142,29 @@ public class SemicolonTest extends InterpreterTester {
 		writeToToken(exp);
 		assertEquals(first + second, run());
 	}
-    
 
+	@Test
+	public void testVariableDifferentSemicolon()
+			throws TypeErrorException, UndeclaredIdentifierException,
+			ParseException, IDDeclaredTwiceException {
+		Random r = new Random();
+		int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
+		int num = r.nextInt(MAX_RAND);
+		String exp = String.format("def x = new %d in x := (!x + %d); !x + %d end",
+				x1, x2, num);
+		writeToToken(exp);
+		assertEquals(x1 + x2 + num, run());
+	}
+
+	@Test
+	public void testChangeVarScope()
+			throws TypeErrorException, UndeclaredIdentifierException,
+			ParseException, IDDeclaredTwiceException {
+		Random r = new Random();
+		int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
+		String exp = String.format("def x = %d in def x = %d in x end; x end", x1, x2);
+		writeToToken(exp);
+		assertEquals(x1, run());
+	}
 
 }
