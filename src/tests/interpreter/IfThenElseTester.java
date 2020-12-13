@@ -59,7 +59,7 @@ public class IfThenElseTester extends InterpreterTester {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND);
         int thenV = r.nextInt(MAX_RAND), elseV = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new (%d < %d) y = new 2 in if x then y := %d else y := %d end; !y + 1 end",
+        String exp = String.format("def x = new (%d < %d) y = new 2 in if !x then y := %d else y := %d end; !y + 1 end",
                 n1, n2, thenV, elseV);
         writeToToken(exp);
         int val = n1 < n2 ? thenV + 1 : elseV + 1;
