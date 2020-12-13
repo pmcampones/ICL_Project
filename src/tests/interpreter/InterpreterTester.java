@@ -1,5 +1,6 @@
 package tests.interpreter;
 
+import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VInt;
 import environment.Environment;
@@ -13,9 +14,9 @@ import static parser.Parser.Start;
 
 public class InterpreterTester extends GenericTester {
 
-    protected static int run()
+    protected static String run()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException {
-        return ((VInt)Start().eval(new Environment<>())).getVal();
+        return Start().eval(new Environment<>()).toString();
     }
 }

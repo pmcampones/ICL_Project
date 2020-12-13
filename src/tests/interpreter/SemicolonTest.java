@@ -26,7 +26,7 @@ public class SemicolonTest extends InterpreterTester {
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("%d - %d;%d + %d", first, second, first, second);
 		writeToToken(exp);
-		assertEquals(first + second, run());
+		assertEquals(String.valueOf(first + second), run());
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class SemicolonTest extends InterpreterTester {
 		int third = r.nextInt(MAX_RAND), fourth = r.nextInt(MAX_RAND);
 		String exp = String.format("%d - %d;%d * %d", first, second, third, fourth);
 		writeToToken(exp);
-		assertEquals(third * fourth, run());
+		assertEquals(String.valueOf(third * fourth), run());
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class SemicolonTest extends InterpreterTester {
 		int fifth = r.nextInt(MAX_RAND), sixth = r.nextInt(MAX_RAND);
 		String exp = String.format("%d - %d;%d + %d;%d - %d", first, second, third, fourth, fifth, sixth);
 		writeToToken(exp);
-		assertEquals(fifth - sixth, run());
+		assertEquals(String.valueOf(fifth - sixth), run());
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class SemicolonTest extends InterpreterTester {
 		String exp = "2 * (3 + 4 * (5 + 6) - 1 * (2)); 5 * (4 - 6 * (9 + 1) - 3 * (0))";
 		int val = 5 * (4 - 6 * (9 + 1) - 3 * (0));
 		writeToToken(exp);
-		assertEquals(val, run());
+		assertEquals(String.valueOf(val), run());
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class SemicolonTest extends InterpreterTester {
 				attr2, attr, nums[0], nums[1], nums[2]);
 		writeToToken(exp);
 		int expected = nums[0] * (-attr + nums[1] * (attr - nums[2]));
-		assertEquals(expected, run());
+		assertEquals(String.valueOf(expected), run());
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class SemicolonTest extends InterpreterTester {
 				"(%d + %d)*%d; 4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end",
 				first, second, third);
 		writeToToken(exp);
-		assertEquals(20, run());
+		assertEquals("20", run());
 	}
 	
     @Test
@@ -98,7 +98,7 @@ public class SemicolonTest extends InterpreterTester {
         int number1 = new Random().nextInt(MAX_RAND);
         String exp = String.format("def x = new 5 in %d end;def x = new %d in !x end", number, number1);
         writeToToken(exp);
-        assertEquals(number1, run());
+        assertEquals(String.valueOf(number1), run());
     }
     
     @Test
@@ -111,7 +111,7 @@ public class SemicolonTest extends InterpreterTester {
         String exp = String.format("def x = new %d in !x end;def x = new %d y = new %d in !x + !y + def x = new !x + !y in !x * !y end end"
                 , z, x, y);
         writeToToken(exp);
-        assertEquals(x + y + (x + y) * y, run());
+        assertEquals(String.valueOf(x + y + (x + y) * y), run());
     }
     
     @Test
@@ -120,7 +120,7 @@ public class SemicolonTest extends InterpreterTester {
             UndeclaredIdentifierException, TypeErrorException {
         int number = new Random().nextInt();
         writeToToken(String.format(";;;;;;;;;;;%d", number));
-        assertEquals(number, run());
+        assertEquals(String.valueOf(number), run());
     }
 
     //TODO Fix Ana pls.
@@ -130,7 +130,7 @@ public class SemicolonTest extends InterpreterTester {
             UndeclaredIdentifierException, TypeErrorException {
         int number = new Random().nextInt();
         writeToToken(String.format("%d;;;;;;;;;;;", number));
-        assertEquals(number, run());
+        assertEquals(String.valueOf(number), run());
     }
     
 	@Test
@@ -140,7 +140,7 @@ public class SemicolonTest extends InterpreterTester {
 		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
 		String exp = String.format("%d - %d;;;;;;;;;;;;%d + %d", first, second, first, second);
 		writeToToken(exp);
-		assertEquals(first + second, run());
+		assertEquals(String.valueOf(first + second), run());
 	}
 
 	@Test
@@ -153,7 +153,7 @@ public class SemicolonTest extends InterpreterTester {
 		String exp = String.format("def x = new %d in x := (!x + %d); !x + %d end",
 				x1, x2, num);
 		writeToToken(exp);
-		assertEquals(x1 + x2 + num, run());
+		assertEquals(String.valueOf(x1 + x2 + num), run());
 	}
 
 	@Test
@@ -164,7 +164,7 @@ public class SemicolonTest extends InterpreterTester {
 		int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
 		String exp = String.format("def x = %d in def x = %d in x end; x end", x1, x2);
 		writeToToken(exp);
-		assertEquals(x1, run());
+		assertEquals(String.valueOf(x1), run());
 	}
 
 }

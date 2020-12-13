@@ -19,10 +19,10 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestNumber() {
+    static String getExpectedTestNumber() {
         int number = new Random().nextInt();
         writeToToken(String.valueOf(number));
-        return number;
+        return String.valueOf(number);
     }
 
     @Test
@@ -31,12 +31,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestSum() {
+    static String getExpectedTestSum() {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("%d + %d", first, second);
         writeToToken(exp);
-        return first + second;
+        return String.valueOf(first + second);
     }
 
     @Test
@@ -45,12 +45,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestSub() {
+    static String getExpectedTestSub() {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("%d - %d", first, second);
         writeToToken(exp);
-        return first - second;
+        return String.valueOf(first - second);
     }
 
     @Test
@@ -59,12 +59,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestMult() {
+    static String getExpectedTestMult() {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("%d * %d", first, second);
         writeToToken(exp);
-        return first * second;
+        return String.valueOf(first * second);
     }
 
     @Test
@@ -73,12 +73,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDiv() {
+    static String getExpectedTestDiv() {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("%d / %d", first, second);
         writeToToken(exp);
-        return first / second;
+        return String.valueOf(first / second);
     }
 
     @Test
@@ -87,12 +87,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestManySums() {
+    static String getExpectedTestManySums() {
         int[] nums = getNumsArray();
         writeToToken(genSameOpStr(nums, "+"));
         int sum = 0;
         for (int num : nums) sum += num;
-        return sum;
+        return String.valueOf(sum);
     }
 
     @Test
@@ -101,13 +101,13 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestManySubs() {
+    static String getExpectedTestManySubs() {
         int[] nums = getNumsArray();
         writeToToken(genSameOpStr(nums, "-"));
         int accum = nums[0];
         for (int i = 1; i < nums.length; i++)
             accum -= nums[i];
-        return accum;
+        return String.valueOf(accum);
     }
 
     @Test
@@ -116,13 +116,13 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestManyMults() {
+    static String getExpectedTestManyMults() {
         int[] nums = getNumsArray();
         writeToToken(genSameOpStr(nums, "*"));
         int accum = nums[0];
         for (int i = 1; i < nums.length; i++)
             accum *= nums[i];
-        return accum;
+        return String.valueOf(accum);
     }
 
     @Test
@@ -131,14 +131,14 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestManyDivs() {
+    static String getExpectedTestManyDivs() {
         int bigNum = Integer.MAX_VALUE;
         int[] nums = getNumsArray();
         String exp = String.format("%d / %s", bigNum, genSameOpStr(nums, "/"));
         writeToToken(exp);
         int accum = bigNum;
         for (int num : nums) accum /= num;
-        return accum;
+        return String.valueOf(accum);
     }
 
     @Test
@@ -147,10 +147,10 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestBrackets() {
+    static String getExpectedTestBrackets() {
         int num = new Random().nextInt();
         writeToToken(String.format("( %d )", num));
-        return num;
+        return String.valueOf(num);
     }
 
     @Test
@@ -159,12 +159,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestBracketsSum() {
+    static String getExpectedTestBracketsSum() {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("(%d + %d)", first, second);
         writeToToken(exp);
-        return first + second;
+        return String.valueOf(first + second);
     }
 
     @Test
@@ -173,7 +173,7 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestSumsAndMultsBrackets() {
+    static String getExpectedTestSumsAndMultsBrackets() {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND), n3 = r.nextInt(MAX_RAND),
                 n4 = r.nextInt(MAX_RAND), n5 = r.nextInt(MAX_RAND),
@@ -181,7 +181,7 @@ public interface ArithmeticOpTester {
         String exp = String.format("%d * (%d + %d * (%d + %d) - %d * (%d))",
                 n1, n2, n3, n4, n5, n6, n7);
         writeToToken(exp);
-        return n1 * (n2 + n3 * (n4 + n5) - n6 * n7);
+        return String.valueOf(n1 * (n2 + n3 * (n4 + n5) - n6 * n7));
     }
 
     @Test
@@ -190,10 +190,10 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestMinusSingle() {
+    static String getExpectedTestMinusSingle() {
         int num = new Random().nextInt();
         writeToToken(String.format("-%d", num));
-        return -num;
+        return String.valueOf(-num);
     }
 
     @Test
@@ -202,12 +202,12 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestMinusTwo() {
+    static String getExpectedTestMinusTwo() {
         Random r = new Random();
         int first = -1 * r.nextInt(), second = -1 * r.nextInt();
         String exp = String.format("-%d + %d\n", first, second);
         writeToToken(exp);
-        return -first + second;
+        return String.valueOf(-first + second);
     }
 
     @Test
@@ -216,7 +216,7 @@ public interface ArithmeticOpTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestMinusExpression() {
+    static String getExpectedTestMinusExpression() {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND),
                 n3 = r.nextInt(MAX_RAND), n4 = r.nextInt(MAX_RAND),
@@ -225,6 +225,6 @@ public interface ArithmeticOpTester {
         String exp = String.format("-(%d * (%d + %d * (%d + %d) - %d * (%d)))",
                 n1, n2, n3, n4, n5, n6, n7);
         writeToToken(exp);
-        return -(n1 * (n2 + n3 * (n4 + n5) - n6 * n7));
+        return String.valueOf(-(n1 * (n2 + n3 * (n4 + n5) - n6 * n7)));
     }
 }

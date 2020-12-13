@@ -19,7 +19,7 @@ public class AttrTest extends InterpreterTester {
         int num = new Random().nextInt(MAX_RAND);
         String exp = String.format("def x = new 5 in x := %d end", num);
         writeToToken(exp);
-        assertEquals(num, run());
+        assertEquals(String.valueOf(num), run());
     }
 
     @Test
@@ -30,7 +30,7 @@ public class AttrTest extends InterpreterTester {
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = new %d in !x + x := %d end", num1, num2);
         writeToToken(exp);
-        assertEquals(num1 + num2, run());
+        assertEquals(String.valueOf(num1 + num2), run());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class AttrTest extends InterpreterTester {
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = new %d in !x * x := %d end", num1, num2);
         writeToToken(exp);
-        assertEquals(num1 * num2, run());
+        assertEquals(String.valueOf(num1 * num2), run());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class AttrTest extends InterpreterTester {
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = new %d in !x + x := !x + def y = %d in !x * y end end", num1, num2);
         writeToToken(exp);
-        assertEquals(num1 + (num1 + num1 * num2), run());
+        assertEquals(String.valueOf(num1 + (num1 + num1 * num2)), run());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class AttrTest extends InterpreterTester {
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = new %d in x := !x + x := %d end", num1, num2);
         writeToToken(exp);
-        assertEquals(num1 + num2, run());
+        assertEquals(String.valueOf(num1 + num2), run());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class AttrTest extends InterpreterTester {
         int num = new Random().nextInt(MAX_RAND);
         String exp = String.format("def x = new %d in x := !x end", num);
         writeToToken(exp);
-        assertEquals(num, run());
+        assertEquals(String.valueOf(num), run());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class AttrTest extends InterpreterTester {
         int thirdX = x1 + fourthY;
         int secondY = y + thirdX;
         int secondX = x1 + secondY;
-        assertEquals(secondX, run());
+        assertEquals(String.valueOf(secondX), run());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class AttrTest extends InterpreterTester {
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = new %d in !x + (x := %d) + !x end", num1, num2);
         writeToToken(exp);
-        assertEquals(num1 + num2 + num2, run());
+        assertEquals(String.valueOf(num1 + num2 + num2), run());
     }
 
 }

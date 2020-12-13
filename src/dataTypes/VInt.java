@@ -17,4 +17,11 @@ public class VInt implements IValue{
 		return val;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof VInt)
+			return this.val == ((VInt)other).val;
+		return false;
+	}
+
 }

@@ -20,12 +20,12 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefWithoutUsingSimple() {
+    static String getExpectedTestDefWithoutUsingSimple() {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("def x = 1 in %d + %d end", first, second);
         writeToToken(exp);
-        return first + second;
+        return String.valueOf(first + second);
     }
 
     @Test
@@ -34,7 +34,7 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefWithoutUsingComplex() {
+    static String getExpectedTestDefWithoutUsingComplex() {
         Random r = new Random();
         int[] nums = new int[5];
         for(int i = 0; i < nums.length; i++)
@@ -42,7 +42,7 @@ public interface DefVarsTester {
         String exp = String.format("def x = 1 in %d * (-%d + %d * (%d - %d)) end",
                 nums[0], nums[1], nums[2], nums[3], nums[4]);
         writeToToken(exp);
-        return nums[0] * (-nums[1] + nums[2] * (nums[3] - nums[4]));
+        return String.valueOf(nums[0] * (-nums[1] + nums[2] * (nums[3] - nums[4])));
     }
 
     @Test
@@ -51,14 +51,14 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefUsingSimple() {
+    static String getExpectedTestDefUsingSimple() {
         Random r = new Random();
         int attr = r.nextInt(MAX_RAND);
         int num = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d in x * %d end",
                 attr, num);
         writeToToken(exp);
-        return attr * num;
+        return String.valueOf(attr * num);
     }
 
     @Test
@@ -67,7 +67,7 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefUsingComplex() {
+    static String getExpectedTestDefUsingComplex() {
         Random r = new Random();
         int attr = r.nextInt(MAX_RAND);
         int[] nums = new int[3];
@@ -76,7 +76,7 @@ public interface DefVarsTester {
         String exp = String.format("def x = %d in %d * (-x + %d * (x - %d)) end",
                 attr, nums[0], nums[1], nums[2]);
         writeToToken(exp);
-        return nums[0] * (-attr + nums[1] * (attr  - nums[2]));
+        return String.valueOf(nums[0] * (-attr + nums[1] * (attr  - nums[2])));
     }
 
     @Test
@@ -85,13 +85,13 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefNestedSimple() {
+    static String getExpectedTestDefNestedSimple() {
         Random r = new Random();
         int attr1 = r.nextInt(MAX_RAND), attr2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d in def y = %d in x * (-y + x) end end",
                 attr1, attr2);
         writeToToken(exp);
-        return attr1 * (-attr2 + attr1);
+        return String.valueOf(attr1 * (-attr2 + attr1));
     }
 
     @Test
@@ -100,10 +100,10 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefNestedCaires1() {
+    static String getExpectedTestDefNestedCaires1() {
         String exp = "def x = 1 in def y = x + x in x + y end end";
         writeToToken(exp);
-        return 3;
+        return "3";
     }
 
     @Test
@@ -112,11 +112,11 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefNestedCaires2() {
+    static String getExpectedTestDefNestedCaires2() {
         int x = 2, z = x + 1, y = z + z;
         String exp = "def x = 2 in def y = def z = x + 1 in z + z end in x * y end end";
         writeToToken(exp);
-        return x * y;
+        return String.valueOf(x * y);
     }
 
     @Test
@@ -125,13 +125,13 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefSameVarDifferentScopesSimple() {
+    static String getExpectedTestDefSameVarDifferentScopesSimple() {
         Random r = new Random();
         int n = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d in def x = %d in x end end",
                 r.nextInt(MAX_RAND), n);
         writeToToken(exp);
-        return n;
+        return String.valueOf(n);
     }
 
     @Test
@@ -140,13 +140,13 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefSameVarDifferentScopesComplex() {
+    static String getExpectedTestDefSameVarDifferentScopesComplex() {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d in def y = def x = x+%d in x+x end in x * y end end",
                 n1, n2);
         writeToToken(exp);
-        return n1 * (2 * (n1 + n2));
+        return String.valueOf(n1 * (2 * (n1 + n2)));
     }
 
     @Test
@@ -155,14 +155,14 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestDefDifferentVarsSameScope() {
+    static String getExpectedTestDefDifferentVarsSameScope() {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND),
                 n3 = r.nextInt(MAX_RAND), n4 = r.nextInt(MAX_RAND);
         String exp = String.format("def x = %d y = x+%d in def z = %d in def y = y+%d in x + y + z end end end",
                 n1, n2, n3, n4);
         writeToToken(exp);
-        return n1 + (n1 + n2 + n4) + n3;
+        return String.valueOf(n1 + (n1 + n2 + n4) + n3);
     }
 
     @Test
@@ -171,7 +171,7 @@ public interface DefVarsTester {
             UndeclaredIdentifierException, TypeErrorException,
             IOException, InterruptedException;
 
-    static int getExpectedTestTwoFramesSameScope() {
+    static String getExpectedTestTwoFramesSameScope() {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND),
                 n3 = r.nextInt(MAX_RAND), n4 = r.nextInt(MAX_RAND),
@@ -184,6 +184,6 @@ public interface DefVarsTester {
         int y = x + n3;
         int z = x + y;
         int w = x - y;
-        return n1 + x + y + n4 * z + w + n5;
+        return String.valueOf(n1 + x + y + n4 * z + w + n5);
     }
 }

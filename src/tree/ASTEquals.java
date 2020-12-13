@@ -4,6 +4,7 @@ import compiler.CodeBlock;
 import compiler.Coordinates;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
+import dataTypes.VBool;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -17,10 +18,11 @@ public class ASTEquals implements ASTNode {
         this.r = r;
     }
 
-    //TODO
     @Override
-    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
-        return null;
+    public IValue eval(Environment<IValue> e)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException,
+            TypeErrorException {
+        return new VBool(l.eval(e).equals(r.eval(e)));
     }
 
     @Override

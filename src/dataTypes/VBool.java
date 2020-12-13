@@ -17,4 +17,11 @@ public class VBool implements IValue{
 		return val;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof VBool)
+			return val == ((VBool)other).val;
+		return false;
+	}
+
 }
