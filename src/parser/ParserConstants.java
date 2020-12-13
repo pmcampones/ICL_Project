@@ -51,13 +51,21 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int EQUALS = 24;
   /** RegularExpression Id. */
-  int ATTR_ID = 25;
+  int GREATER = 25;
   /** RegularExpression Id. */
-  int DEREF = 26;
+  int GREATER_EQ = 26;
   /** RegularExpression Id. */
-  int ATTR_VAL = 27;
+  int SMALLER = 27;
   /** RegularExpression Id. */
-  int SEMI = 28;
+  int SMALLER_EQ = 28;
+  /** RegularExpression Id. */
+  int ATTR_ID = 29;
+  /** RegularExpression Id. */
+  int DEREF = 30;
+  /** RegularExpression Id. */
+  int ATTR_VAL = 31;
+  /** RegularExpression Id. */
+  int SEMI = 32;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -89,6 +97,10 @@ public interface ParserConstants {
     "\")\"",
     "\"\\n\"",
     "\"==\"",
+    "\">\"",
+    "\">=\"",
+    "\"<\"",
+    "\"<=\"",
     "\"=\"",
     "\"!\"",
     "\":=\"",

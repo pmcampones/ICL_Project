@@ -4,31 +4,25 @@ import compiler.CodeBlock;
 import compiler.Coordinates;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
-import dataTypes.VBool;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
-public class ASTIf implements ASTNode{
+public class ASTSmallerEq implements ASTNode {
 
-    private final ASTNode ifNode, thenNode, elseNode;
+    private final ASTGreaterEq node;
 
-    public ASTIf(ASTNode ifNode, ASTNode thenNode, ASTNode elseNode) {
-        this.ifNode   = ifNode;
-        this.thenNode = thenNode;
-        this.elseNode = elseNode;
+    public ASTSmallerEq(ASTNode l, ASTNode r) {
+        node = new ASTGreaterEq(r,l);
     }
 
     @Override
     public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
-        IValue ifVal = ifNode.eval(e);
-        if (ifVal instanceof VBool)
-            return ((VBool) ifVal).isTrue() ? thenNode.eval(e) : elseNode.eval(e);
-        throw new TypeErrorException("The condition did not evaluate to a boolean");
+        return node.eval(e);
     }
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-
+        node.compile(codeBlock, env);
     }
 }

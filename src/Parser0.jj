@@ -85,6 +85,14 @@ TOKEN :
   |
   < EQUALS: "==">
   |
+  < GREATER: ">">
+  |
+  < GREATER_EQ: ">=">
+  |
+  < SMALLER: "<">
+  |
+  < SMALLER_EQ: "<=">
+  |
   < ATTR_ID: "=">
   |
   < DEREF: "!">
@@ -118,7 +126,10 @@ ASTNode Exp() :
 } {
     expRes = FunctionalExp() (
         <EQUALS>   {expRes = new ASTEquals(expRes, FunctionalExp());}   //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
-      /*| <ATTR_VAL> {expRes = new ASTAttr(expRes, FunctionalExp());}*/
+        | <GREATER> {expRes = new ASTGreater(expRes, FunctionalExp());}
+        | <GREATER_EQ> {expRes = new ASTGreaterEq(expRes, FunctionalExp());}
+        | <SMALLER> {expRes = new ASTSmaller(expRes, FunctionalExp());}
+        | <SMALLER_EQ> {expRes = new ASTSmallerEq(expRes, FunctionalExp());}
     )?
     {return expRes;}
 }
@@ -179,7 +190,7 @@ ASTNode Def() :
     ASTNode init, body;
     Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 } {
-    (id = <ID> <ATTR_ID> {variables.add(new Variable(id.toString(), FunctionalExp()));})+
+    (id = <ID> <ATTR_ID> {variables.add(new Variable(id.toString(), Exp()));})+
     <IN>
     body = ExpSeq()
     <END>
