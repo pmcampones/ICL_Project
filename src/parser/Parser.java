@@ -99,7 +99,9 @@ lastExp = new ASTSemi(lastExp, Exp());
     case GREATER:
     case GREATER_EQ:
     case SMALLER:
-    case SMALLER_EQ:{
+    case SMALLER_EQ:
+    case AND:
+    case OR:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case EQUALS:{
         jj_consume_token(EQUALS);
@@ -124,6 +126,16 @@ expRes = new ASTSmaller(expRes, FunctionalExp());
       case SMALLER_EQ:{
         jj_consume_token(SMALLER_EQ);
 expRes = new ASTSmallerEq(expRes, FunctionalExp());
+        break;
+        }
+      case AND:{
+        jj_consume_token(AND);
+expRes = new ASTAnd(expRes, FunctionalExp());
+        break;
+        }
+      case OR:{
+        jj_consume_token(OR);
+expRes = new ASTOr(expRes, FunctionalExp());
         break;
         }
       default:
@@ -297,6 +309,11 @@ t = new ASTWhile(t, ExpSeq());
       t = If();
       break;
       }
+    case NOT:{
+      jj_consume_token(NOT);
+t = new ASTNot(Fact());
+      break;
+      }
     default:
       jj_la1[11] = jj_gen;
       jj_consume_token(-1);
@@ -370,10 +387,10 @@ elseRes = new ASTVoid();
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x1f000000,0x1f000000,0x30000,0x30000,0x1c0000,0x1c0000,0x80000000,0x4022d390,0x4000,0x800,};
+	   jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x7f000000,0x7f000000,0x30000,0x30000,0x1c0000,0x1c0000,0x0,0x8022d390,0x4000,0x800,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x1,0x1,0x1,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+	   jj_la1_1 = new int[] {0x8,0x8,0x8,0x8,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x2,0x0,0x0,};
 	}
 
   /** Constructor with InputStream. */
@@ -519,7 +536,7 @@ elseRes = new ASTVoid();
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[33];
+	 boolean[] la1tokens = new boolean[36];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -536,7 +553,7 @@ elseRes = new ASTVoid();
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 33; i++) {
+	 for (int i = 0; i < 36; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

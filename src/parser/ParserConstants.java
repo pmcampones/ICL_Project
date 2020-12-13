@@ -59,13 +59,19 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int SMALLER_EQ = 28;
   /** RegularExpression Id. */
-  int ATTR_ID = 29;
+  int AND = 29;
   /** RegularExpression Id. */
-  int DEREF = 30;
+  int OR = 30;
   /** RegularExpression Id. */
-  int ATTR_VAL = 31;
+  int NOT = 31;
   /** RegularExpression Id. */
-  int SEMI = 32;
+  int ATTR_ID = 32;
+  /** RegularExpression Id. */
+  int DEREF = 33;
+  /** RegularExpression Id. */
+  int ATTR_VAL = 34;
+  /** RegularExpression Id. */
+  int SEMI = 35;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -101,6 +107,9 @@ public interface ParserConstants {
     "\">=\"",
     "\"<\"",
     "\"<=\"",
+    "\"&&\"",
+    "\"||\"",
+    "\"~\"",
     "\"=\"",
     "\"!\"",
     "\":=\"",

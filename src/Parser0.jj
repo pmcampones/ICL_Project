@@ -93,6 +93,12 @@ TOKEN :
   |
   < SMALLER_EQ: "<=">
   |
+  < AND: "&&">
+  |
+  < OR: "||">
+  |
+  < NOT: "~">
+  |
   < ATTR_ID: "=">
   |
   < DEREF: "!">
@@ -130,6 +136,8 @@ ASTNode Exp() :
         | <GREATER_EQ> {expRes = new ASTGreaterEq(expRes, FunctionalExp());}
         | <SMALLER> {expRes = new ASTSmaller(expRes, FunctionalExp());}
         | <SMALLER_EQ> {expRes = new ASTSmallerEq(expRes, FunctionalExp());}
+        | <AND> {expRes = new ASTAnd(expRes, FunctionalExp());}
+        | <OR> {expRes = new ASTOr(expRes, FunctionalExp());}
     )?
     {return expRes;}
 }
@@ -181,7 +189,8 @@ ASTNode Fact() :
    | <WHILE> t = Exp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
    | <DEF>          t = Def()
    | <LPAR> t = ExpSeq() <RPAR>
-   | <IF>           t = If())
+   | <IF>           t = If()
+   | <NOT> {t = new ASTNot(Fact());})
    { return t; }
 }
 
