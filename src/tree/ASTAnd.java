@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.AndOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
@@ -29,7 +30,9 @@ public class ASTAnd implements ASTNode{
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
 
-
+    	l.compile(codeBlock, env);
+    	r.compile(codeBlock, env);
+    	codeBlock.addOperation(new AndOp());	
     	
     }
 }

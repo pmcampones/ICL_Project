@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.PopOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import environment.Environment;
@@ -25,6 +26,8 @@ public class ASTSemi implements ASTNode {
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-
+    	first.compile(codeBlock, env);
+    	codeBlock.addOperation(new PopOp());
+    	second.compile(codeBlock, env);
     }
 }

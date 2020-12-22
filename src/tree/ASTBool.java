@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.PushValueOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
@@ -27,6 +28,9 @@ public class ASTBool implements ASTNode {
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        //TODO
+        if(val)
+        	codeBlock.addOperation(new PushValueOp("1"));
+        else
+        	codeBlock.addOperation(new PushValueOp("0"));
     }
 }
