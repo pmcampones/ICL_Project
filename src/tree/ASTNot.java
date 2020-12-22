@@ -2,6 +2,12 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.Label;
+import compiler.operations.EqualOp;
+import compiler.operations.GoToOp;
+import compiler.operations.LabelOp;
+import compiler.operations.PushValueOp;
+import compiler.operations.SubOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
@@ -27,6 +33,10 @@ public class ASTNot implements ASTNode{
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-
+    	
+    	codeBlock.addOperation(new PushValueOp("1"));
+    	node.compile(codeBlock, env);
+    	codeBlock.addOperation(new SubOp());
+    	
     }
 }

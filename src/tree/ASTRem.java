@@ -2,7 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
-import compiler.operations.DivOp;
+import compiler.operations.RemOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VInt;
@@ -36,7 +36,7 @@ public class ASTRem implements ASTNode {
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	l.compile(cb, env);
     	r.compile(cb, env);
-    	cb.addOperation(new DivOp());
+    	cb.addOperation(new RemOp());
     }
 
 
