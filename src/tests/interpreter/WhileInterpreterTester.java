@@ -6,6 +6,8 @@ import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WhileInterpreterTester extends InterpreterTester {
@@ -22,7 +24,7 @@ public class WhileInterpreterTester extends InterpreterTester {
     public void testFibonacci()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        int fibIndex = 20;
+        int fibIndex = new Random().nextInt(MAX_RAND);
         String exp = String.format(
                 "def fibIndex = %d in " +
                     "if fibIndex <= 1 then " +
@@ -54,6 +56,30 @@ public class WhileInterpreterTester extends InterpreterTester {
             y += aux;
         }
         return y;
+    }
+
+    @Test
+    public void gaussianSum()
+            throws TypeErrorException, UndeclaredIdentifierException,
+            ParseException, IDDeclaredTwiceException {
+        int limit = new Random().nextInt(MAX_RAND);
+        String exp = String.format(
+                "def i = new 0 sum = new 0 in " +
+                    "while !i < %d do " +
+                        "i := !i + 1; " +
+                        "sum := !sum + !i " +
+                    "end; " +
+                    "!sum " +
+                "end", limit);
+        writeToToken(exp);
+        assertEquals(String.valueOf(computeGaussianSum(limit)), run());
+    }
+
+    private int computeGaussianSum(int limit) {
+        int sum = 0;
+        for (int i = 0; i <= limit; i++)
+            sum += i;
+        return sum;
     }
 
 }

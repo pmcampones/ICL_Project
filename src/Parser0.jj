@@ -10,7 +10,6 @@ PARSER_BEGIN(Parser)
 /** ID lister. */
 import tree.*;
 import environment.*;
-import java.lang.invoke.VarHandle;
 import java.util.Collection;
 import java.util.LinkedList;
 public class Parser {
@@ -30,6 +29,7 @@ public class Parser {
         }
     }
   }
+}}
 }
 
 PARSER_END(Parser)
