@@ -17,7 +17,6 @@ public class ASTVoid implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        return;
-    }
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> env)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException {}
 }
