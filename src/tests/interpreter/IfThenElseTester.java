@@ -17,7 +17,7 @@ public class IfThenElseTester extends InterpreterTester {
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         int num = new Random().nextInt(MAX_RAND);
-        String exp = String.format("if true then %d end", num);
+        String exp = String.format("def x = new 0 in if true then x := %d end; !x end", num);
         writeToToken(exp);
         assertEquals(String.valueOf(num), run());
     }
@@ -26,8 +26,10 @@ public class IfThenElseTester extends InterpreterTester {
     public void testSimpleExpressionFalse()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        writeToToken("if false then 10 end");
-        assertEquals("", run());
+        int num = new Random().nextInt(MAX_RAND);
+        String exp = String.format("def x = new 0 in if false then x := %d end; !x end", num);
+        writeToToken(exp);
+        assertEquals("0", run());
     }
 
     @Test
@@ -36,7 +38,7 @@ public class IfThenElseTester extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND);
-        String exp = String.format("if true then %d else %d end", n1, n2);
+        String exp = String.format("def x = new 0 in if true then x := %d else x := %d end; !x end", n1, n2);
         writeToToken(exp);
         assertEquals(String.valueOf(n1), run());
     }
@@ -47,7 +49,7 @@ public class IfThenElseTester extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND);
-        String exp = String.format("if false then %d else %d end", n1, n2);
+        String exp = String.format("def x = new 0 in if false then x := %d else x := %d end; !x end", n1, n2);
         writeToToken(exp);
         assertEquals(String.valueOf(n2), run());
     }
@@ -74,7 +76,7 @@ public class IfThenElseTester extends InterpreterTester {
         Random r = new Random();
         int ifVal = r.nextInt(MAX_RAND);
         int thenVal = r.nextInt(MAX_RAND), elseVal = r.nextInt(MAX_RAND);
-        String exp = String.format("if %d < %d then %d else %d end", ifVal, mid, thenVal, elseVal);
+        String exp = String.format("def x = new 0 in if %d < %d then x := %d else x := %d end; !x end", ifVal, mid, thenVal, elseVal);
         writeToToken(exp);
         assertEquals(String.valueOf(ifVal < mid ? thenVal : elseVal), run());
     }

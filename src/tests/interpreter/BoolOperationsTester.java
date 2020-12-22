@@ -121,7 +121,7 @@ public class BoolOperationsTester extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x > x := !x - %d end", x1, x2);
+        String exp = String.format("def x = new %d in !x > (x := !x - %d) end", x1, x2);
         writeToToken(exp);
         assertEquals("true", run());
     }
@@ -177,7 +177,7 @@ public class BoolOperationsTester extends InterpreterTester {
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         int num = new Random().nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x >= x := %d end", num, num);
+        String exp = String.format("def x = new %d in !x >= (x := %d) end", num, num);
         writeToToken(exp);
         assertEquals("true", run());
     }
@@ -226,7 +226,7 @@ public class BoolOperationsTester extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x < x := !x + %d end", x1, x2);
+        String exp = String.format("def x = new %d in !x < (x := !x + %d) end", x1, x2);
         writeToToken(exp);
         assertEquals("true", run());
     }
@@ -282,7 +282,7 @@ public class BoolOperationsTester extends InterpreterTester {
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         int num = new Random().nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x <= x := %d end", num, num);
+        String exp = String.format("def x = new %d in !x <= (x := %d) end", num, num);
         writeToToken(exp);
         assertEquals("true", run());
     }

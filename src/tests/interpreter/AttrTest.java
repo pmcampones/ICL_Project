@@ -28,7 +28,7 @@ public class AttrTest extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x + x := %d end", num1, num2);
+        String exp = String.format("def x = new %d in !x + (x := %d) end", num1, num2);
         writeToToken(exp);
         assertEquals(String.valueOf(num1 + num2), run());
     }
@@ -39,7 +39,7 @@ public class AttrTest extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x * x := %d end", num1, num2);
+        String exp = String.format("def x = new %d in !x * (x := %d) end", num1, num2);
         writeToToken(exp);
         assertEquals(String.valueOf(num1 * num2), run());
     }
@@ -50,7 +50,7 @@ public class AttrTest extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x + x := !x + def y = %d in !x * y end end", num1, num2);
+        String exp = String.format("def x = new %d in !x + (x := !x + def y = %d in !x * y end) end", num1, num2);
         writeToToken(exp);
         assertEquals(String.valueOf(num1 + (num1 + num1 * num2)), run());
     }
@@ -61,7 +61,7 @@ public class AttrTest extends InterpreterTester {
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in x := !x + x := %d end", num1, num2);
+        String exp = String.format("def x = new %d in x := !x + (x := %d) end", num1, num2);
         writeToToken(exp);
         assertEquals(String.valueOf(num1 + num2), run());
     }
@@ -83,7 +83,7 @@ public class AttrTest extends InterpreterTester {
         Random r = new Random();
         int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
         int y = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d y = new %d in x := !x + y := !y + x := !x + y := !x * !y + def x = %d in x * !y end end", x1, y, x2);
+        String exp = String.format("def x = new %d y = new %d in x := !x + (y := !y + (x := !x + (y := !x * !y + def x = %d in x * !y end))) end", x1, y, x2);
         writeToToken(exp);
         int fourthY = x1 * y + x2 * y;
         int thirdX = x1 + fourthY;

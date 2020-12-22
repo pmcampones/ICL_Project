@@ -29,7 +29,7 @@ public class WhileInterpreterTester extends InterpreterTester {
         String exp = String.format(
                 "def fibIndex = %d result = new 0 in " +
                     "if fibIndex <= 1 then " +
-                        "result := fibIndex" +
+                        "result := fibIndex " +
                     "else " +
                         "def i = new 1 x = new 0 y = new 1 in " +
                             "while !i < fibIndex do " +
@@ -39,7 +39,7 @@ public class WhileInterpreterTester extends InterpreterTester {
                                 "end; " +
                                 "i := !i + 1 " +
                             "end; " +
-                        "result := !y " +
+                            "result := !y " +
                         "end " +
                     "end; " +
                     "!result " +
