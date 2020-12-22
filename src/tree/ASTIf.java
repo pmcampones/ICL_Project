@@ -2,6 +2,12 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.Label;
+import compiler.operations.EqualOp;
+import compiler.operations.GoToOp;
+import compiler.operations.LabelOp;
+import compiler.operations.PushValueOp;
+import compiler.operations.SubOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
@@ -34,6 +40,18 @@ public class ASTIf implements ASTNode{
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-
+    	
+    	Label thenLabel = new Label();
+    	Label exit = new Label();
+    	ifNode.compile(codeBlock, env);
+    	codeBlock.addOperation(new PushValueOp("1"));
+    	codeBlock.addOperation(new SubOp());
+    	codeBlock.addOperation(new EqualOp(thenLabel));
+    	elseNode.compile(codeBlock, env);
+    	codeBlock.addOperation(new GoToOp(exit));
+    	codeBlock.addOperation(new LabelOp(thenLabel));
+    	thenNode.compile(codeBlock, env);
+    	codeBlock.addOperation(new LabelOp(exit)); 
+    	
     }
 }

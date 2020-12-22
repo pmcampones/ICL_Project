@@ -2,6 +2,12 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.Label;
+import compiler.operations.GoToOp;
+import compiler.operations.LabelOp;
+import compiler.operations.NotEqualOp;
+import compiler.operations.PushValueOp;
+import compiler.operations.SubOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
@@ -33,6 +39,17 @@ public class ASTWhile implements ASTNode{
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-
+    	
+    	Label beforeCond = new Label();
+    	Label exit = new Label();
+    	codeBlock.addOperation(new LabelOp(beforeCond));
+    	ifNode.compile(codeBlock, env);
+    	codeBlock.addOperation(new PushValueOp("1"));
+    	codeBlock.addOperation(new SubOp());
+    	codeBlock.addOperation(new NotEqualOp(exit));
+    	doNode.compile(codeBlock, env);
+    	codeBlock.addOperation(new GoToOp(beforeCond));
+    	codeBlock.addOperation(new LabelOp(exit)); 
+    	
     }
 }

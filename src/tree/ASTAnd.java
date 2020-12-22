@@ -29,5 +29,7 @@ public class ASTAnd implements ASTNode{
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
 
+
+    	
     }
 }
