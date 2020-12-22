@@ -21,14 +21,13 @@ public class ASTWhile implements ASTNode{
 
     @Override
     public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
-        IValue result = new VVoid();
         IValue condition = ifNode.eval(e);
         while (condition instanceof VBool && ((VBool)condition).isTrue()) {
-            result = doNode.eval(e);
+            doNode.eval(e);
             condition = ifNode.eval(e);
         }
         if (condition instanceof VBool)
-            return result;
+            return new VVoid();
         throw new TypeErrorException("Reentrance condition did not evaluate as a boolean");
     }
 

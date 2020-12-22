@@ -29,7 +29,7 @@ public class Parser {
         }
     }
   }
-}}
+
 }
 
 PARSER_END(Parser)
@@ -111,7 +111,7 @@ TOKEN :
 ASTNode Start():
 { ASTNode t; }
 {
-   (<SEMI>)* t = ExpSeq() (<SEMI>)* <EL>
+   (<SEMI>)* t = ExpSeq() <EL>
    { return t; }
 }
 
@@ -123,6 +123,7 @@ ASTNode ExpSeq() :
     ASTNode lastExp;
 } {
     lastExp = Exp() ((<SEMI>)+ {lastExp = new ASTSemi(lastExp, Exp());})*
+    //((<SEMI>)+ ({lastExp = new ASTSemi(lastExp, Exp());} (<SEMI>)+)*)?
     {return lastExp;}
 }
 
@@ -131,7 +132,8 @@ ASTNode Exp() :
     ASTNode expRes;
 } {
     expRes = FunctionalExp() (
-        <EQUALS>   {expRes = new ASTEquals(expRes, FunctionalExp());}   //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
+         <ATTR_VAL> {expRes = new ASTAttr(expRes, Exp());}
+        | <EQUALS>   {expRes = new ASTEquals(expRes, FunctionalExp());}   //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
         | <GREATER> {expRes = new ASTGreater(expRes, FunctionalExp());}
         | <GREATER_EQ> {expRes = new ASTGreaterEq(expRes, FunctionalExp());}
         | <SMALLER> {expRes = new ASTSmaller(expRes, FunctionalExp());}
@@ -158,21 +160,13 @@ ASTNode FunctionalExp() :
 
 ASTNode Term() :
 {
-    ASTNode attrRes;
-} {
-    attrRes = AttrOp() (
-          <TIMES> {attrRes = new ASTMult(attrRes, AttrOp());}
-        | <DIV> {attrRes = new ASTDiv(attrRes, AttrOp());}
-        | <REMAINDER> {attrRes = new ASTRem(attrRes, AttrOp());}
-    )*
-    {return attrRes;}
-}
-
-ASTNode AttrOp() :
-{
     ASTNode factRes;
 } {
-    factRes = Fact() (<ATTR_VAL> {factRes = new ASTAttr(factRes, FunctionalExp());})*
+    factRes = Fact() (
+          <TIMES> {factRes = new ASTMult(factRes, Fact());}
+        | <DIV> {factRes = new ASTDiv(factRes, Fact());}
+        | <REMAINDER> {factRes = new ASTRem(factRes, Fact());}
+    )*
     {return factRes;}
 }
 
@@ -184,7 +178,7 @@ ASTNode Fact() :
    | n = <BOOL>     {t = new ASTBool(n.image);}
    | n = <ID>       {t = new ASTVariable(n.image);}
    | <MINUS>            {t = new ASTNeg(Fact());}
-   | <DEREF>        {t = new ASTDeref(Fact());}         //Must not be FunctionalExp() otherwise !x + !y fails
+   | <DEREF>            {t = new ASTDeref(Fact());}         //Must not be FunctionalExp() otherwise !x + !y fails
    | <NEW>          {t = new ASTNew(FunctionalExp());}
    | <WHILE> t = Exp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
    | <DEF>          t = Def()
