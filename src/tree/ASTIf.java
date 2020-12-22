@@ -5,6 +5,7 @@ import compiler.Coordinates;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
+import dataTypes.VVoid;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -22,8 +23,12 @@ public class ASTIf implements ASTNode{
     @Override
     public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
         IValue ifVal = ifNode.eval(e);
-        if (ifVal instanceof VBool)
-            return ((VBool) ifVal).isTrue() ? thenNode.eval(e) : elseNode.eval(e);
+        if (ifVal instanceof VBool) {
+            if(((VBool) ifVal).isTrue())
+                thenNode.eval(e);
+            else elseNode.eval(e);
+            return new VVoid();
+        }
         throw new TypeErrorException("The condition did not evaluate to a boolean");
     }
 
