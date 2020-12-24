@@ -9,7 +9,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class NewOperationTester extends InterpreterTester {
+public class NewOperationInterpreterTester extends InterpreterTester {
 
     @Test
     public void testNewVarTestNotUsing()

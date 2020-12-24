@@ -41,3 +41,5 @@ src/compiledPrograms/unitTests/*
 CompiledPrograms/*
 
 *.j
+
+*.prefs

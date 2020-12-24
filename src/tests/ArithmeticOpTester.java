@@ -20,7 +20,7 @@ public interface ArithmeticOpTester {
             IOException, InterruptedException;
 
     static String getExpectedTestNumber() {
-        int number = new Random().nextInt();
+        int number = new Random().nextInt(MAX_RAND);
         writeToToken(String.valueOf(number));
         return String.valueOf(number);
     }
@@ -148,7 +148,7 @@ public interface ArithmeticOpTester {
             IOException, InterruptedException;
 
     static String getExpectedTestBrackets() {
-        int num = new Random().nextInt();
+        int num = new Random().nextInt(MAX_RAND);
         writeToToken(String.format("( %d )", num));
         return String.valueOf(num);
     }
@@ -191,7 +191,7 @@ public interface ArithmeticOpTester {
             IOException, InterruptedException;
 
     static String getExpectedTestMinusSingle() {
-        int num = new Random().nextInt();
+        int num = new Random().nextInt(MAX_RAND);
         writeToToken(String.format("-%d", num));
         return String.valueOf(-num);
     }
@@ -204,7 +204,7 @@ public interface ArithmeticOpTester {
 
     static String getExpectedTestMinusTwo() {
         Random r = new Random();
-        int first = -1 * r.nextInt(), second = -1 * r.nextInt();
+        int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
         String exp = String.format("-%d + %d\n", first, second);
         writeToToken(exp);
         return String.valueOf(-first + second);

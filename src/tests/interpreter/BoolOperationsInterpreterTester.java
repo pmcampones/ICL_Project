@@ -10,7 +10,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BoolOperationsTester extends InterpreterTester {
+public class BoolOperationsInterpreterTester extends InterpreterTester {
 
     @Test
     public void testBoolConstTrue()
@@ -246,7 +246,6 @@ public class BoolOperationsTester extends InterpreterTester {
     public void testSmallerAttr()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
         int n1 = 100, n2 = 10;
         String exp = String.format("def x = new false in x := %d < %d end", n1, n2);
         writeToToken(exp);

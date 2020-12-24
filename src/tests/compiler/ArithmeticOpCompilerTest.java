@@ -109,7 +109,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 //        int accum = bigNum;
 //        for (int num : nums) accum /= num;
-        assertEquals(256, compileAndGetResults(methodName));
+        assertEquals("256", compileAndGetResults(methodName));
     }
     
     @Test

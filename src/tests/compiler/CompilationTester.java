@@ -28,14 +28,14 @@ public class CompilationTester extends GenericTester {
 	
 //	private static final String ASSEMBLED_FILE_DIRECTORY = "src/compiledPrograms/unitTests";
 	
-	static int compileAndGetResults(String methodName) 
+	static String compileAndGetResults(String methodName) 
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
 			UndeclaredIdentifierException {
 		return compileAndGetResults(methodName, 0);
 	}
 	
-	static int compileAndGetResults(String methodName, int scopesCreated) 
+	static String compileAndGetResults(String methodName, int scopesCreated) 
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
 			UndeclaredIdentifierException {
@@ -70,7 +70,7 @@ public class CompilationTester extends GenericTester {
         //return assembledFilePath.substring(0, assembledFilePath.length() - 1);
 	}
 	
-	private static int runJVMCompiledFile(String directory, String file) throws IOException {
+	private static String runJVMCompiledFile(String directory, String file) throws IOException {
 		String[] pathComponents = directory.split("/");
 		StringBuilder builder = new StringBuilder();
 		for (String s : pathComponents)
@@ -79,7 +79,7 @@ public class CompilationTester extends GenericTester {
 		Process p = new ProcessBuilder("java", builder.toString()).start();
         try(InputStreamReader in = new InputStreamReader(p.getInputStream());
         		BufferedReader reader = new BufferedReader(in)) {
-        	return Integer.parseInt(reader.readLine());
+        	return reader.readLine();
         }
 	}
 

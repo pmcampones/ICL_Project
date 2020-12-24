@@ -120,7 +120,7 @@ class DefVarsCompilerTest extends CompilationTester implements DefVarsTester {
     	String exp = "def x = 2 y = 3 in def k = x+y in x+y+k end end";
     	writeToToken(exp);
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-    	assertEquals(10, compileAndGetResults(methodName, 2));
+    	assertEquals("10", compileAndGetResults(methodName, 2));
     }
     
     @Test

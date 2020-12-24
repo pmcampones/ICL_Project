@@ -1,5 +1,8 @@
 package tests.compiler;
 
+import static compiler.Compiler.DEFAULT_COMPILATION_DIRECTORY;
+import static compiler.Compiler.DEFAULT_FRAME_DIRECTORY;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +17,6 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
-
-import static compiler.Compiler.*;
 
 /**
 * MIEI
@@ -38,10 +39,9 @@ public class CompilationUtils {
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
 			UndeclaredIdentifierException {
-//		String assembledFilePath = String.format("%s/%s", ASSEMBLED_FILE_DIRECTORY, methodName);
 		Compiler comp = new Compiler(DEFAULT_COMPILATION_DIRECTORY + "/UnitTests", DEFAULT_FRAME_DIRECTORY);
 		String assembledFilePath = generateAssembledFile(methodName, comp);
-		String compiledFilePath = compileAssembledFile(assembledFilePath, scopesCreated, comp);
+		compileAssembledFile(assembledFilePath, scopesCreated, comp);
 		return runJVMCompiledFile(comp.codeDirectory, methodName);
 	}
 	

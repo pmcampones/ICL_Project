@@ -17,7 +17,7 @@ import parser.ParseException;
  * @author Pedro Campon�s - 50051
  **/
 
-public class SemicolonTest extends InterpreterTester {
+public class SemicolonInterpreterTester extends InterpreterTester {
 
 	@Test
 	public void testArithmeticSeq()
