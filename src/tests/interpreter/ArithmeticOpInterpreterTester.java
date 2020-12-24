@@ -19,7 +19,7 @@ import static tests.ArithmeticOpTester.*;
 **/
 public class ArithmeticOpInterpreterTester extends InterpreterTester implements ArithmeticOpTester {
 
-
+	@Override
     @Test
     public void testNumber()
             throws ParseException, IDDeclaredTwiceException,
@@ -27,6 +27,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestNumber(), run());
     }
 
+	@Override
     @Test
     public void testSum()
             throws ParseException, IDDeclaredTwiceException,
@@ -34,6 +35,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestSum(), run());
     }
 
+	@Override
     @Test
     public void testSub()
             throws ParseException, IDDeclaredTwiceException,
@@ -41,6 +43,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestSub(), run());
     }
 
+	@Override
     @Test
     public void testMult()
             throws ParseException, IDDeclaredTwiceException,
@@ -48,6 +51,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestMult(), run());
     }
 
+	@Override
     @Test
     public void testDiv()
             throws ParseException, IDDeclaredTwiceException,
@@ -55,6 +59,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestDiv(), run());
     }
 
+	@Override
     @Test
     public void testManySums()
             throws ParseException, IDDeclaredTwiceException,
@@ -62,6 +67,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestManySums(), run());
     }
 
+	@Override
     @Test
     public void testManySubs()
             throws ParseException, IDDeclaredTwiceException,
@@ -69,6 +75,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestManySubs(), run());
     }
 
+	@Override
     @Test
     public void testManyMults()
             throws ParseException, IDDeclaredTwiceException,
@@ -76,6 +83,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestManyMults(), run());
     }
 
+	@Override
     @Test
     public void testManyDivs()
             throws ParseException, IDDeclaredTwiceException,
@@ -83,6 +91,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestManyDivs(), run());
     }
 
+	@Override
     @Test
     public void testBrackets()
             throws ParseException, IDDeclaredTwiceException,
@@ -90,6 +99,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestBrackets(), run());
     }
 
+	@Override
     @Test
     public void testBracketsSum()
             throws ParseException, IDDeclaredTwiceException,
@@ -97,6 +107,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestBracketsSum(), run());
     }
 
+	@Override
     @Test
     public void testSumsAndMultBrackets()
             throws ParseException, IDDeclaredTwiceException,
@@ -104,6 +115,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestSumsAndMultsBrackets(), run());
     }
 
+	@Override
     @Test
     public void testMinusSingle()
             throws ParseException, IDDeclaredTwiceException,
@@ -111,6 +123,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestMinusSingle(), run());
     }
 
+	@Override
     @Test
     public void testMinusTwo()
             throws ParseException, IDDeclaredTwiceException,
@@ -118,6 +131,7 @@ public class ArithmeticOpInterpreterTester extends InterpreterTester implements 
         assertEquals(getExpectedTestMinusTwo(), run());
     }
 
+	@Override
     @Test
     public void testMinusExpression()
             throws ParseException, IDDeclaredTwiceException,

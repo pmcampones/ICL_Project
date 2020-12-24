@@ -21,6 +21,7 @@ import static tests.ArithmeticOpTester.*;
 
 public class ArithmeticOpCompilerTest extends CompilationTester implements ArithmeticOpTester {
 
+	@Override
     @Test
     public void testNumber() 
     		throws ParseException, IOException, 
@@ -30,14 +31,17 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestNumber(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testSum() 
     		throws ParseException, IOException, 
-    		InterruptedException, IDDeclaredTwiceException, UndeclaredIdentifierException {
+    		InterruptedException, IDDeclaredTwiceException, 
+    		UndeclaredIdentifierException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
     	assertEquals(getExpectedTestSum(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testSub() 
     		throws ParseException, IOException, 
@@ -47,6 +51,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     	assertEquals(getExpectedTestSub(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testMult() 
     		throws ParseException, IOException, 
@@ -56,6 +61,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     	assertEquals(getExpectedTestMult(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testDiv() 
     		throws ParseException, IOException, 
@@ -65,6 +71,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     	assertEquals(getExpectedTestDiv(), compileAndGetResults(methodName));
     }
 
+	@Override
     @Test
     public void testManySums() 
     		throws ParseException, IOException, 
@@ -74,6 +81,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestManySums(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testManySubs() 
     		throws ParseException, IOException, 
@@ -83,6 +91,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestManySubs(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testManyMults() 
     		throws ParseException, IOException, 
@@ -95,6 +104,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     /*
      * Cannot use very big numbers because we only test with short ints
      */
+	@Override
     @Test
     public void testManyDivs() 
     		throws ParseException, IOException, 
@@ -112,6 +122,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals("256", compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testBrackets() 
     		throws ParseException, IOException, 
@@ -121,6 +132,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestBrackets(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testBracketsSum() 
     		throws ParseException, IOException, 
@@ -130,6 +142,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestBracketsSum(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testSumsAndMultBrackets() 
     		throws ParseException, IOException, 
@@ -139,6 +152,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestSumsAndMultsBrackets(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testMinusSingle() 
     		throws ParseException, IOException, 
@@ -148,6 +162,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestMinusSingle(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testMinusTwo() 
     		throws ParseException, IOException, 
@@ -157,6 +172,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
         assertEquals(getExpectedTestMinusTwo(), compileAndGetResults(methodName));
     }
     
+	@Override
     @Test
     public void testMinusExpression() 
     		throws ParseException, IOException, 

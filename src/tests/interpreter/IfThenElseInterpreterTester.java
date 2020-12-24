@@ -18,6 +18,7 @@ import tests.IfThenElseTester;
 
 public class IfThenElseInterpreterTester extends InterpreterTester implements IfThenElseTester {
 
+	@Override
     @Test
     public void testSimpleExpressionTrue()
             throws TypeErrorException, UndeclaredIdentifierException,
@@ -25,6 +26,7 @@ public class IfThenElseInterpreterTester extends InterpreterTester implements If
         assertEquals(getExpectedTestSimpleExpressionTrue(), run());
     }
 
+	@Override
     @Test
     public void testSimpleExpressionFalse()
             throws TypeErrorException, UndeclaredIdentifierException,
@@ -32,6 +34,7 @@ public class IfThenElseInterpreterTester extends InterpreterTester implements If
         assertEquals(getExpectedTestSimpleExpressionFalse(), run());
     }
 
+	@Override
     @Test
     public void testElseExpressionTrue()
             throws TypeErrorException, UndeclaredIdentifierException,
@@ -39,6 +42,7 @@ public class IfThenElseInterpreterTester extends InterpreterTester implements If
         assertEquals(getExpectedTestElseExpressionTrue(), run());
     }
 
+	@Override
     @Test
     public void testElseExpressionFalse()
             throws TypeErrorException, UndeclaredIdentifierException,
@@ -46,6 +50,7 @@ public class IfThenElseInterpreterTester extends InterpreterTester implements If
         assertEquals(getExpectedTestElseExpressionFalse(), run());
     }
 
+	@Override
     @Test
     public void testExpressionScopeIf()
             throws TypeErrorException, UndeclaredIdentifierException,
@@ -53,6 +58,7 @@ public class IfThenElseInterpreterTester extends InterpreterTester implements If
         assertEquals(getExpectedTestExpressionScopeIf(), run());
     }
 
+	@Override
     @Test
     public void testRunningExpressionIf()
             throws TypeErrorException, UndeclaredIdentifierException,

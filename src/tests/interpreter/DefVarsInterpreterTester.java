@@ -20,6 +20,7 @@ import static tests.DefVarsTester.*;
 
 public class DefVarsInterpreterTester extends InterpreterTester implements DefVarsTester {
 
+	@Override
     @Test
     public void testDefWithoutUsingSimple()
             throws ParseException, IDDeclaredTwiceException,
@@ -27,6 +28,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefWithoutUsingSimple(), run());
     }
 
+	@Override
     @Test
     public void testDefWithoutUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
@@ -34,13 +36,15 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefWithoutUsingComplex(), run());
     }
 
+	@Override
     @Test
     public void testDefUsingSimple() 
     		throws ParseException, IDDeclaredTwiceException, 
     		UndeclaredIdentifierException, TypeErrorException {
         assertEquals(getExpectedTestDefUsingSimple(), run());
     }
-
+	
+	@Override
     @Test
     public void testDefUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
@@ -48,6 +52,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefUsingComplex(), run());
     }
 
+	@Override
     @Test
     public void testDefNestedSimple()
             throws ParseException, IDDeclaredTwiceException,
@@ -55,6 +60,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefNestedSimple(), run());
     }
 
+	@Override
     @Test
     public void testDefNestedCaires1()
             throws ParseException, IDDeclaredTwiceException,
@@ -62,6 +68,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefNestedCaires1(), run());
     }
 
+	@Override
     @Test
     public void testDefNestedCaires2()
             throws ParseException, IDDeclaredTwiceException,
@@ -69,6 +76,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefNestedCaires2(), run());
     }
 
+	@Override
     @Test
     public void testDefSameVarDifferentScopesSimple()
             throws ParseException, IDDeclaredTwiceException, 
@@ -76,6 +84,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefSameVarDifferentScopesSimple(), run());
     }
 
+	@Override
     @Test
     public void testDefSameVarDifferentScopesComplex()
             throws ParseException, IDDeclaredTwiceException,
@@ -83,6 +92,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefSameVarDifferentScopesComplex(), run());
     }
 
+	@Override
     @Test
     public void testDefDifferentVarsSameScope()
             throws ParseException, IDDeclaredTwiceException,
@@ -90,6 +100,7 @@ public class DefVarsInterpreterTester extends InterpreterTester implements DefVa
         assertEquals(getExpectedTestDefDifferentVarsSameScope(), run());
     }
     
+	@Override
     @Test
     public void testTwoFramesSameScope() 
     		throws ParseException, IDDeclaredTwiceException, 
