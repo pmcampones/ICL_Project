@@ -1,12 +1,12 @@
-package tree;
+package tree.comparisons;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.Label;
 import compiler.operations.GoToOp;
-import compiler.operations.GreaterEqualOp;
 import compiler.operations.LabelOp;
 import compiler.operations.PushValueOp;
+import compiler.operations.SmallerOp;
 import compiler.operations.SubOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
@@ -15,14 +15,12 @@ import dataTypes.VInt;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.ASTNode;
 
-public class ASTGreaterEq implements ASTNode {
+public class ASTSmaller extends ASTComparison {
 
-    private final ASTNode l, r;
-
-    public ASTGreaterEq(ASTNode l, ASTNode r) {
-        this.l = l;
-        this.r = r;
+    public ASTSmaller(ASTNode l, ASTNode r) {
+        super(l,r);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class ASTGreaterEq implements ASTNode {
             TypeErrorException {
         IValue lVal, rVal;
         if ((lVal = l.eval(e)) instanceof VInt && (rVal = r.eval(e)) instanceof VInt)
-            return new VBool(((VInt)lVal).getVal() >= ((VInt)rVal).getVal());
+            return new VBool(((VInt)lVal).getVal() < ((VInt)rVal).getVal());
         throw new TypeErrorException("The comparison is not between numbers");
     }
 
@@ -44,7 +42,7 @@ public class ASTGreaterEq implements ASTNode {
     	l.compile(codeBlock, env);
     	r.compile(codeBlock, env);
     	codeBlock.addOperation(new SubOp());
-    	codeBlock.addOperation(new GreaterEqualOp(thenLabel));
+    	codeBlock.addOperation(new SmallerOp(thenLabel));
     	codeBlock.addOperation(new PushValueOp("0"));
     	codeBlock.addOperation(new GoToOp(exit));
     	codeBlock.addOperation(new LabelOp(thenLabel));

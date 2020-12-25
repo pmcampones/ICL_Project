@@ -8,9 +8,7 @@ import compiler.operations.GoToOp;
 import compiler.operations.LabelOp;
 import compiler.operations.PushValueOp;
 import compiler.operations.SubOp;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VBool;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -38,5 +36,13 @@ public class ASTNot implements ASTNode{
     	node.compile(codeBlock, env);
     	codeBlock.addOperation(new SubOp());
     	
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException {
+        if (node.typeCheck(e) instanceof TBool)
+            return new TBool();
+        throw new TypeErrorException("Not operation requires an expression of type Bool");
     }
 }

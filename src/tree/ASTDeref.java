@@ -2,9 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VMCell;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -31,7 +29,13 @@ public class ASTDeref implements ASTNode {
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException {
 		
 	}
-	
-	
+
+	@Override
+	public IType typeCheck(Environment<IType> e)
+			throws TypeErrorException, IDDeclaredTwiceException {
+		if (node.typeCheck(e) instanceof TMCell)
+			return ((TMCell)node.typeCheck(e)).getReferencedType();
+		throw new TypeErrorException("Dereference expression must be of type reference");
+	}
 
 }

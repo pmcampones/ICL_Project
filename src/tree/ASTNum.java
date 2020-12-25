@@ -3,8 +3,7 @@ package tree;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.PushValueOp;
-import dataTypes.IValue;
-import dataTypes.VInt;
+import dataTypes.*;
 import environment.Environment;
 
 /**
@@ -24,6 +23,11 @@ public class ASTNum implements ASTNode {
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> env) {
     	cb.addOperation(new PushValueOp(String.valueOf(val)));
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> e) throws TypeErrorException {
+        return new TInt();
     }
 
 }

@@ -3,6 +3,11 @@ package parser;/* Parser.java */
 /** ID lister. */
 import tree.*;
 import environment.*;
+import tree.binaryArithmetic.*;
+import tree.boolArithmetic.ASTAnd;
+import tree.boolArithmetic.ASTOr;
+import tree.comparisons.*;
+
 import java.util.Collection;
 import java.util.LinkedList;
 public class Parser implements ParserConstants {

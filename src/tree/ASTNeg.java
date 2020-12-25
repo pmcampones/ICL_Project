@@ -2,12 +2,11 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VInt;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.binaryArithmetic.ASTMult;
 
 /**
 * MIEI
@@ -34,6 +33,14 @@ public class ASTNeg implements ASTNode {
     public void compile(CodeBlock cb, Environment<Coordinates> env) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
         new ASTMult(node, new ASTNum(-1)).compile(cb, env);
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException {
+        if (node.typeCheck(e) instanceof TInt)
+            return new TInt();
+        throw new TypeErrorException("Unary negative requires a type Int.");
     }
 
 }

@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import dataTypes.IType;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VMCell;
@@ -10,21 +11,21 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTAttr implements ASTNode {
-	
-	private final ASTNode v;
-	private final ASTNode node;
-	
-	public ASTAttr(ASTNode v, ASTNode node) {
-		this.v = v;
-		this.node = node;
+
+	private final ASTNode var;
+	private final ASTNode value;
+
+	public ASTAttr(ASTNode var, ASTNode value) {
+		this.var = var;
+		this.value = value;
 	}
 
 	@Override
 	public IValue eval(Environment<IValue> e)
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
-		IValue updatedValue = node.eval(e);
-		if(v instanceof ASTVariable) {
-			IValue memRef = v.eval(e);
+		IValue updatedValue = value.eval(e);
+		if(var instanceof ASTVariable) {
+			IValue memRef = var.eval(e);
 			if(memRef instanceof VMCell) {
 				((VMCell) memRef).setValue(updatedValue);
 				return updatedValue;
@@ -39,6 +40,14 @@ public class ASTAttr implements ASTNode {
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException {
 	
 		
+	}
+
+	@Override
+	public IType typeCheck(Environment<IType> e)
+			throws TypeErrorException, IDDeclaredTwiceException {
+		if (var.typeCheck(e).equals(value.typeCheck(e)))
+			return value.typeCheck(e);
+		throw new TypeErrorException("Variable and attributed value are of different types.");
 	}
 
 }

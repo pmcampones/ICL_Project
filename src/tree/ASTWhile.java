@@ -8,10 +8,7 @@ import compiler.operations.LabelOp;
 import compiler.operations.NotEqualOp;
 import compiler.operations.PushValueOp;
 import compiler.operations.SubOp;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VBool;
-import dataTypes.VVoid;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -39,7 +36,6 @@ public class ASTWhile implements ASTNode{
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	
     	Label beforeCond = new Label();
     	Label exit = new Label();
     	codeBlock.addOperation(new LabelOp(beforeCond));
@@ -49,7 +45,15 @@ public class ASTWhile implements ASTNode{
     	codeBlock.addOperation(new NotEqualOp(exit));
     	doNode.compile(codeBlock, env);
     	codeBlock.addOperation(new GoToOp(beforeCond));
-    	codeBlock.addOperation(new LabelOp(exit)); 
-    	
+    	codeBlock.addOperation(new LabelOp(exit));
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> e) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException {
+        if (ifNode.typeCheck(e) instanceof TBool) {
+            doNode.typeCheck(e);
+            return new TVoid();
+        }
+        throw new TypeErrorException("Reentrance condition is not of type Bool.");
     }
 }
