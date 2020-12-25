@@ -29,49 +29,57 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int DO = 13;
   /** RegularExpression Id. */
-  int ID = 14;
+  int INTEGER_REF = 14;
   /** RegularExpression Id. */
-  int NUM = 15;
+  int BOOL_REF = 15;
   /** RegularExpression Id. */
-  int PLUS = 16;
+  int GENERAL_REF = 16;
   /** RegularExpression Id. */
-  int MINUS = 17;
+  int ID = 17;
   /** RegularExpression Id. */
-  int TIMES = 18;
+  int NUM = 18;
   /** RegularExpression Id. */
-  int DIV = 19;
+  int PLUS = 19;
   /** RegularExpression Id. */
-  int REMAINDER = 20;
+  int MINUS = 20;
   /** RegularExpression Id. */
-  int LPAR = 21;
+  int TIMES = 21;
   /** RegularExpression Id. */
-  int RPAR = 22;
+  int DIV = 22;
   /** RegularExpression Id. */
-  int EL = 23;
+  int REMAINDER = 23;
   /** RegularExpression Id. */
-  int EQUALS = 24;
+  int LPAR = 24;
   /** RegularExpression Id. */
-  int GREATER = 25;
+  int RPAR = 25;
   /** RegularExpression Id. */
-  int GREATER_EQ = 26;
+  int EL = 26;
   /** RegularExpression Id. */
-  int SMALLER = 27;
+  int EQUALS = 27;
   /** RegularExpression Id. */
-  int SMALLER_EQ = 28;
+  int GREATER = 28;
   /** RegularExpression Id. */
-  int AND = 29;
+  int GREATER_EQ = 29;
   /** RegularExpression Id. */
-  int OR = 30;
+  int SMALLER = 30;
   /** RegularExpression Id. */
-  int NOT = 31;
+  int SMALLER_EQ = 31;
   /** RegularExpression Id. */
-  int ATTR_ID = 32;
+  int AND = 32;
   /** RegularExpression Id. */
-  int DEREF = 33;
+  int OR = 33;
   /** RegularExpression Id. */
-  int ATTR_VAL = 34;
+  int NOT = 34;
   /** RegularExpression Id. */
-  int SEMI = 35;
+  int ATTR_ID = 35;
+  /** RegularExpression Id. */
+  int DEREF = 36;
+  /** RegularExpression Id. */
+  int ATTR_VAL = 37;
+  /** RegularExpression Id. */
+  int DECLARE_TYPE = 38;
+  /** RegularExpression Id. */
+  int SEMI = 39;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -92,6 +100,9 @@ public interface ParserConstants {
     "\"else\"",
     "\"while\"",
     "\"do\"",
+    "\"int\"",
+    "\"bool\"",
+    "\"ref\"",
     "<ID>",
     "<NUM>",
     "\"+\"",
@@ -113,6 +124,7 @@ public interface ParserConstants {
     "\"=\"",
     "\"!\"",
     "\":=\"",
+    "\":\"",
     "\";\"",
   };
 

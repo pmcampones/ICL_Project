@@ -2,6 +2,7 @@ package tree;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import dataTypes.IType;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import environment.Environment;
@@ -22,6 +23,8 @@ public interface ASTNode {
 
     void compile(CodeBlock codeBlock, Environment<Coordinates> env) 
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException;
+
+    IType typeCheck(Environment<IType> e) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException;
     
 }
 

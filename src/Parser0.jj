@@ -9,7 +9,7 @@ PARSER_BEGIN(Parser)
 
 /** ID lister. */
 import tree.*;
-import environment.*;
+import environment.*;import tree.binaryArithmetic.ASTDiv;import tree.binaryArithmetic.ASTMult;
 import java.util.Collection;
 import java.util.LinkedList;
 public class Parser {
@@ -22,7 +22,7 @@ public class Parser {
     while (true) {
         try {
             exp = parser.Start();
-            System.out.println( exp.eval(new Environment()) );
+            System.out.println( exp.eval(new Environment<dataTypes.IValue>()) );
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
           parser.ReInit(System.in);
@@ -31,6 +31,7 @@ public class Parser {
   }
 
 }
+
 
 PARSER_END(Parser)
 
@@ -53,15 +54,21 @@ TOKEN :
   |
   < BOOL: "true" | "false" | "True" | "False">
   |
-  <IF : "if">
+  < IF : "if">
   |
-  <THEN : "then">
+  < THEN : "then">
   |
-  <ELSE : "else">
+  < ELSE : "else">
   |
-  <WHILE : "while">
+  < WHILE : "while">
   |
-  <DO : "do">
+  < DO : "do">
+  |
+  < INTEGER_REF : "int">
+  |
+  < BOOL_REF : "bool">
+  |
+  < GENERAL_REF : "ref">
   |
   < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )*>
   |
@@ -104,6 +111,8 @@ TOKEN :
   < DEREF: "!">
   |
   < ATTR_VAL: ":=">
+  |
+  < DECLARE_TYPE : ":">
   |
   < SEMI: ";">
 }
@@ -189,11 +198,16 @@ ASTNode Fact() :
 }
 
 ASTNode Def() :
-{   Token id;
+{   Token id, aux;
     ASTNode init, body;
+    String type;
     Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
 } {
-    (id = <ID> <ATTR_ID> {variables.add(new Variable(id.toString(), Exp()));})+
+    ({type = null;} id = <ID>
+    (<DECLARE_TYPE> {type = "";}
+    ((aux = <INTEGER_REF> | aux = <BOOL_REF> | aux = <GENERAL_REF>){type = String.format("%s %s", type, aux.image).trim();})+)?
+    <ATTR_ID>
+    {variables.add(new Variable(id.toString(), type, Exp()));})+
     <IN>
     body = ExpSeq()
     <END>

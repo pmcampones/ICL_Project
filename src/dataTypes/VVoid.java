@@ -6,4 +6,9 @@ public class VVoid implements IValue{
     public String toString() {
         return "";
     }
+
+    @Override
+    public IType getType() {
+        return new TVoid();
+    }
 }

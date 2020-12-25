@@ -1,13 +1,16 @@
-package tree;
+package tree.comparisons;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import dataTypes.IType;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.ASTNode;
 
+//TODO MAY HAVE TO REALLY IMPLEMENT THIS BECAUSE THE ORDER IN WHICH THE EXPRESSIONS ARE EVALUATED MAY BE IMPORTANT
 public class ASTSmallerEq implements ASTNode {
 
     private final ASTGreaterEq node;
@@ -24,5 +27,12 @@ public class ASTSmallerEq implements ASTNode {
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
         node.compile(codeBlock, env);
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
+        return node.typeCheck(e);
     }
 }

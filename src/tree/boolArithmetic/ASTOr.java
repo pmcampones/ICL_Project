@@ -1,22 +1,20 @@
-package tree;
+package tree.boolArithmetic;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
-import compiler.operations.AndOp;
+import compiler.operations.OrOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.ASTNode;
 
-public class ASTAnd implements ASTNode{
+public class ASTOr extends ASTBoolArithmetic implements ASTNode {
 
-    private final ASTNode l, r;
-
-    public ASTAnd(ASTNode l, ASTNode r) {
-        this.l = l;
-        this.r = r;
+    public ASTOr(ASTNode l, ASTNode r) {
+        super(l, r);
     }
 
     @Override
@@ -32,7 +30,6 @@ public class ASTAnd implements ASTNode{
 
     	l.compile(codeBlock, env);
     	r.compile(codeBlock, env);
-    	codeBlock.addOperation(new AndOp());	
-    	
+    	codeBlock.addOperation(new OrOp());	
     }
 }

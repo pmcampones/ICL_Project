@@ -1,4 +1,4 @@
-package tree;
+package tree.binaryArithmetic;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -9,6 +9,7 @@ import dataTypes.VInt;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.ASTNode;
 
 /**
 * MIEI
@@ -16,11 +17,11 @@ import environment.exceptions.UndeclaredIdentifierException;
 * @author Pedro Campon�s - 50051
 **/
 
-public class ASTPlus implements ASTNode {
+public class ASTPlus extends ASTIntArithmetic {
 
-    private final ASTNode l, r;
-
-    public ASTPlus(ASTNode l, ASTNode r) {this.l = l; this.r = r;}
+    public ASTPlus(ASTNode l, ASTNode r) {
+        super(l,r);
+    }
 
     public IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 

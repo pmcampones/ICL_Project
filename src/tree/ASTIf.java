@@ -8,10 +8,7 @@ import compiler.operations.GoToOp;
 import compiler.operations.LabelOp;
 import compiler.operations.PushValueOp;
 import compiler.operations.SubOp;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VBool;
-import dataTypes.VVoid;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -53,5 +50,17 @@ public class ASTIf implements ASTNode{
     	thenNode.compile(codeBlock, env);
     	codeBlock.addOperation(new LabelOp(exit)); 
     	
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
+        if (ifNode.typeCheck(e) instanceof TBool) {
+            thenNode.typeCheck(e);
+            elseNode.typeCheck(e);
+            return new TVoid();
+        }
+        throw new TypeErrorException("If condition must be type Bool.");
     }
 }

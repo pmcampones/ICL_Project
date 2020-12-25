@@ -24,4 +24,8 @@ public class VInt implements IValue{
 		return false;
 	}
 
+	@Override
+	public IType getType() {
+		return new TInt();
+	}
 }

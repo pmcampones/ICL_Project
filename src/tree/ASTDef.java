@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -13,6 +14,7 @@ import compiler.operations.NewOp;
 import compiler.operations.PopOp;
 import compiler.operations.PutFieldOp;
 import compiler.operations.StoreOp;
+import dataTypes.IType;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import environment.Environment;
@@ -26,6 +28,9 @@ import environment.exceptions.UndeclaredIdentifierException;
 **/
 
 public class ASTDef implements ASTNode {
+
+	private static final String TYPE_MISMATCH_MESSAGE =
+			"Value attributed to the variable is not the expected type";
 
     private final Collection<Variable> variables;
 
@@ -41,8 +46,13 @@ public class ASTDef implements ASTNode {
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
             TypeErrorException {
         Environment<IValue> currEnv = prevEnv.beginScope();
-        for (Variable v : variables)
-            currEnv.assoc(v.id, v.exp.eval(currEnv));
+        for (Variable v : variables) {
+			Optional<String> optType = v.type;
+        	IValue valAttr = v.exp.eval(currEnv);
+        	if (optType.isPresent() && !optType.get().equals(valAttr.getType().toString()))
+        		throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
+			currEnv.assoc(v.id, v.exp.eval(currEnv));
+		}
         return body.eval(currEnv);
     }
 
@@ -54,20 +64,20 @@ public class ASTDef implements ASTNode {
     	assocVarsPos(cb, currEnv, f.name);
     	cb.addOperation(new PopOp());
     	body.compile(cb, currEnv);
-    	closeFrame(cb, currEnv, f);
+    	closeFrame(cb, f);
     	cb.closeFrame();
     }
-    
-    private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv, Frame currFrame) {
+
+	private void closeFrame(CodeBlock cb, Frame currFrame) {
     	cb.addOperation(new LoadOp());
     	String fieldName = String.format("%s/sl", currFrame.name);
     	String type = String.format("L%s;", currFrame.parent.name);
     	cb.addOperation(new GetFieldOp(fieldName, type));
     	cb.addOperation(new StoreOp());
-    	
+
     }
-    
-    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> env, String fName) 
+
+    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> env, String fName)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	int varIndex = 0;
     	for (Variable v : variables) {
@@ -78,7 +88,7 @@ public class ASTDef implements ASTNode {
     		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex++));
     	}
     }
-    
+
     private Environment<Coordinates> compileBoilerPlate
     		(CodeBlock cb, Environment<Coordinates> prevEnv, Frame currFrame) {
     	Environment<Coordinates> currEnv = prevEnv.beginScope();
@@ -95,4 +105,18 @@ public class ASTDef implements ASTNode {
     	return currEnv;
     }
 
+	@Override
+	public IType typeCheck(Environment<IType> prevEnv)
+			throws TypeErrorException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
+		Environment<IType> currEnv = prevEnv.beginScope();
+		for (Variable v : variables) {
+			Optional<String> optType = v.type;
+			IType typeAttr = v.exp.typeCheck(currEnv);
+			if (optType.isPresent() && !optType.get().equals(typeAttr.toString()))
+				throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
+			currEnv.assoc(v.id, typeAttr);
+		}
+    	return body.typeCheck(currEnv);
+	}
 }
