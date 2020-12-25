@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -28,6 +29,9 @@ import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTDef implements ASTNode {
 
+	private static final String TYPE_MISMATCH_MESSAGE =
+			"Value attributed to the variable is not the expected type";
+
     private final Collection<Variable> variables;
 
     private final ASTNode body;
@@ -42,8 +46,13 @@ public class ASTDef implements ASTNode {
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
             TypeErrorException {
         Environment<IValue> currEnv = prevEnv.beginScope();
-        for (Variable v : variables)
-            currEnv.assoc(v.id, v.exp.eval(currEnv));
+        for (Variable v : variables) {
+			Optional<String> optType = v.type;
+        	IValue valAttr = v.exp.eval(currEnv);
+        	if (optType.isPresent() && !optType.get().equals(valAttr.getType().toString()))
+        		throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
+			currEnv.assoc(v.id, v.exp.eval(currEnv));
+		}
         return body.eval(currEnv);
     }
 
@@ -55,11 +64,11 @@ public class ASTDef implements ASTNode {
     	assocVarsPos(cb, currEnv, f.name);
     	cb.addOperation(new PopOp());
     	body.compile(cb, currEnv);
-    	closeFrame(cb, currEnv, f);
+    	closeFrame(cb, f);
     	cb.closeFrame();
     }
 
-	private void closeFrame(CodeBlock cb, Environment<Coordinates> currEnv, Frame currFrame) {
+	private void closeFrame(CodeBlock cb, Frame currFrame) {
     	cb.addOperation(new LoadOp());
     	String fieldName = String.format("%s/sl", currFrame.name);
     	String type = String.format("L%s;", currFrame.parent.name);
@@ -97,10 +106,17 @@ public class ASTDef implements ASTNode {
     }
 
 	@Override
-	public IType typeCheck(Environment<IType> prevEnv) throws TypeErrorException, IDDeclaredTwiceException {
+	public IType typeCheck(Environment<IType> prevEnv)
+			throws TypeErrorException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		Environment<IType> currEnv = prevEnv.beginScope();
-		for (Variable v : variables)
-			currEnv.assoc(v.id, v.exp.typeCheck(currEnv));
+		for (Variable v : variables) {
+			Optional<String> optType = v.type;
+			IType typeAttr = v.exp.typeCheck(currEnv);
+			if (optType.isPresent() && !optType.get().equals(typeAttr.toString()))
+				throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
+			currEnv.assoc(v.id, typeAttr);
+		}
     	return body.typeCheck(currEnv);
 	}
 }

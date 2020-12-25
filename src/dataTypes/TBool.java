@@ -4,7 +4,7 @@ public class TBool implements IType {
 
     @Override
     public String toString() {
-        return "Bool";
+        return "bool";
     }
 
     @Override

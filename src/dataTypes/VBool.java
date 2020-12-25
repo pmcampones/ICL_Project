@@ -24,4 +24,8 @@ public class VBool implements IValue{
 		return false;
 	}
 
+	@Override
+	public IType getType() {
+		return new TBool();
+	}
 }

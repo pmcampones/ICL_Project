@@ -29,7 +29,8 @@ public class ASTNew implements ASTNode {
 
 	@Override
 	public IType typeCheck(Environment<IType> e)
-			throws TypeErrorException, IDDeclaredTwiceException {
+			throws TypeErrorException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		return new TMCell(node.typeCheck(e));
 	}
 

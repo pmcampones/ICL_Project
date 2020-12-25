@@ -37,8 +37,10 @@ public class ASTAnd implements ASTNode {
     }
 
     @Override
-    public IType typeCheck() throws TypeErrorException {
-        if (l.typeCheck() instanceof TBool && r.typeCheck() instanceof TBool)
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
+        if (l.typeCheck(e) instanceof TBool && r.typeCheck(e) instanceof TBool)
             return new TBool();
         throw new TypeErrorException("AND operation requires two Bool parameters.");
     }

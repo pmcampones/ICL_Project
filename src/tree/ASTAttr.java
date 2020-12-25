@@ -44,7 +44,8 @@ public class ASTAttr implements ASTNode {
 
 	@Override
 	public IType typeCheck(Environment<IType> e)
-			throws TypeErrorException, IDDeclaredTwiceException {
+			throws TypeErrorException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		if (var.typeCheck(e).equals(value.typeCheck(e)))
 			return value.typeCheck(e);
 		throw new TypeErrorException("Variable and attributed value are of different types.");

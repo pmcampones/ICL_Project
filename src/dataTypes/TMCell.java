@@ -14,7 +14,7 @@ public class TMCell implements IType {
 
     @Override
     public String toString() {
-        return String.format("Ref<%s>", ref.toString());
+        return String.format("ref %s", ref.toString());
     }
 
     @Override

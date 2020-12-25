@@ -45,8 +45,7 @@ public class ASTVariable implements ASTNode {
     }
 
 	@Override
-	public IType typeCheck(Environment<IType> e)
-			throws TypeErrorException, UndeclaredIdentifierException {
+	public IType typeCheck(Environment<IType> e) throws UndeclaredIdentifierException {
 		return e.find(id);
 	}
 }

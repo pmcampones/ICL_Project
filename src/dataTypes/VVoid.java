@@ -7,4 +7,8 @@ public class VVoid implements IValue{
         return "";
     }
 
+    @Override
+    public IType getType() {
+        return new TVoid();
+    }
 }

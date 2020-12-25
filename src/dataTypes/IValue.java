@@ -5,4 +5,6 @@ package dataTypes;
  */
 public interface IValue {
 	//String toString();
+
+    IType getType();
 }

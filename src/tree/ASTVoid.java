@@ -19,7 +19,7 @@ public class ASTVoid implements ASTNode{
             throws IDDeclaredTwiceException, UndeclaredIdentifierException {}
 
     @Override
-    public IType typeCheck(Environment<IType> e) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public IType typeCheck(Environment<IType> e) {
         return new TVoid();
     }
 }

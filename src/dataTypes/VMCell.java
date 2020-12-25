@@ -33,5 +33,9 @@ public class VMCell implements IValue{
 			return this.currVal.equals(((VMCell)other).currVal);
 		return false;
 	}
-	
+
+	@Override
+	public IType getType() {
+		return new TMCell(currVal.getType());
+	}
 }

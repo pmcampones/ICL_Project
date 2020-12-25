@@ -43,3 +43,11 @@ CompiledPrograms/*
 *.j
 
 *.prefs
+
+src/SimpleCharStream.java
+
+src/ParseException.java
+
+src/Token.java
+
+src/TokenMgrError.java

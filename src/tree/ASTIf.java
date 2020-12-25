@@ -54,7 +54,8 @@ public class ASTIf implements ASTNode{
 
     @Override
     public IType typeCheck(Environment<IType> e)
-            throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException {
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         if (ifNode.typeCheck(e) instanceof TBool) {
             thenNode.typeCheck(e);
             elseNode.typeCheck(e);

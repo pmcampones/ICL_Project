@@ -40,7 +40,8 @@ public class ASTNot implements ASTNode{
 
     @Override
     public IType typeCheck(Environment<IType> e)
-            throws TypeErrorException, IDDeclaredTwiceException {
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         if (node.typeCheck(e) instanceof TBool)
             return new TBool();
         throw new TypeErrorException("Not operation requires an expression of type Bool");

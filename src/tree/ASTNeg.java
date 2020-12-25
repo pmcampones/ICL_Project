@@ -37,7 +37,8 @@ public class ASTNeg implements ASTNode {
 
     @Override
     public IType typeCheck(Environment<IType> e)
-            throws TypeErrorException, IDDeclaredTwiceException {
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         if (node.typeCheck(e) instanceof TInt)
             return new TInt();
         throw new TypeErrorException("Unary negative requires a type Int.");

@@ -4,7 +4,7 @@ public class TInt implements IType {
 
     @Override
     public String toString() {
-        return "String";
+        return "int";
     }
 
     @Override

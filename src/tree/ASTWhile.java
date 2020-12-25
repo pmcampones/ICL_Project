@@ -49,7 +49,9 @@ public class ASTWhile implements ASTNode{
     }
 
     @Override
-    public IType typeCheck(Environment<IType> e) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         if (ifNode.typeCheck(e) instanceof TBool) {
             doNode.typeCheck(e);
             return new TVoid();

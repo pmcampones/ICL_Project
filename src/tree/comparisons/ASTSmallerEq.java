@@ -30,7 +30,9 @@ public class ASTSmallerEq implements ASTNode {
     }
 
     @Override
-    public IType typeCheck() throws TypeErrorException {
-        return node.typeCheck();
+    public IType typeCheck(Environment<IType> e)
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
+        return node.typeCheck(e);
     }
 }

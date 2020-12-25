@@ -32,7 +32,8 @@ public class ASTDeref implements ASTNode {
 
 	@Override
 	public IType typeCheck(Environment<IType> e)
-			throws TypeErrorException, IDDeclaredTwiceException {
+			throws TypeErrorException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException {
 		if (node.typeCheck(e) instanceof TMCell)
 			return ((TMCell)node.typeCheck(e)).getReferencedType();
 		throw new TypeErrorException("Dereference expression must be of type reference");

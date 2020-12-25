@@ -34,7 +34,8 @@ public class ASTSemi implements ASTNode {
 
     @Override
     public IType typeCheck(Environment<IType> e)
-            throws TypeErrorException, IDDeclaredTwiceException {
+            throws TypeErrorException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException {
         first.typeCheck(e);
         return second.typeCheck(e);
     }
