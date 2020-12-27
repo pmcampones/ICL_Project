@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Scanner;
@@ -20,9 +21,7 @@ import compiler.operations.NewOp;
 import compiler.operations.PopOp;
 import compiler.operations.PutFieldOp;
 import compiler.operations.StoreOp;
-import dataTypes.IType;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -96,26 +95,32 @@ public class ASTDef implements ASTNode {
     	}
     }
     
-    private IType getVariableType(Variable v, Environment<IType> envTypes) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException, IOException {
-    	
+    private IType getVariableType(Variable v, Environment<IType> envTypes)
+			throws TypeErrorException, IDDeclaredTwiceException,
+			UndeclaredIdentifierException, IOException {
     	Optional<String> optType = v.type;
-    	
-    	if(optType.isPresent()) {
-    		
-    		InputStream is = new ByteArrayInputStream(optType.get().getBytes());
-
-            DataInputStream dataIn = new DataInputStream(is);
-            
-            while (dataIn.available() > 0) {
-                String k = dataIn.readUTF();
-                
-                
-            }
-    		
-    	}
+    	if(optType.isPresent())
+    		try (InputStream in = new ByteArrayInputStream(optType.get().getBytes());
+				 DataInputStream dataIn = new DataInputStream(in)) {
+				return getVariableSubtype(dataIn);
+			}
     	
     	return v.exp.typeCheck(envTypes);
     }
+
+    private IType getVariableSubtype(DataInputStream in) throws IOException {
+    	String subtypeName = in.readUTF();
+    	switch (subtypeName) {
+			case "int":
+				return new TInt();
+			case "bool":
+				return new TBool();
+			case "ref":
+				return new TMCell(getVariableSubtype(in));
+			default:
+				return new TVoid();
+		}
+	}
 
     private EnvPair compileBoilerPlate
     		(CodeBlock cb, Environment<Coordinates> prevEnvCoord, Environment<IType> prevEnvTypes, Frame currFrame) {
@@ -134,12 +139,12 @@ public class ASTDef implements ASTNode {
     	return new EnvPair(currEnvCoord, currEnvTypes);
     }
     
-    private class EnvPair{
+    private static class EnvPair{
     	
     	private final Environment<Coordinates> envCoord;
     	private final Environment<IType> envTypes;
     	
-    	EnvPair(Environment<Coordinates> envCoord, Environment<IType> envTypes) {
+    	private EnvPair(Environment<Coordinates> envCoord, Environment<IType> envTypes) {
     		this.envCoord = envCoord;
     		this.envTypes = envTypes;
     	}
