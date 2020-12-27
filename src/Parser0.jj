@@ -9,7 +9,10 @@ PARSER_BEGIN(Parser)
 
 /** ID lister. */
 import tree.*;
-import environment.*;import tree.binaryArithmetic.ASTDiv;import tree.binaryArithmetic.ASTMult;
+import environment.*;
+import tree.binaryArithmetic.*;
+import tree.boolArithmetic.*;
+import tree.comparisons.*;
 import java.util.Collection;
 import java.util.LinkedList;
 public class Parser {

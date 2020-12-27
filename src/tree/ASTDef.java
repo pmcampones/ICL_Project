@@ -1,7 +1,13 @@
 package tree;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Scanner;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -60,10 +66,10 @@ public class ASTDef implements ASTNode {
     public void compile(CodeBlock cb,Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	Frame f = cb.createFrame(variables.size());
-    	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv, f);
-    	assocVarsPos(cb, currEnv, f.name);
+    	EnvPair env = compileBoilerPlate(cb, envCoord, envTypes, f);
+    	assocVarsPos(cb, env.envCoord, env.envTypes, f.name);
     	cb.addOperation(new PopOp());
-    	body.compile(cb, currEnv);
+    	body.compile(cb, env.envCoord, env.envTypes);
     	closeFrame(cb, f);
     	cb.closeFrame();
     }
@@ -77,21 +83,44 @@ public class ASTDef implements ASTNode {
 
     }
 
-    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> env, String fName)
+    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes, String fName)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	int varIndex = 0;
     	for (Variable v : variables) {
     		cb.addOperation(new DupOp());
-    		v.exp.compile(cb, env);
+    		v.exp.compile(cb, envCoord, envTypes);
     		String fieldName = String.format("%s/v%d", fName, varIndex);
+    		v.exp.t
     		cb.addOperation(new PutFieldOp(fieldName, "I"));
-    		env.assoc(v.id, new Coordinates(env.getDepth(), varIndex++));
+    		envCoord.assoc(v.id, new Coordinates(envCoord.getDepth(), varIndex++));
     	}
     }
+    
+    private IType getVariableType(Variable v, Environment<IType> envTypes) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException, IOException {
+    	
+    	Optional<String> optType = v.type;
+    	
+    	if(optType.isPresent()) {
+    		
+    		InputStream is = new ByteArrayInputStream(optType.get().getBytes());
 
-    private Environment<Coordinates> compileBoilerPlate
-    		(CodeBlock cb, Environment<Coordinates> prevEnv, Frame currFrame) {
-    	Environment<Coordinates> currEnv = prevEnv.beginScope();
+            DataInputStream dataIn = new DataInputStream(is);
+            
+            while (dataIn.available() > 0) {
+                String k = dataIn.readUTF();
+                
+                
+            }
+    		
+    	}
+    	
+    	return v.exp.typeCheck(envTypes);
+    }
+
+    private EnvPair compileBoilerPlate
+    		(CodeBlock cb, Environment<Coordinates> prevEnvCoord, Environment<IType> prevEnvTypes, Frame currFrame) {
+    	Environment<Coordinates> currEnvCoord = prevEnvCoord.beginScope();
+    	Environment<IType> currEnvTypes = prevEnvTypes.beginScope();
     	cb.addOperation(new NewOp(currFrame.name));
     	cb.addOperation(new DupOp());
     	cb.addOperation(new InvokeSpecialOp(String.format("%s/<init>()V", currFrame.name)));
@@ -102,7 +131,18 @@ public class ASTDef implements ASTNode {
     	cb.addOperation(new PutFieldOp(fieldName, type));
     	cb.addOperation(new DupOp());
     	cb.addOperation(new StoreOp());
-    	return currEnv;
+    	return new EnvPair(currEnvCoord, currEnvTypes);
+    }
+    
+    private class EnvPair{
+    	
+    	private final Environment<Coordinates> envCoord;
+    	private final Environment<IType> envTypes;
+    	
+    	EnvPair(Environment<Coordinates> envCoord, Environment<IType> envTypes) {
+    		this.envCoord = envCoord;
+    		this.envTypes = envTypes;
+    	}
     }
 
 	@Override
