@@ -30,10 +30,10 @@ public class ASTNot implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	
     	codeBlock.addOperation(new PushValueOp("1"));
-    	node.compile(codeBlock, env);
+    	node.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new SubOp());
     	
     }

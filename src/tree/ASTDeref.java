@@ -25,7 +25,7 @@ public class ASTDeref implements ASTNode {
 	}
 
 	@Override
-	public void compile(CodeBlock codeBlock, Environment<Coordinates> env)
+	public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException {
 		
 	}

@@ -9,13 +9,10 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
-public class ASTAnd implements ASTNode {
-
-    private final ASTNode l, r;
+public class ASTAnd extends ASTBoolArithmetic {
 
     public ASTAnd(ASTNode l, ASTNode r) {
-        this.l = l;
-        this.r = r;
+        super(l, r);
     }
 
     @Override
@@ -29,19 +26,11 @@ public class ASTAnd implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env)
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	l.compile(codeBlock, env);
-    	r.compile(codeBlock, env);
+    	l.compile(codeBlock, envCoord, envTypes);
+    	r.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new AndOp());
     }
 
-    @Override
-    public IType typeCheck(Environment<IType> e)
-            throws TypeErrorException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException {
-        if (l.typeCheck(e) instanceof TBool && r.typeCheck(e) instanceof TBool)
-            return new TBool();
-        throw new TypeErrorException("AND operation requires two Bool parameters.");
-    }
 }

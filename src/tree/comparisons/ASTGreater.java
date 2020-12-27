@@ -31,12 +31,12 @@ public class ASTGreater extends ASTComparison {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	Label thenLabel = new Label();
     	Label exit = new Label();
     	
-    	l.compile(codeBlock, env);
-    	r.compile(codeBlock, env);
+    	l.compile(codeBlock, envCoord, envTypes);
+    	r.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new SubOp());
     	codeBlock.addOperation(new GreaterOp(thenLabel));
     	codeBlock.addOperation(new PushValueOp("0"));

@@ -25,8 +25,8 @@ public class ASTSmallerEq implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        node.compile(codeBlock, env);
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+        node.compile(codeBlock, envCoord, envTypes);
     }
 
     @Override

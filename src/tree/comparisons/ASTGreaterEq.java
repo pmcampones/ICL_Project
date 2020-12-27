@@ -8,10 +8,7 @@ import compiler.operations.GreaterEqualOp;
 import compiler.operations.LabelOp;
 import compiler.operations.PushValueOp;
 import compiler.operations.SubOp;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VBool;
-import dataTypes.VInt;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -34,13 +31,13 @@ public class ASTGreaterEq extends ASTComparison {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
 
     	Label thenLabel = new Label();
     	Label exit = new Label();
     	
-    	l.compile(codeBlock, env);
-    	r.compile(codeBlock, env);
+    	l.compile(codeBlock, envCoord, envTypes);
+    	r.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new SubOp());
     	codeBlock.addOperation(new GreaterEqualOp(thenLabel));
     	codeBlock.addOperation(new PushValueOp("0"));

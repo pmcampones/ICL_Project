@@ -30,9 +30,9 @@ public class ASTNeg implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) 
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-        new ASTMult(node, new ASTNum(-1)).compile(cb, env);
+        new ASTMult(node, new ASTNum(-1)).compile(cb, envCoord, envTypes);
     }
 
     @Override

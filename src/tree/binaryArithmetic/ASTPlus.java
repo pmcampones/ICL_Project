@@ -3,6 +3,7 @@ package tree.binaryArithmetic;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.AddOp;
+import dataTypes.IType;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VInt;
@@ -33,10 +34,10 @@ public class ASTPlus extends ASTIntArithmetic {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) 
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	l.compile(cb, env);
-    	r.compile(cb, env);
+    	l.compile(cb, envCoord, envTypes);
+    	r.compile(cb, envCoord, envTypes);
     	cb.addOperation(new AddOp());
     }
 

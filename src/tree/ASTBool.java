@@ -22,7 +22,7 @@ public class ASTBool implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) {
         if(val)
         	codeBlock.addOperation(new PushValueOp("1"));
         else

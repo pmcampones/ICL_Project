@@ -35,15 +35,16 @@ public class ASTWhile implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	Label beforeCond = new Label();
     	Label exit = new Label();
     	codeBlock.addOperation(new LabelOp(beforeCond));
-    	ifNode.compile(codeBlock, env);
+    	ifNode.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new PushValueOp("1"));
     	codeBlock.addOperation(new SubOp());
     	codeBlock.addOperation(new NotEqualOp(exit));
-    	doNode.compile(codeBlock, env);
+    	doNode.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new GoToOp(beforeCond));
     	codeBlock.addOperation(new LabelOp(exit));
     }

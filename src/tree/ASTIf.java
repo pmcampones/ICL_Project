@@ -36,18 +36,19 @@ public class ASTIf implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	
     	Label thenLabel = new Label();
     	Label exit = new Label();
-    	ifNode.compile(codeBlock, env);
+    	ifNode.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new PushValueOp("1"));
     	codeBlock.addOperation(new SubOp());
     	codeBlock.addOperation(new EqualOp(thenLabel));
-    	elseNode.compile(codeBlock, env);
+    	elseNode.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new GoToOp(exit));
     	codeBlock.addOperation(new LabelOp(thenLabel));
-    	thenNode.compile(codeBlock, env);
+    	thenNode.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new LabelOp(exit)); 
     	
     }

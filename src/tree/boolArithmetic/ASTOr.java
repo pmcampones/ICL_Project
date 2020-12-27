@@ -3,6 +3,7 @@ package tree.boolArithmetic;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.OrOp;
+import dataTypes.IType;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VBool;
@@ -26,10 +27,10 @@ public class ASTOr extends ASTBoolArithmetic implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-
-    	l.compile(codeBlock, env);
-    	r.compile(codeBlock, env);
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    	l.compile(codeBlock, envCoord, envTypes);
+    	r.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new OrOp());	
     }
 }

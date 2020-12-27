@@ -26,10 +26,10 @@ public class ASTSemi implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> env) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	first.compile(codeBlock, env);
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    	first.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new PopOp());
-    	second.compile(codeBlock, env);
+    	second.compile(codeBlock, envCoord, envTypes);
     }
 
     @Override

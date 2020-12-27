@@ -29,9 +29,9 @@ public class ASTVariable implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) throws UndeclaredIdentifierException {
-    	int currDepth = env.getDepth();
-    	Coordinates varLocation = env.find(id);
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws UndeclaredIdentifierException {
+    	int currDepth = envCoord.getDepth();
+    	Coordinates varLocation = envCoord.find(id);
     	cb.addOperation(new LoadOp());
     	Frame f = cb.getActiveFrame();
     	for (int i = currDepth; i > varLocation.depth; i--) {

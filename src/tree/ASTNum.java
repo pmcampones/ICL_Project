@@ -21,7 +21,7 @@ public class ASTNum implements ASTNode {
     public IValue eval(Environment<IValue> e) {return val;}
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) {
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes) {
     	cb.addOperation(new PushValueOp(String.valueOf(val)));
     }
 

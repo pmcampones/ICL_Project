@@ -32,10 +32,10 @@ public class ASTDiv extends ASTIntArithmetic {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) 
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	l.compile(cb, env);
-    	r.compile(cb, env);
+    	l.compile(cb, envCoord, envTypes);
+    	r.compile(cb, envCoord, envTypes);
     	cb.addOperation(new DivOp());
     }
 }

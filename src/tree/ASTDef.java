@@ -57,7 +57,7 @@ public class ASTDef implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> prevEnv) 
+    public void compile(CodeBlock cb,Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
     	Frame f = cb.createFrame(variables.size());
     	Environment<Coordinates> currEnv = compileBoilerPlate(cb, prevEnv, f);
