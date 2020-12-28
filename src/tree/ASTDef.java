@@ -95,6 +95,7 @@ public class ASTDef implements ASTNode {
     		IType type = getVariableType(v, envTypes);
     		cb.addOperation(new PutFieldOp(fieldName, type.getCompString()));
     		envCoord.assoc(v.id, new Coordinates(envCoord.getDepth(), varIndex++));
+    		envTypes.assoc(v.id, type);
     	}
     }
     

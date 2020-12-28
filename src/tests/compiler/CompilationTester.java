@@ -1,5 +1,8 @@
 package tests.compiler;
 
+import static compiler.Compiler.DEFAULT_COMPILATION_DIRECTORY;
+import static compiler.Compiler.DEFAULT_FRAME_DIRECTORY;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +18,6 @@ import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
 import tests.GenericTester;
-
-import static compiler.Compiler.*;
 
 /**
 * MIEI
