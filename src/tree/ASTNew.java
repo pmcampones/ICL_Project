@@ -1,7 +1,13 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.DupOp;
+import compiler.operations.InvokeSpecialOp;
+import compiler.operations.NewOp;
+import compiler.operations.PutFieldOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
@@ -23,7 +29,17 @@ public class ASTNew implements ASTNode {
 
 	@Override
 	public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-			throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
+		
+		IType type = node.typeCheck(envTypes);
+		String className = (type instanceof TMCell) ? "ref_class" : "ref_int";
+		
+		codeBlock.addOperation(new NewOp(className));
+		codeBlock.addOperation(new DupOp());
+		codeBlock.addOperation(new InvokeSpecialOp(String.format("%s/<init>()V", className)));
+		codeBlock.addOperation(new DupOp());
+		node.compile(codeBlock, envCoord, envTypes);
+		codeBlock.addOperation(new PutFieldOp(String.format("%s/v", className), type.getCompString()));		
 		
 	}
 

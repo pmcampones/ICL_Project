@@ -1,5 +1,7 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.Label;
@@ -36,7 +38,7 @@ public class ASTWhile implements ASTNode{
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	Label beforeCond = new Label();
     	Label exit = new Label();
     	codeBlock.addOperation(new LabelOp(beforeCond));

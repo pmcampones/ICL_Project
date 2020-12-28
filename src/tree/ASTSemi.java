@@ -1,5 +1,7 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.PopOp;
@@ -26,7 +28,7 @@ public class ASTSemi implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	first.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new PopOp());
     	second.compile(codeBlock, envCoord, envTypes);

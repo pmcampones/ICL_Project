@@ -11,4 +11,9 @@ public class TInt implements IType {
     public boolean equals(Object other) {
         return other instanceof TInt;
     }
+
+	@Override
+	public String getCompString() {
+		return "I";
+	}
 }

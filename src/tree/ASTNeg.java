@@ -1,5 +1,7 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import dataTypes.*;
@@ -31,7 +33,7 @@ public class ASTNeg implements ASTNode {
 
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
         new ASTMult(node, new ASTNum(-1)).compile(cb, envCoord, envTypes);
     }
 

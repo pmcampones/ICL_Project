@@ -12,6 +12,8 @@ import java.util.List;
 
 import compiler.Compiler;
 import compiler.Coordinates;
+import dataTypes.IType;
+import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -31,14 +33,14 @@ public class CompilationUtils {
 	static int compileAndGetResults(String methodName) 
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException {
+			UndeclaredIdentifierException, TypeErrorException {
 		return compileAndGetResults(methodName, 0);
 	}
 	
 	static int compileAndGetResults(String methodName, int scopesCreated) 
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException {
+			UndeclaredIdentifierException, TypeErrorException {
 		Compiler comp = new Compiler(DEFAULT_COMPILATION_DIRECTORY + "/UnitTests", DEFAULT_FRAME_DIRECTORY);
 		String assembledFilePath = generateAssembledFile(methodName, comp);
 		compileAssembledFile(assembledFilePath, scopesCreated, comp);
@@ -47,8 +49,8 @@ public class CompilationUtils {
 	
 	private static String generateAssembledFile(String fileName, Compiler comp) 
 			throws ParseException, IOException, 
-			IDDeclaredTwiceException, UndeclaredIdentifierException {
-        Parser.Start().compile(comp.getCodeBlock(), new Environment<Coordinates>());
+			IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+        Parser.Start().compile(comp.getCodeBlock(), new Environment<>(), new Environment<>());
         return comp.generateOutputFile(fileName);
 	}
 	

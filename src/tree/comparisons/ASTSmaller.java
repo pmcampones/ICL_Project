@@ -1,5 +1,7 @@
 package tree.comparisons;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.Label;
@@ -31,7 +33,7 @@ public class ASTSmaller extends ASTComparison {
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
 
     	Label thenLabel = new Label();
     	Label exit = new Label();

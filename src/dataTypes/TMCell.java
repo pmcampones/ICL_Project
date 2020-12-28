@@ -24,4 +24,9 @@ public class TMCell implements IType {
         return false;
     }
 
+	@Override
+	public String getCompString() {
+		return "Ljava/lang/Object;";
+	}
+
 }

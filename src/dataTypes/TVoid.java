@@ -7,4 +7,9 @@ public class TVoid implements IType{
         return other instanceof TVoid;
     }
 
+	@Override
+	public String getCompString() {
+		return null;
+	}
+
 }

@@ -2,6 +2,7 @@ package tests.compiler;
 
 import org.junit.jupiter.api.Test;
 
+import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
@@ -26,7 +27,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testNumber() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestNumber(), compileAndGetResults(methodName));
     }
@@ -36,7 +37,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testSum() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
     	assertEquals(getExpectedTestSum(), compileAndGetResults(methodName));
     }
@@ -46,7 +47,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testSub() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
     	assertEquals(getExpectedTestSub(), compileAndGetResults(methodName));
     }
@@ -56,7 +57,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testMult() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
     	assertEquals(getExpectedTestMult(), compileAndGetResults(methodName));
     }
@@ -66,7 +67,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testDiv() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
     	assertEquals(getExpectedTestDiv(), compileAndGetResults(methodName));
     }
@@ -76,7 +77,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testManySums() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestManySums(), compileAndGetResults(methodName));
     }
@@ -86,7 +87,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testManySubs() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestManySubs(), compileAndGetResults(methodName));
     }
@@ -96,7 +97,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testManyMults() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
     	String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestManyMults(), compileAndGetResults(methodName));
     }
@@ -109,7 +110,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testManyDivs() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
 //    	int bigNum = Integer.MAX_VALUE;
 //        int[] nums = getNumsArray();
 //        int[] nums = {1024, 2, 2};
@@ -127,7 +128,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testBrackets() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestBrackets(), compileAndGetResults(methodName));
     }
@@ -137,7 +138,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testBracketsSum() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestBracketsSum(), compileAndGetResults(methodName));
     }
@@ -147,7 +148,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testSumsAndMultBrackets() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestSumsAndMultsBrackets(), compileAndGetResults(methodName));
     }
@@ -157,7 +158,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testMinusSingle() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestMinusSingle(), compileAndGetResults(methodName));
     }
@@ -167,7 +168,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testMinusTwo() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestMinusTwo(), compileAndGetResults(methodName));
     }
@@ -177,7 +178,7 @@ public class ArithmeticOpCompilerTest extends CompilationTester implements Arith
     public void testMinusExpression() 
     		throws ParseException, IOException, 
     		InterruptedException, IDDeclaredTwiceException,
-    		UndeclaredIdentifierException {
+    		UndeclaredIdentifierException, TypeErrorException {
         String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
         assertEquals(getExpectedTestMinusExpression(), compileAndGetResults(methodName));
     }

@@ -1,5 +1,7 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.Label;
@@ -30,7 +32,7 @@ public class ASTNot implements ASTNode{
     }
 
     @Override
-    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	
     	codeBlock.addOperation(new PushValueOp("1"));
     	node.compile(codeBlock, envCoord, envTypes);

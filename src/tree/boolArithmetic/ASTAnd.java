@@ -1,5 +1,7 @@
 package tree.boolArithmetic;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.AndOp;
@@ -27,7 +29,7 @@ public class ASTAnd extends ASTBoolArithmetic {
 
     @Override
     public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	l.compile(codeBlock, envCoord, envTypes);
     	r.compile(codeBlock, envCoord, envTypes);
     	codeBlock.addOperation(new AndOp());

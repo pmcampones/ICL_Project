@@ -1,7 +1,11 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
+import compiler.operations.CheckCastOp;
+import compiler.operations.GetFieldOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
@@ -26,8 +30,15 @@ public class ASTDeref implements ASTNode {
 
 	@Override
 	public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-			throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
 		
+		IType type = node.typeCheck(envTypes);
+		String className = (type instanceof TMCell) ? "ref_class" : "ref_int";
+		
+		node.compile(codeBlock, envCoord, envTypes);
+		codeBlock.addOperation(new CheckCastOp(className));	
+		codeBlock.addOperation(new GetFieldOp(String.format("%s/v", className), type.getCompString()));
+	
 	}
 
 	@Override

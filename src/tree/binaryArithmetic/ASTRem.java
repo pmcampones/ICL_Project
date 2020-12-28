@@ -1,5 +1,7 @@
 package tree.binaryArithmetic;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.RemOp;
@@ -35,7 +37,7 @@ public class ASTRem extends ASTIntArithmetic {
 
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	l.compile(cb, envCoord, envTypes);
     	r.compile(cb, envCoord, envTypes);
     	cb.addOperation(new RemOp());

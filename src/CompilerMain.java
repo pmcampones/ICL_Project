@@ -22,7 +22,7 @@ public class CompilerMain {
         	String frameDir = args.length >= 3 ? args[2] : Compiler.DEFAULT_FRAME_DIRECTORY;
             Compiler comp = new Compiler(directory, frameDir);
             exp.typeCheck(new Environment<>());
-            exp.compile(comp.getCodeBlock(), new Environment<>());
+            exp.compile(comp.getCodeBlock(), new Environment<>(), new Environment<>());
             comp.generateOutputFile(fileName);
         } catch (Exception e) {
           System.err.println (e.getMessage());

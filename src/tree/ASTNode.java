@@ -1,5 +1,7 @@
 package tree;
 
+import java.io.IOException;
+
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import dataTypes.IType;
@@ -22,7 +24,7 @@ public interface ASTNode {
             TypeErrorException;
 
     void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException;
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException;
 
     IType typeCheck(Environment<IType> e) throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException;
     

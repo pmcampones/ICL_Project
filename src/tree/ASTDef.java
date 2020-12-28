@@ -4,11 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Scanner;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -21,7 +18,13 @@ import compiler.operations.NewOp;
 import compiler.operations.PopOp;
 import compiler.operations.PutFieldOp;
 import compiler.operations.StoreOp;
-import dataTypes.*;
+import dataTypes.IType;
+import dataTypes.IValue;
+import dataTypes.TBool;
+import dataTypes.TInt;
+import dataTypes.TMCell;
+import dataTypes.TVoid;
+import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -63,7 +66,7 @@ public class ASTDef implements ASTNode {
 
     @Override
     public void compile(CodeBlock cb,Environment<Coordinates> envCoord, Environment<IType> envTypes)
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	Frame f = cb.createFrame(variables.size());
     	EnvPair env = compileBoilerPlate(cb, envCoord, envTypes, f);
     	assocVarsPos(cb, env.envCoord, env.envTypes, f.name);
@@ -83,14 +86,14 @@ public class ASTDef implements ASTNode {
     }
 
     private void assocVarsPos(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes, String fName)
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	int varIndex = 0;
     	for (Variable v : variables) {
     		cb.addOperation(new DupOp());
     		v.exp.compile(cb, envCoord, envTypes);
     		String fieldName = String.format("%s/v%d", fName, varIndex);
-    		v.exp.t
-    		cb.addOperation(new PutFieldOp(fieldName, "I"));
+    		IType type = getVariableType(v, envTypes);
+    		cb.addOperation(new PutFieldOp(fieldName, type.getCompString()));
     		envCoord.assoc(v.id, new Coordinates(envCoord.getDepth(), varIndex++));
     	}
     }

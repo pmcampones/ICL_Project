@@ -12,4 +12,9 @@ public class TBool implements IType {
         return other instanceof TBool;
     }
 
+	@Override
+	public String getCompString() {
+		return "I";
+	}
+
 }
