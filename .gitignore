@@ -40,8 +40,6 @@ src/Parser*
 src/compiledPrograms/unitTests/*
 CompiledPrograms/*
 
-*.j
-
 *.prefs
 
 src/SimpleCharStream.java
