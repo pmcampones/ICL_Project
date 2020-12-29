@@ -1,106 +1,87 @@
 package tests.interpreter;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.AttrOpTester.getExpectedTestAttrExpressionAfter;
+import static tests.AttrOpTester.getExpectedTestAttrSum;
+import static tests.AttrOpTester.getExpectedTestAttrTerm;
+import static tests.AttrOpTester.getExpectedTestIdentity;
+import static tests.AttrOpTester.getExpectedTestMutabilityOrder;
+import static tests.AttrOpTester.getExpectedTestNestedAttr;
+import static tests.AttrOpTester.getExpectedTestNestedWithExpression;
+import static tests.AttrOpTester.getExpectedTestSimpleAttr;
+
+import org.junit.jupiter.api.Test;
+
 import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
-import org.junit.jupiter.api.Test;
 import parser.ParseException;
+import tests.AttrOpTester;
 
-import java.util.Random;
+public class AttrInterpreterTester extends InterpreterTester implements AttrOpTester {
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class AttrInterpreterTester extends InterpreterTester {
-
+	@Override
     @Test
     public void testSimpleAttr()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        int num = new Random().nextInt(MAX_RAND);
-        String exp = String.format("def x = new 5 in x := %d end", num);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num), run());
+        assertEquals(getExpectedTestSimpleAttr(), run());
     }
 
+	@Override
     @Test
     public void testAttrSum()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
-        int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x + (x := %d) end", num1, num2);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num1 + num2), run());
+        assertEquals(getExpectedTestAttrSum(), run());
     }
 
+	@Override
     @Test
     public void testAttrTerm()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
-        int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x * (x := %d) end", num1, num2);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num1 * num2), run());
+        assertEquals(getExpectedTestAttrTerm(), run());
     }
 
+	@Override
     @Test
     public void testAttrExpressionAfter()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
-        int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x + (x := !x + def y = %d in !x * y end) end", num1, num2);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num1 + (num1 + num1 * num2)), run());
+        assertEquals(getExpectedTestAttrExpressionAfter(), run());
     }
 
+	@Override
     @Test
     public void testNestedAttr()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
-        int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in x := !x + (x := %d) end", num1, num2);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num1 + num2), run());
+        assertEquals(getExpectedTestNestedAttr(), run());
     }
 
+	@Override
     @Test
     public void testIdentity()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        int num = new Random().nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in x := !x end", num);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num), run());
+        assertEquals(getExpectedTestIdentity(), run());
     }
 
+	@Override
     @Test
     public void testNestedWithExpression()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
-        int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
-        int y = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d y = new %d in x := !x + (y := !y + (x := !x + (y := !x * !y + def x = %d in x * !y end))) end", x1, y, x2);
-        writeToToken(exp);
-        int fourthY = x1 * y + x2 * y;
-        int thirdX = x1 + fourthY;
-        int secondY = y + thirdX;
-        int secondX = x1 + secondY;
-        assertEquals(String.valueOf(secondX), run());
+        assertEquals(getExpectedTestNestedWithExpression(), run());
     }
 
+	@Override
     @Test
     public void testMutabilityOrder()
             throws TypeErrorException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
-        Random r = new Random();
-        int num1 = r.nextInt(MAX_RAND), num2 = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x + (x := %d) + !x end", num1, num2);
-        writeToToken(exp);
-        assertEquals(String.valueOf(num1 + num2 + num2), run());
+        assertEquals(getExpectedTestMutabilityOrder(), run());
     }
 
 }

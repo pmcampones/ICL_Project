@@ -5,12 +5,13 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
+import tests.StaticTypecheckerTester;
 
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StaticTypecheckerInterpreterTester extends InterpreterTester{
+public class StaticTypecheckerInterpreterTester extends InterpreterTester implements StaticTypecheckerTester {
 
     @Test
     public void testSimpleIntExp()
