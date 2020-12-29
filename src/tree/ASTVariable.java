@@ -7,7 +7,6 @@ import compiler.operations.GetFieldOp;
 import compiler.operations.LoadOp;
 import dataTypes.IType;
 import dataTypes.IValue;
-import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.UndeclaredIdentifierException;
 
@@ -41,7 +40,7 @@ public class ASTVariable implements ASTNode {
     		f = f.parent;
     	}
     	String fieldName = String.format("%s/v%d", f.name, varLocation.frameIndex);
-    	cb.addOperation(new GetFieldOp(fieldName, "I"));
+    	cb.addOperation(new GetFieldOp(fieldName, envTypes.find(id).getCompString()));
     }
 
 	@Override

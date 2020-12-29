@@ -5,6 +5,7 @@ import java.io.IOException;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.CheckCastOp;
+import compiler.operations.DupOp;
 import compiler.operations.GetFieldOp;
 import compiler.operations.PutFieldOp;
 import dataTypes.IType;
@@ -46,14 +47,15 @@ public class ASTAttr implements ASTNode {
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
 		
 		IType type = var.typeCheck(envTypes);
-		String className = (type instanceof TMCell) ? "ref_class" : "ref_int";
+		assert(type instanceof TMCell);
+		String className = ((TMCell) type).getRefFileName();
 		
 		this.var.compile(codeBlock, envCoord, envTypes);
+		codeBlock.addOperation(new DupOp());
 		codeBlock.addOperation(new CheckCastOp(className));
 		this.value.compile(codeBlock, envCoord, envTypes);
-		codeBlock.addOperation(new PutFieldOp(String.format("%s/v", className), type.getCompString()));
-	
-		
+		codeBlock.addOperation(new GetFieldOp(String.format("%s/v", className), ((TMCell)type).getReferencedType().getCompString()));
+		codeBlock.addOperation(new PutFieldOp(String.format("%s/v", className), ((TMCell)type).getReferencedType().getCompString()));
 	}
 
 	@Override

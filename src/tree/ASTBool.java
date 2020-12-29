@@ -3,10 +3,11 @@ package tree;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.PushValueOp;
-import dataTypes.*;
+import dataTypes.IType;
+import dataTypes.IValue;
+import dataTypes.TBool;
+import dataTypes.VBool;
 import environment.Environment;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTBool implements ASTNode {
 

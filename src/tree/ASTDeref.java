@@ -33,11 +33,12 @@ public class ASTDeref implements ASTNode {
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
 		
 		IType type = node.typeCheck(envTypes);
-		String className = (type instanceof TMCell) ? "ref_class" : "ref_int";
+		assert(type instanceof TMCell);
+		String className = ((TMCell) type).getRefFileName();
 		
 		node.compile(codeBlock, envCoord, envTypes);
 		codeBlock.addOperation(new CheckCastOp(className));	
-		codeBlock.addOperation(new GetFieldOp(String.format("%s/v", className), type.getCompString()));
+		codeBlock.addOperation(new GetFieldOp(String.format("%s/v", className), ((TMCell)type).getRefType().getCompString()));
 	
 	}
 

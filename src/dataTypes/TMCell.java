@@ -28,5 +28,13 @@ public class TMCell implements IType {
 	public String getCompString() {
 		return "Ljava/lang/Object;";
 	}
+	
+	public String getRefFileName() {
+		return ref instanceof TMCell ? "ref_class" : "ref_int";
+	}
+	
+	public IType getRefType() {
+		return ref;
+	}
 
 }

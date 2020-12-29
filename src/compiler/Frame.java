@@ -1,16 +1,21 @@
 package compiler;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dataTypes.IType;
+
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Camponï¿½s - 50051
 **/
 
 public class Frame {
 	
 	private static final String BASE_CLASS = "java/lang/Object";
 
-	public final int numVariables;
+	public final List<IType> varTypes;
 
 	public final Frame parent;
 	
@@ -21,9 +26,13 @@ public class Frame {
 	}
 	
 	public Frame(int numVariables, Frame parent, String name) {
-		this.numVariables = numVariables;
+		varTypes = new ArrayList<>(numVariables);
 		this.parent = parent;
 		this.name = name;
+	}
+	
+	public void addVariableType(IType t) {
+		varTypes.add(t);
 	}
 	
 	public static boolean isBaseClass(Frame f) {

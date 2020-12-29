@@ -32,7 +32,7 @@ public class ASTNew implements ASTNode {
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
 		
 		IType type = node.typeCheck(envTypes);
-		String className = (type instanceof TMCell) ? "ref_class" : "ref_int";
+		String className = type instanceof TMCell ? "ref_class" : "ref_int";
 		
 		codeBlock.addOperation(new NewOp(className));
 		codeBlock.addOperation(new DupOp());

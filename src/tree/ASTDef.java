@@ -69,7 +69,7 @@ public class ASTDef implements ASTNode {
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	Frame f = cb.createFrame(variables.size());
     	EnvPair env = compileBoilerPlate(cb, envCoord, envTypes, f);
-    	assocVarsPos(cb, env.envCoord, env.envTypes, f.name);
+    	assocVarsPos(cb, env.envCoord, env.envTypes, f);
     	cb.addOperation(new PopOp());
     	body.compile(cb, env.envCoord, env.envTypes);
     	closeFrame(cb, f);
@@ -85,17 +85,19 @@ public class ASTDef implements ASTNode {
 
     }
 
-    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes, String fName)
+    private void assocVarsPos(CodeBlock cb, Environment<Coordinates> envCoord, 
+    		Environment<IType> envTypes, Frame f)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
     	int varIndex = 0;
     	for (Variable v : variables) {
     		cb.addOperation(new DupOp());
     		v.exp.compile(cb, envCoord, envTypes);
-    		String fieldName = String.format("%s/v%d", fName, varIndex);
+    		String fieldName = String.format("%s/v%d", f.name, varIndex);
     		IType type = getVariableType(v, envTypes);
     		cb.addOperation(new PutFieldOp(fieldName, type.getCompString()));
     		envCoord.assoc(v.id, new Coordinates(envCoord.getDepth(), varIndex++));
     		envTypes.assoc(v.id, type);
+    		f.addVariableType(type);
     	}
     }
     
