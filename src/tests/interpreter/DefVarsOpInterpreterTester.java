@@ -8,9 +8,9 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import tests.DefVarsTester;
+import tests.DefVarsOpTester;
 
-import static tests.DefVarsTester.*;
+import static tests.DefVarsOpTester.*;
 
 /**
 * MIEI
@@ -18,7 +18,7 @@ import static tests.DefVarsTester.*;
 * @author Pedro Campon�s - 50051
 **/
 
-public class DefVarsInterpreterTester extends InterpreterTester implements DefVarsTester {
+public class DefVarsOpInterpreterTester extends InterpreterTester implements DefVarsOpTester {
 
 	@Override
     @Test

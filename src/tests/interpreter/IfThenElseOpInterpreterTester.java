@@ -1,12 +1,12 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.IfThenElseTester.getExpectedTestElseExpressionFalse;
-import static tests.IfThenElseTester.getExpectedTestElseExpressionTrue;
-import static tests.IfThenElseTester.getExpectedTestExpressionScopeIf;
-import static tests.IfThenElseTester.getExpectedTestRunningExpressionIf;
-import static tests.IfThenElseTester.getExpectedTestSimpleExpressionFalse;
-import static tests.IfThenElseTester.getExpectedTestSimpleExpressionTrue;
+import static tests.IfThenElseOpTester.getExpectedTestElseExpressionFalse;
+import static tests.IfThenElseOpTester.getExpectedTestElseExpressionTrue;
+import static tests.IfThenElseOpTester.getExpectedTestExpressionScopeIf;
+import static tests.IfThenElseOpTester.getExpectedTestRunningExpressionIf;
+import static tests.IfThenElseOpTester.getExpectedTestSimpleExpressionFalse;
+import static tests.IfThenElseOpTester.getExpectedTestSimpleExpressionTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +14,9 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import tests.IfThenElseTester;
+import tests.IfThenElseOpTester;
 
-public class IfThenElseInterpreterTester extends InterpreterTester implements IfThenElseTester {
+public class IfThenElseOpInterpreterTester extends InterpreterTester implements IfThenElseOpTester {
 
 	@Override
     @Test

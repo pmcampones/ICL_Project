@@ -13,7 +13,7 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 
-public interface IfThenElseTester {
+public interface IfThenElseOpTester {
 	
 	@Test
 	void testSimpleExpressionTrue() 

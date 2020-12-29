@@ -5,15 +5,15 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
-import tests.BoolOperationsTester;
+import tests.BoolOpTester;
 
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static tests.BoolOperationsTester.*;
+import static tests.BoolOpTester.*;
 
-public class BoolOperationsInterpreterTester extends InterpreterTester implements BoolOperationsTester {
+public class BoolOpInterpreterTester extends InterpreterTester implements BoolOpTester {
 
 	@Override
     @Test

@@ -1,7 +1,7 @@
 package tests.compiler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.BoolOperationsTester.*;
+import static tests.BoolOpTester.*;
 
 import java.io.IOException;
 
@@ -11,9 +11,9 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import tests.BoolOperationsTester;
+import tests.BoolOpTester;
 
-public class BoolOperationsCompilerTester extends CompilationTester implements BoolOperationsTester {
+public class BoolOpCompilerTester extends CompilationTester implements BoolOpTester {
 
 	@Override
 	@Test

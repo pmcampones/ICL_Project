@@ -12,7 +12,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
-public interface BoolOperationsTester {
+public interface BoolOpTester {
 
 	@Test
 	void testBoolConstTrue() 

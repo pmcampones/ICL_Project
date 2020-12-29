@@ -18,7 +18,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import tests.AttrOpTester;
 
-public class AttrInterpreterTester extends InterpreterTester implements AttrOpTester {
+public class AttrInterpreterOpTester extends InterpreterTester implements AttrOpTester {
 
 	@Override
     @Test

@@ -6,15 +6,15 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import tests.IfThenElseTester;
+import tests.IfThenElseOpTester;
 
-import static tests.IfThenElseTester.*;
+import static tests.IfThenElseOpTester.*;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-public class IfThenElseCompilerTester extends CompilationTester implements IfThenElseTester{
+public class IfThenElseOpCompilerTester extends CompilationTester implements IfThenElseOpTester{
 
 	@Override
 	@Test

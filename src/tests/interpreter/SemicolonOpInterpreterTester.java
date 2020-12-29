@@ -30,7 +30,7 @@ import tests.SemicolonOpTester;
  * @author Pedro Campon�s - 50051
  **/
 
-public class SemicolonInterpreterTester extends InterpreterTester implements SemicolonOpTester{
+public class SemicolonOpInterpreterTester extends InterpreterTester implements SemicolonOpTester{
 
 	@Override
 	@Test

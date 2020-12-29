@@ -12,7 +12,7 @@ import java.util.Random;
 import static tests.GenericTester.MAX_RAND;
 import static tests.GenericTester.writeToToken;
 
-public interface DefVarsTester {
+public interface DefVarsOpTester {
 
     @Test
     void testDefWithoutUsingSimple()

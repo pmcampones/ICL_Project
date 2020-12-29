@@ -1,17 +1,17 @@
 package tests.compiler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.DefVarsTester.getExpectedTestDefDifferentVarsSameScope;
-import static tests.DefVarsTester.getExpectedTestDefNestedCaires1;
-import static tests.DefVarsTester.getExpectedTestDefNestedCaires2;
-import static tests.DefVarsTester.getExpectedTestDefNestedSimple;
-import static tests.DefVarsTester.getExpectedTestDefSameVarDifferentScopesComplex;
-import static tests.DefVarsTester.getExpectedTestDefSameVarDifferentScopesSimple;
-import static tests.DefVarsTester.getExpectedTestDefUsingComplex;
-import static tests.DefVarsTester.getExpectedTestDefUsingSimple;
-import static tests.DefVarsTester.getExpectedTestDefWithoutUsingComplex;
-import static tests.DefVarsTester.getExpectedTestDefWithoutUsingSimple;
-import static tests.DefVarsTester.getExpectedTestTwoFramesSameScope;
+import static tests.DefVarsOpTester.getExpectedTestDefDifferentVarsSameScope;
+import static tests.DefVarsOpTester.getExpectedTestDefNestedCaires1;
+import static tests.DefVarsOpTester.getExpectedTestDefNestedCaires2;
+import static tests.DefVarsOpTester.getExpectedTestDefNestedSimple;
+import static tests.DefVarsOpTester.getExpectedTestDefSameVarDifferentScopesComplex;
+import static tests.DefVarsOpTester.getExpectedTestDefSameVarDifferentScopesSimple;
+import static tests.DefVarsOpTester.getExpectedTestDefUsingComplex;
+import static tests.DefVarsOpTester.getExpectedTestDefUsingSimple;
+import static tests.DefVarsOpTester.getExpectedTestDefWithoutUsingComplex;
+import static tests.DefVarsOpTester.getExpectedTestDefWithoutUsingSimple;
+import static tests.DefVarsOpTester.getExpectedTestTwoFramesSameScope;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
-import tests.DefVarsTester;
+import tests.DefVarsOpTester;
 
 /**
 * MIEI
@@ -29,7 +29,7 @@ import tests.DefVarsTester;
 * @author Pedro Campon�s - 50051
 **/
 
-class DefVarsCompilerTest extends CompilationTester implements DefVarsTester {
+class DefVarsOpCompilerTest extends CompilationTester implements DefVarsOpTester {
 
 	@Override
     @Test

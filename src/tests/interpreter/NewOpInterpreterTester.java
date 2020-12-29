@@ -19,7 +19,7 @@ import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import tests.NewOpTester;
 
-public class NewOperationInterpreterTester extends InterpreterTester implements NewOpTester{
+public class NewOpInterpreterTester extends InterpreterTester implements NewOpTester{
 
 	@Override
     @Test

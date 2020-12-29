@@ -1,31 +1,39 @@
-package tests.interpreter;
+package tests;
+
+import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
-import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
+import static tests.GenericTester.writeToToken;
+import static tests.GenericTester.MAX_RAND;
+
+import java.io.IOException;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public interface WhileOpTester {
 
-public class WhileInterpreterTester extends InterpreterTester {
-
-    @Test
-    public void testCountToTen()
+	@Test
+	void testCountToTen()
             throws TypeErrorException, UndeclaredIdentifierException,
-            ParseException, IDDeclaredTwiceException {
-        writeToToken("def x = new 0 in while !x < 10 do x := !x + 1 end; !x end");
-        assertEquals("10", run());
-    }
-
-    //TODO Changed the sintax, now the test does not work, but the program does.
-    @Test
-    public void testFibonacci()
-            throws TypeErrorException, UndeclaredIdentifierException,
-            ParseException, IDDeclaredTwiceException {
-        int fibIndex = new Random().nextInt(MAX_RAND);
+            ParseException, IDDeclaredTwiceException,
+            IOException, InterruptedException;
+	
+	static String getExpectedTestCountToTen() {
+		writeToToken("def x = new 0 in while !x < 10 do x := !x + 1 end; !x end");
+		return "10";
+	}
+	
+	@Test
+	void testFibonacci()
+			throws TypeErrorException, UndeclaredIdentifierException,
+            ParseException, IDDeclaredTwiceException,
+            IOException, InterruptedException;
+	
+	static String getExpectedTestFibonacci() {
+		int fibIndex = new Random().nextInt(MAX_RAND);
         String exp = String.format(
                 "def fibIndex = %d result = new 0 in " +
                     "if fibIndex <= 1 then " +
@@ -45,11 +53,10 @@ public class WhileInterpreterTester extends InterpreterTester {
                     "!result " +
                 "end", fibIndex);
         writeToToken(exp);
-        assertEquals(String.valueOf(computeFibonacci(fibIndex)), run());
-
-    }
-
-    private int computeFibonacci(int fibIndex) {
+        return String.valueOf(computeFibonacci(fibIndex));
+	}
+	
+	private static int computeFibonacci(int fibIndex) {
         if (fibIndex <= 1) return fibIndex;
         int x = 0, y = 1;
         for (int i = 1; i < fibIndex; i++) {
@@ -59,12 +66,15 @@ public class WhileInterpreterTester extends InterpreterTester {
         }
         return y;
     }
-
-    @Test
-    public void gaussianSum()
-            throws TypeErrorException, UndeclaredIdentifierException,
-            ParseException, IDDeclaredTwiceException {
-        int limit = new Random().nextInt(MAX_RAND);
+	
+	@Test
+	void testGaussianSum()
+			throws TypeErrorException, UndeclaredIdentifierException,
+            ParseException, IDDeclaredTwiceException,
+            IOException, InterruptedException;
+	
+	static String getExpectedTestGaussianSum() {
+		int limit = new Random().nextInt(MAX_RAND);
         String exp = String.format(
                 "def i = new 0 sum = new 0 in " +
                     "while !i < %d do " +
@@ -74,14 +84,14 @@ public class WhileInterpreterTester extends InterpreterTester {
                     "!sum " +
                 "end", limit);
         writeToToken(exp);
-        assertEquals(String.valueOf(computeGaussianSum(limit)), run());
-    }
-
-    private int computeGaussianSum(int limit) {
+        return String.valueOf(computeGaussianSum(limit));
+	}
+	
+	private static int computeGaussianSum(int limit) {
         int sum = 0;
         for (int i = 0; i <= limit; i++)
             sum += i;
         return sum;
     }
-
+	
 }
