@@ -6,7 +6,6 @@ import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.CheckCastOp;
 import compiler.operations.DupOp;
-import compiler.operations.GetFieldOp;
 import compiler.operations.PutFieldOp;
 import dataTypes.IType;
 import dataTypes.IValue;
@@ -54,7 +53,6 @@ public class ASTAttr implements ASTNode {
 		codeBlock.addOperation(new DupOp());
 		codeBlock.addOperation(new CheckCastOp(className));
 		this.value.compile(codeBlock, envCoord, envTypes);
-		codeBlock.addOperation(new GetFieldOp(String.format("%s/v", className), ((TMCell)type).getReferencedType().getCompString()));
 		codeBlock.addOperation(new PutFieldOp(String.format("%s/v", className), ((TMCell)type).getReferencedType().getCompString()));
 	}
 
@@ -62,7 +60,10 @@ public class ASTAttr implements ASTNode {
 	public IType typeCheck(Environment<IType> e)
 			throws TypeErrorException, IDDeclaredTwiceException,
 			UndeclaredIdentifierException {
-		if (var.typeCheck(e).equals(value.typeCheck(e)))
+		IType varType = var.typeCheck(e);
+		if (!(varType instanceof TMCell))
+			throw new TypeErrorException("Variable being dereferenced is not mutable");
+		if (((TMCell)varType).getReferencedType().equals(value.typeCheck(e)))
 			return value.typeCheck(e);
 		throw new TypeErrorException("Variable and attributed value are of different types.");
 	}
