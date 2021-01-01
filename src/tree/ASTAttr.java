@@ -6,6 +6,7 @@ import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.CheckCastOp;
 import compiler.operations.DupOp;
+import compiler.operations.GetFieldOp;
 import compiler.operations.PutFieldOp;
 import dataTypes.IType;
 import dataTypes.IValue;
@@ -50,10 +51,13 @@ public class ASTAttr implements ASTNode {
 		String className = ((TMCell) type).getRefFileName();
 		
 		this.var.compile(codeBlock, envCoord, envTypes);
-		codeBlock.addOperation(new DupOp());
 		codeBlock.addOperation(new CheckCastOp(className));
+		codeBlock.addOperation(new DupOp());
 		this.value.compile(codeBlock, envCoord, envTypes);
-		codeBlock.addOperation(new PutFieldOp(String.format("%s/v", className), ((TMCell)type).getReferencedType().getCompString()));
+		codeBlock.addOperation(new PutFieldOp(String.format("%s/v", className),
+				((TMCell)type).getReferencedType().getCompString()));
+		codeBlock.addOperation(new GetFieldOp(String.format("%s/v", className),
+				((TMCell)type).getReferencedType().getCompString()));
 	}
 
 	@Override

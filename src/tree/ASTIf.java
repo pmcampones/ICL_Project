@@ -5,12 +5,17 @@ import java.io.IOException;
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.Label;
-import compiler.operations.EqualOp;
 import compiler.operations.GoToOp;
 import compiler.operations.LabelOp;
-import compiler.operations.PushValueOp;
-import compiler.operations.SubOp;
-import dataTypes.*;
+import compiler.operations.NotEqualOp;
+import compiler.operations.PopOp;
+import dataTypes.IType;
+import dataTypes.IValue;
+import dataTypes.TBool;
+import dataTypes.TVoid;
+import dataTypes.TypeErrorException;
+import dataTypes.VBool;
+import dataTypes.VVoid;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -44,13 +49,15 @@ public class ASTIf implements ASTNode{
     	Label thenLabel = new Label();
     	Label exit = new Label();
     	ifNode.compile(codeBlock, envCoord, envTypes);
-    	codeBlock.addOperation(new PushValueOp("1"));
-    	codeBlock.addOperation(new SubOp());
-    	codeBlock.addOperation(new EqualOp(thenLabel));
+    	codeBlock.addOperation(new NotEqualOp(thenLabel));
     	elseNode.compile(codeBlock, envCoord, envTypes);
+    	if (!(elseNode.typeCheck(envTypes) instanceof TVoid))
+    		codeBlock.addOperation(new PopOp());
     	codeBlock.addOperation(new GoToOp(exit));
     	codeBlock.addOperation(new LabelOp(thenLabel));
     	thenNode.compile(codeBlock, envCoord, envTypes);
+    	if (!(thenNode.typeCheck(envTypes) instanceof TVoid))
+    		codeBlock.addOperation(new PopOp());
     	codeBlock.addOperation(new LabelOp(exit)); 
     	
     }

@@ -8,6 +8,8 @@ import static tests.StaticTypecheckerOpTester.*;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -15,6 +17,7 @@ import parser.ParseException;
 
 public class StaticTypecheckerOpCompilerTester extends CompilationTester implements StaticTypecheckerOpTester{
 
+	@Test
 	@Override
 	public void testSimpleIntExp() 
 			throws ParseException, IOException, 
@@ -24,6 +27,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(getExpectedTestSimpleIntExp(), compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testSimpleBoolExp() 
 			throws ParseException, IOException, 
@@ -34,6 +38,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(expected, compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testSimpleRefExp() 
 			throws ParseException, IOException, 
@@ -43,6 +48,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(getExpectedTestSimpleRefExp(), compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testSeveralExp() 
 			throws ParseException, IOException, 
@@ -52,6 +58,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(getExpectedTestSeveralExp(), compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testChainedTypes() 
 			throws ParseException, IOException, 
@@ -61,6 +68,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(getExpectedTestChainedTypes(), compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testStaticAndDynamic() 
 			throws ParseException, IOException, 
@@ -70,6 +78,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(getExpectedTestStaticAndDynamic(), compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testDifferentScopesStatic() 
 			throws ParseException, IOException, 
@@ -79,6 +88,7 @@ public class StaticTypecheckerOpCompilerTester extends CompilationTester impleme
 		assertEquals(getExpectedTestDifferentScopesStatic(), compileAndGetResults(methodName, 2));
 	}
 
+	@Test
 	@Override
 	public void testDifferentScopesStaticAndDynamic() 
 			throws ParseException, IOException, 

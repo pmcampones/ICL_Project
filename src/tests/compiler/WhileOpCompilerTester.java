@@ -7,6 +7,8 @@ import static tests.WhileOpTester.getExpectedTestGaussianSum;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
+
 import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
@@ -15,6 +17,7 @@ import tests.WhileOpTester;
 
 public class WhileOpCompilerTester extends CompilationTester implements WhileOpTester{
 
+	@Test
 	@Override
 	public void testCountToTen() 
 			throws ParseException, IOException, 
@@ -24,6 +27,7 @@ public class WhileOpCompilerTester extends CompilationTester implements WhileOpT
 		assertEquals(getExpectedTestCountToTen(), compileAndGetResults(methodName, 1));
 	}
 
+	@Test
 	@Override
 	public void testFibonacci() 
 			throws ParseException, IOException, 
@@ -33,6 +37,7 @@ public class WhileOpCompilerTester extends CompilationTester implements WhileOpT
 		assertEquals(getExpectedTestFibonacci(), compileAndGetResults(methodName, 2));
 	}
 
+	@Test
 	@Override
 	public void testGaussianSum() 
 			throws ParseException, IOException, 

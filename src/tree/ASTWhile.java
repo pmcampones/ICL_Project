@@ -8,6 +8,7 @@ import compiler.Label;
 import compiler.operations.GoToOp;
 import compiler.operations.LabelOp;
 import compiler.operations.NotEqualOp;
+import compiler.operations.PopOp;
 import compiler.operations.PushValueOp;
 import compiler.operations.SubOp;
 import dataTypes.*;
@@ -47,6 +48,8 @@ public class ASTWhile implements ASTNode{
     	codeBlock.addOperation(new SubOp());
     	codeBlock.addOperation(new NotEqualOp(exit));
     	doNode.compile(codeBlock, envCoord, envTypes);
+    	if (!(doNode.typeCheck(envTypes) instanceof TVoid))
+    		codeBlock.addOperation(new PopOp());
     	codeBlock.addOperation(new GoToOp(beforeCond));
     	codeBlock.addOperation(new LabelOp(exit));
     }
