@@ -1,11 +1,9 @@
 package tree;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Scanner;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -106,16 +104,15 @@ public class ASTDef implements ASTNode {
 			UndeclaredIdentifierException, IOException {
     	Optional<String> optType = v.type;
     	if(optType.isPresent())
-    		try (InputStream in = new ByteArrayInputStream(optType.get().getBytes());
-				 DataInputStream dataIn = new DataInputStream(in)) {
-				return getVariableSubtype(dataIn);
+    		try (Scanner in = new Scanner(optType.get())) {
+				return getVariableSubtype(in);
 			}
     	
     	return v.exp.typeCheck(envTypes);
     }
 
-    private IType getVariableSubtype(DataInputStream in) throws IOException {
-    	String subtypeName = in.readUTF();
+    private IType getVariableSubtype(Scanner in) throws IOException {
+    	String subtypeName = in.next();
     	switch (subtypeName) {
 			case "int":
 				return new TInt();
