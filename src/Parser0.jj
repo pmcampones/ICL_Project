@@ -5,8 +5,6 @@
 **/
 
 PARSER_BEGIN(Parser)
-
-
 /** ID lister. */
 import tree.*;
 import environment.*;
@@ -15,26 +13,30 @@ import tree.boolArithmetic.*;
 import tree.comparisons.*;
 import java.util.Collection;
 import java.util.LinkedList;
-public class Parser {
 
+public class Parser
+{
   /** Main entry point. */
-  public static void main(String[] args) {
+  public static void main(String [] args)
+  {
     Parser parser = new Parser(System.in);
     ASTNode exp;
-
-    while (true) {
-        try {
-            exp = parser.Start();
-            System.out.println( exp.eval(new Environment<dataTypes.IValue>()) );
-        } catch (Exception e) {
-          System.out.println ("Syntax Error!");
-          parser.ReInit(System.in);
-        }
+    while (true)
+    {
+      try
+      {
+        exp = parser.Start();
+        if (exp != null) 
+        	System.out.println(exp.eval(new Environment < dataTypes.IValue > ()));
+      }
+      catch (Exception e)
+      {
+        System.out.println("Syntax Error!");
+        parser.ReInit(System.in);
+      }
     }
   }
-
 }
-
 
 PARSER_END(Parser)
 
@@ -47,90 +49,117 @@ SKIP :
 
 TOKEN :
 {
-  < DEF: "def">
-  |
-  < IN: "in">
-  |
-  < END: "end">
-  |
-  < NEW: "new">
-  |
-  < BOOL: "true" | "false" | "True" | "False">
-  |
-  < IF : "if">
-  |
-  < THEN : "then">
-  |
-  < ELSE : "else">
-  |
-  < WHILE : "while">
-  |
-  < DO : "do">
-  |
-  < INTEGER_REF : "int">
-  |
-  < BOOL_REF : "bool">
-  |
-  < GENERAL_REF : "ref">
-  |
-  < ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )*>
-  |
-  < NUM: (["0"-"9"])+>
-  |
-  < PLUS : "+">
-  |
-  < MINUS : "-">
-  |
-  < TIMES : "*">
-  |
-  < DIV : "/">
-  |
-  < REMAINDER: "%">
-  |
-  < LPAR : "(">
-  |
-  < RPAR : ")">
-  |
-  < EL: "\n">
-  |
-  < EQUALS: "==">
-  |
-  < GREATER: ">">
-  |
-  < GREATER_EQ: ">=">
-  |
-  < SMALLER: "<">
-  |
-  < SMALLER_EQ: "<=">
-  |
-  < AND: "&&">
-  |
-  < OR: "||">
-  |
-  < NOT: "~">
-  |
-  < ATTR_ID: "=">
-  |
-  < DEREF: "!">
-  |
-  < ATTR_VAL: ":=">
-  |
-  < DECLARE_TYPE : ":">
-  |
-  < SEMI: ";">
+  < DEF : "def" >
+| 
+  < IN : "in" >
+| 
+  < END : "end" >
+| 
+  < NEW : "new" >
+| 
+  < BOOL :
+    "true"
+  | "false"
+  | "True"
+  | "False" >
+| 
+  < IF : "if" >
+| 
+  < THEN : "then" >
+| 
+  < ELSE : "else" >
+| 
+  < WHILE : "while" >
+| 
+  < DO : "do" >
+| 
+  < INTEGER_REF : "int" >
+| 
+  < BOOL_REF : "bool" >
+| 
+  < GENERAL_REF : "ref" >
+| 
+  < ID : [ "a"-"z", "A"-"Z" ] ([ "a"-"z", "A"-"Z", "0"-"9" ])* >
+| 
+  < NUM : ([ "0"-"9" ])+ >
+| 
+  < PLUS : "+" >
+| 
+  < MINUS : "-" >
+| 
+  < TIMES : "*" >
+| 
+  < DIV : "/" >
+| 
+  < REMAINDER : "%" >
+| 
+  < LPAR : "(" >
+| 
+  < RPAR : ")" >
+| 
+  < EL : "\n" >
+| 
+  < EQUALS : "==" >
+| 
+  < GREATER : ">" >
+| 
+  < GREATER_EQ : ">=" >
+| 
+  < SMALLER : "<" >
+| 
+  < SMALLER_EQ : "<=" >
+| 
+  < AND : "&&" >
+| 
+  < OR : "||" >
+| 
+  < NOT : "~" >
+| 
+  < ATTR_ID : "=" >
+| 
+  < DEREF : "!" >
+| 
+  < ATTR_VAL : ":=" >
+| 
+  < DECLARE_TYPE : ":" >
+| 
+  < SEMI : ";" >
 }
 
-ASTNode Start():
-{ ASTNode t; }
+ASTNode Start() :
 {
-   (<SEMI>)* t = ExpSeq() <EL>
-   { return t; }
+  ASTNode t = null;
+}
+{
+  (
+    t = ExpSeq()
+  | < EOF >
+  )
+  {
+    return t;
+  }
+}
+
+ASTNode ExpSeq() :
+{
+  ASTNode t;
+}
+{
+  (< SEMI >)* t = Exp() (< SEMI >)*
+  (
+    < EL >
+  | t = ExpSeq()
+  )
+  {
+    return t;
+  }
 }
 
 /*
 *   Sequence of expressions, the value returned is that of the last expression
 */
-ASTNode ExpSeq() :
+
+ASTNode ExpSeq2() :
 {
     ASTNode lastExp;
 } {
@@ -138,6 +167,9 @@ ASTNode ExpSeq() :
     //((<SEMI>)+ ({lastExp = new ASTSemi(lastExp, Exp());} (<SEMI>)+)*)?
     {return lastExp;}
 }
+
+
+
 
 ASTNode Exp() :
 {
@@ -192,9 +224,9 @@ ASTNode Fact() :
    | <MINUS>            {t = new ASTNeg(Fact());}
    | <DEREF>            {t = new ASTDeref(Fact());}         //Must not be FunctionalExp() otherwise !x + !y fails
    | <NEW>          {t = new ASTNew(FunctionalExp());}
-   | <WHILE> t = Exp() <DO> {t = new ASTWhile(t, ExpSeq());} <END>
+   | <WHILE> t = Exp() <DO> {t = new ASTWhile(t, ExpSeq2());} <END>
    | <DEF>          t = Def()
-   | <LPAR> t = ExpSeq() <RPAR>
+   | <LPAR> t = ExpSeq2() <RPAR>
    | <IF>           t = If()
    | <NOT> {t = new ASTNot(Fact());})
    { return t; }
@@ -212,7 +244,7 @@ ASTNode Def() :
     <ATTR_ID>
     {variables.add(new Variable(id.toString(), type, Exp()));})+
     <IN>
-    body = ExpSeq()
+    body = ExpSeq2()
     <END>
     {return new ASTDef(variables, body);}
 }
@@ -222,6 +254,6 @@ ASTNode If() :
     ASTNode ifRes, thenRes, elseRes;
 } {
     {elseRes = new ASTVoid();}
-    ifRes = Exp() <THEN> thenRes = ExpSeq() (<ELSE> elseRes = ExpSeq())? <END>
+    ifRes = Exp() <THEN> thenRes = ExpSeq2() (<ELSE> elseRes = ExpSeq2())? <END>
     {return new ASTIf(ifRes, thenRes, elseRes);}
 }
