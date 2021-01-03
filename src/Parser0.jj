@@ -133,7 +133,7 @@ ASTNode Start() :
 {
   (
     t = ExpSeq()
-  | < EOF >
+  | <EOF>
   )
   {
     return t;
@@ -249,7 +249,7 @@ ASTNode DefType() :
 
 ASTNode Def(Token id, String type) :
 {   
-    ASTNode body;
+    ASTNode body, t;
     Token id2, aux2;
     String type2;
     Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
@@ -261,10 +261,12 @@ ASTNode Def(Token id, String type) :
     ((aux2 = <INTEGER_REF> | aux2 = <BOOL_REF> | aux2 = <GENERAL_REF>){type2 = String.format("%s %s", type2, aux2.image).trim();})+)?
     <ATTR_ID>
     {variables.add(new Variable(id2.toString(), type2, Exp()));})*
-    <IN>
+    { t = new ASTNum(0); }
+    (<IN>
     body = ExpSeq2()
     <END>
-    {return new ASTDef(variables, body);}
+    {t = new ASTDef(variables, body);})?
+    { return t; }
 }
 
 ASTNode Func(Token name) :
