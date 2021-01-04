@@ -34,24 +34,15 @@ import parser.Parser;
 * @author Pedro Campon�s - 50051
 **/
 
-public class ASTFunc implements ASTNode {
+public class ASTGlobalDef implements ASTNode {
 
 	private static final String TYPE_MISMATCH_MESSAGE =
 			"Value attributed to the variable is not the expected type";
 
-    private final Collection<Variable> args;
+    private final Collection<Variable> variables;
 
-    private final ASTNode body;
-    
-    private final String name;
-    
-    private final String type;
-
-    public ASTFunc(String name, String type, Collection<Variable> args, ASTNode body) {
-    	this.name = name;
-    	this.type = type;
-    	this.args = args;
-        this.body = body;
+    public ASTGlobalDef(Collection<Variable> variables) {
+        this.variables = variables;
     }
     
     @Override
@@ -59,17 +50,25 @@ public class ASTFunc implements ASTNode {
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
             TypeErrorException {
     	
-    	Parser.globalEnv.assocFunc(name, new Function(name, type, args, body));
+    	Environment<IValue> currEnv = prevEnv.beginScope();
+        for (Variable v : variables) {
+			Optional<String> optType = v.type;
+        	IValue valAttr = v.exp.eval(currEnv);
+        	if (optType.isPresent() && !optType.get().equals(valAttr.getType().toString()))
+        		throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
+        	IValue value = v.exp.eval(currEnv);
+			currEnv.assoc(v.id, value);
+			Parser.globalEnv.assocVar(v.id, value);
+		}
        
         return null;
-    	
     }
 
-	@Override
-	public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
-			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
-		
-	}
+    @Override
+    public void compile(CodeBlock cb,Environment<Coordinates> envCoord, Environment<IType> envTypes)
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
+
+    }
 
 	@Override
 	public IType typeCheck(Environment<IType> e)
@@ -78,5 +77,6 @@ public class ASTFunc implements ASTNode {
 		return null;
 	}
 
-   
+
+    
 }

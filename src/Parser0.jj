@@ -1,7 +1,7 @@
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
 
 PARSER_BEGIN(Parser)
@@ -13,9 +13,12 @@ import tree.boolArithmetic.*;
 import tree.comparisons.*;
 import java.util.Collection;
 import java.util.LinkedList;
+import dataTypes.IValue;
 
 public class Parser
 {
+  public static final GlobalEnvironment globalEnv = new GlobalEnvironment();
+
   /** Main entry point. */
   public static void main(String [] args)
   {
@@ -26,8 +29,12 @@ public class Parser
       try
       {
         exp = parser.Start();
-        if (exp != null) 
-        	System.out.println(exp.eval(new Environment < dataTypes.IValue > ()));
+        if (exp != null)
+        {
+          IValue val = exp.eval(new Environment < dataTypes.IValue > ());
+          if (val != null) 
+          System.out.println(val);
+        }
       }
       catch (Exception e)
       {
@@ -133,7 +140,7 @@ ASTNode Start() :
 {
   (
     t = ExpSeq()
-  | <EOF>
+  | < EOF >
   )
   {
     return t;
@@ -161,31 +168,65 @@ ASTNode ExpSeq() :
 
 ASTNode ExpSeq2() :
 {
-    ASTNode lastExp;
-} {
-    lastExp = Exp() ((<SEMI>)+ {lastExp = new ASTSemi(lastExp, Exp());})*
-    //((<SEMI>)+ ({lastExp = new ASTSemi(lastExp, Exp());} (<SEMI>)+)*)?
-    {return lastExp;}
+  ASTNode lastExp;
 }
-
-
-
+{
+  lastExp = Exp()
+  (
+    (< SEMI >)+
+    {
+      lastExp = new ASTSemi(lastExp, Exp());
+    }
+  )*
+  //((<SEMI>)+ ({lastExp = new ASTSemi(lastExp, Exp());} (<SEMI>)+)*)?
+  {
+    return lastExp;
+  }
+}
 
 ASTNode Exp() :
 {
-    ASTNode expRes;
-} {
-    expRes = FunctionalExp() (
-         <ATTR_VAL> {expRes = new ASTAttr(expRes, Exp());}
-        | <EQUALS>   {expRes = new ASTEquals(expRes, FunctionalExp());}   //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
-        | <GREATER> {expRes = new ASTGreater(expRes, FunctionalExp());}
-        | <GREATER_EQ> {expRes = new ASTGreaterEq(expRes, FunctionalExp());}
-        | <SMALLER> {expRes = new ASTSmaller(expRes, FunctionalExp());}
-        | <SMALLER_EQ> {expRes = new ASTSmallerEq(expRes, FunctionalExp());}
-        | <AND> {expRes = new ASTAnd(expRes, FunctionalExp());}
-        | <OR> {expRes = new ASTOr(expRes, FunctionalExp());}
-    )?
-    {return expRes;}
+  ASTNode expRes;
+}
+{
+  expRes = FunctionalExp()
+  (
+    < ATTR_VAL >
+    {
+      expRes = new ASTAttr(expRes, Exp());
+    }
+  | < EQUALS >
+    {
+      expRes = new ASTEquals(expRes, FunctionalExp());
+    } //MIGHT HAVE TO MIGRATE TO FUNCTIONAL EXP
+  | < GREATER >
+    {
+      expRes = new ASTGreater(expRes, FunctionalExp());
+    }
+  | < GREATER_EQ >
+    {
+      expRes = new ASTGreaterEq(expRes, FunctionalExp());
+    }
+  | < SMALLER >
+    {
+      expRes = new ASTSmaller(expRes, FunctionalExp());
+    }
+  | < SMALLER_EQ >
+    {
+      expRes = new ASTSmallerEq(expRes, FunctionalExp());
+    }
+  | < AND >
+    {
+      expRes = new ASTAnd(expRes, FunctionalExp());
+    }
+  | < OR >
+    {
+      expRes = new ASTOr(expRes, FunctionalExp());
+    }
+  )?
+  {
+    return expRes;
+  }
 }
 
 /*
@@ -193,106 +234,269 @@ ASTNode Exp() :
  */
 ASTNode FunctionalExp() :
 {
-    ASTNode termRes;
-} {
-    termRes = Term() (
-          <PLUS> {termRes = new ASTPlus(termRes, Term());}
-        | <MINUS> {termRes = new ASTSub(termRes, Term());}
-    )*
-    {return termRes;}
+  ASTNode termRes;
+}
+{
+  termRes = Term()
+  (
+    < PLUS >
+    {
+      termRes = new ASTPlus(termRes, Term());
+    }
+  | < MINUS >
+    {
+      termRes = new ASTSub(termRes, Term());
+    }
+  )*
+  {
+    return termRes;
+  }
 }
 
 ASTNode Term() :
 {
-    ASTNode factRes;
-} {
-    factRes = Fact() (
-          <TIMES> {factRes = new ASTMult(factRes, Fact());}
-        | <DIV> {factRes = new ASTDiv(factRes, Fact());}
-        | <REMAINDER> {factRes = new ASTRem(factRes, Fact());}
-    )*
-    {return factRes;}
+  ASTNode factRes;
+}
+{
+  factRes = Fact()
+  (
+    < TIMES >
+    {
+      factRes = new ASTMult(factRes, Fact());
+    }
+  | < DIV >
+    {
+      factRes = new ASTDiv(factRes, Fact());
+    }
+  | < REMAINDER >
+    {
+      factRes = new ASTRem(factRes, Fact());
+    }
+  )*
+  {
+    return factRes;
+  }
 }
 
 ASTNode Fact() :
-{ Token n; 
-  ASTNode t;}
 {
-   ( n = <NUM>      {t = new ASTNum(Integer.parseInt(n.image));}
-   | n = <BOOL>     {t = new ASTBool(n.image);}
-   | n = <ID>       {t = new ASTVariable(n.image);}
-   | <MINUS>            {t = new ASTNeg(Fact());}
-   | <DEREF>            {t = new ASTDeref(Fact());}         //Must not be FunctionalExp() otherwise !x + !y fails
-   | <NEW>          {t = new ASTNew(FunctionalExp());}
-   | <WHILE> t = Exp() <DO> {t = new ASTWhile(t, ExpSeq2());} <END>
-   | <DEF>          t = DefType()
-   | <LPAR> t = ExpSeq2() <RPAR>
-   | <IF>           t = If()
-   | <NOT> {t = new ASTNot(Fact());})
-   { return t; }
+  Token n;
+  ASTNode t;
+}
+{
+  (
+    n = < NUM >
+    {
+      t = new ASTNum(Integer.parseInt(n.image));
+    }
+  | n = < BOOL >
+    {
+      t = new ASTBool(n.image);
+    }
+  | n = < ID >
+    {
+      t = new ASTVariable(n.image);
+    }
+  | < MINUS >
+    {
+      t = new ASTNeg(Fact());
+    }
+  | < DEREF >
+    {
+      t = new ASTDeref(Fact());
+    } //Must not be FunctionalExp() otherwise !x + !y fails
+  | < NEW >
+    {
+      t = new ASTNew(FunctionalExp());
+    }
+  | < WHILE > t = Exp() < DO >
+    {
+      t = new ASTWhile(t, ExpSeq2());
+    }
+    < END >
+  | < DEF > t = DefType()
+  | < LPAR > t = ExpSeq2() < RPAR >
+  | < IF > t = If()
+  | < NOT >
+    {
+      t = new ASTNot(Fact());
+    }
+  )
+  {
+    return t;
+  }
 }
 
 ASTNode DefType() :
-{  
-    ASTNode t;
-    Token id, aux;
-    String type;
-} {
-	{type = null;} id = <ID>
-    (<DECLARE_TYPE> {type = "";}
-    ((aux = <INTEGER_REF> | aux = <BOOL_REF> | aux = <GENERAL_REF>){type = String.format("%s %s", type, aux.image).trim();})+)?
-
-	(<ATTR_ID> {t = Def(id, type);}
-	| <LPAR> {t = Func(id);})
-	{return t;}
+{
+  ASTNode t;
+  Token id, aux;
+  String type;
+}
+{
+  {
+    type = null;
   }
+  id = < ID >
+  (
+    < DECLARE_TYPE >
+    {
+      type = "";
+    }
+    (
+      (
+        aux = < INTEGER_REF >
+      | aux = < BOOL_REF >
+      | aux = < GENERAL_REF >
+      )
+      {
+        type = String.format("%s %s", type, aux.image).trim();
+      }
+    )+
+  )?
+  (
+    < ATTR_ID >
+    {
+      t = Def(id, type);
+    }
+  | < LPAR >
+    {
+      t = Func(id);
+    }
+  )
+  {
+    return t;
+  }
+}
 
 ASTNode Def(Token id, String type) :
-{   
-    ASTNode body, t;
-    Token id2, aux2;
-    String type2;
-    Collection<Variable> variables = new LinkedList<Variable>();  //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
-} {
-    {variables.add(new Variable(id.toString(), type, Exp()));}
-
-    ({type2 = null;} id2 = <ID>
-    (<DECLARE_TYPE> {type2 = "";}
-    ((aux2 = <INTEGER_REF> | aux2 = <BOOL_REF> | aux2 = <GENERAL_REF>){type2 = String.format("%s %s", type2, aux2.image).trim();})+)?
-    <ATTR_ID>
-    {variables.add(new Variable(id2.toString(), type2, Exp()));})*
-    { t = new ASTNum(0); }
-    (<IN>
-    body = ExpSeq2()
-    <END>
-    {t = new ASTDef(variables, body);})?
-    { return t; }
+{
+  ASTNode body, t;
+  Token id2, aux2;
+  String type2;
+  Collection < Variable > variables = new LinkedList < Variable > (); //DO NOT REMOVE TYPE OF LIST VARIABLE FROM INSTANTIATION, PARSER DOES NOT LIKE IT
+}
+{
+  {
+    variables.add(new Variable(id.toString(), type, Exp()));
+  }
+  (
+    {
+      type2 = null;
+    }
+    id2 = < ID >
+    (
+      < DECLARE_TYPE >
+      {
+        type2 = "";
+      }
+      (
+        (
+          aux2 = < INTEGER_REF >
+        | aux2 = < BOOL_REF >
+        | aux2 = < GENERAL_REF >
+        )
+        {
+          type2 = String.format("%s %s", type2, aux2.image).trim();
+        }
+      )+
+    )?
+    < ATTR_ID >
+    {
+      variables.add(new Variable(id2.toString(), type2, Exp()));
+    }
+  )*
+  {
+    t = new ASTGlobalDef(variables);
+  }
+  (
+    < IN > 
+    body = ExpSeq2() 
+    < END >
+    {
+      t = new ASTDef(variables, body);
+    }
+  )?
+  {
+    return t;
+  }
 }
 
 ASTNode Func(Token name) :
-{   Token id, aux;
-    String type, functype;
-	Collection<Variable> args = new LinkedList<Variable>();
-	ASTNode body;
-} {
-  	({type = null;} id = <ID>
-    (<DECLARE_TYPE> {type = "";}
-    ((aux = <INTEGER_REF> | aux = <BOOL_REF> | aux = <GENERAL_REF>){type = String.format("%s %s", type, aux.image).trim();})+)?
-    {args.add(new Variable(id.toString(), type, null));})+ <RPAR>   
-	{functype = null;}
-	(<DECLARE_TYPE> {functype = "";}
-    ((aux = <INTEGER_REF> | aux = <BOOL_REF> | aux = <GENERAL_REF>){functype = String.format("%s %s", functype, aux.image).trim();})+)?
-	<ATTR_ID>
-	body = ExpSeq2()
-    <END>
-    {return new ASTFunc(name.toString(), functype, args, body);}
+{
+  Token id, aux;
+  String type, functype;
+  Collection < Variable > args = new LinkedList < Variable > ();
+  ASTNode body;
+}
+{
+  (
+    {
+      type = null;
+    }
+    id = < ID >
+    (
+      < DECLARE_TYPE >
+      {
+        type = "";
+      }
+      (
+        (
+          aux = < INTEGER_REF >
+        | aux = < BOOL_REF >
+        | aux = < GENERAL_REF >
+        )
+        {
+          type = String.format("%s %s", type, aux.image).trim();
+        }
+      )+
+    )?
+    {
+      args.add(new Variable(id.toString(), type, null));
+    }
+  )+
+  < RPAR >
+  {
+    functype = null;
+  }
+  (
+    < DECLARE_TYPE >
+    {
+      functype = "";
+    }
+    (
+      (
+        aux = < INTEGER_REF >
+      | aux = < BOOL_REF >
+      | aux = < GENERAL_REF >
+      )
+      {
+        functype = String.format("%s %s", functype, aux.image).trim();
+      }
+    )+
+  )?
+  < ATTR_ID > 
+  body = ExpSeq2() 
+  < END >
+  {
+    return new ASTFunc(name.toString(), functype, args, body);
+  }
 }
 
 ASTNode If() :
 {
-    ASTNode ifRes, thenRes, elseRes;
-} {
-    {elseRes = new ASTVoid();}
-    ifRes = Exp() <THEN> thenRes = ExpSeq2() (<ELSE> elseRes = ExpSeq2())? <END>
-    {return new ASTIf(ifRes, thenRes, elseRes);}
+  ASTNode ifRes, thenRes, elseRes;
+}
+{
+  {
+    elseRes = new ASTVoid();
+  }
+  ifRes = Exp() < THEN > thenRes = ExpSeq2()
+  (
+    < ELSE > elseRes = ExpSeq2()
+  )?
+  < END >
+  {
+    return new ASTIf(ifRes, thenRes, elseRes);
+  }
 }
