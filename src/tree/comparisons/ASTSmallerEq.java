@@ -9,6 +9,7 @@ import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
@@ -22,7 +23,7 @@ public class ASTSmallerEq implements ASTNode {
     }
 
     @Override
-    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         return node.eval(e);
     }
 

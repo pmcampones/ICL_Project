@@ -6,8 +6,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 
 import static tests.GenericTester.MAX_RAND;
@@ -18,7 +17,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testArithmeticSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestArithmeticSeq() {
@@ -32,7 +31,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testAritmeticSeq2()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestAritmeticSeq2() {
@@ -47,7 +46,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testTripleAritmeticSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestTripleAritmeticSeq() {
@@ -63,7 +62,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testBracketsSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestBracketsSeq() {
@@ -76,7 +75,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testDefSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestDefSeq() {
@@ -97,7 +96,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testDoubleFramesSameScopeSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestDoubleFramesSameScopeSeq() {
@@ -113,7 +112,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testNewSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestNewSeq() {
@@ -127,7 +126,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testNewSeq2()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestNewSeq2() {
@@ -143,7 +142,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testMultipleSemicolonsBegin()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestMultipleSemicolonsBegin() {
@@ -155,7 +154,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testMultipleSemicolonsEnd()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestMultipleSemicolonsEnd() {
@@ -167,7 +166,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testMultipleSemicolonsMiddle()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestMultipleSemicolonsMiddle() {
@@ -181,7 +180,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testVariableDifferentSemicolon()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestVariableDifferentSemicolon() {
@@ -197,7 +196,7 @@ public interface SemicolonOpTester {
 	@Test
 	void testChangeVarScope()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException, 
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException, 
 			IOException, InterruptedException;
 	
 	static String getExpectedTestChangeVarScope() {

@@ -1,24 +1,23 @@
 package tests.interpreter;
 
-import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
-import org.junit.jupiter.api.Test;
-import parser.ParseException;
-import tests.BoolOpTester;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.BoolOpTester.*;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
-import static tests.BoolOpTester.*;
+import dataTypes.TypeErrorException;
+import environment.exceptions.*;
+import parser.ParseException;
+import tests.BoolOpTester;
 
 public class BoolOpInterpreterTester extends InterpreterTester implements BoolOpTester {
 
 	@Override
     @Test
     public void testBoolConstTrue()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestBoolConstTrue(), run());
     }
@@ -26,7 +25,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testBoolConstFalse()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestBoolConstFalse(), run());
     }
@@ -34,7 +33,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testDefBool()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestDefBool(), run());
     }
@@ -42,7 +41,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testAttrBool() 
-    		throws TypeErrorException, UndeclaredIdentifierException, 
+    		throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
     		ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestAttrBool(), run());
     }
@@ -50,7 +49,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testTrueEqualityInteger()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestTrueEqualityInteger(), run());
     }
@@ -58,7 +57,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testFalseEqualityInteger()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestFalseEqualityInteger(), run());
     }
@@ -66,7 +65,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testTrueEqualityBool()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestTrueEqualityBool(), run());
     }
@@ -74,7 +73,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testFalseEqualityBool()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestFalseEqualityBool(), run());
     }
@@ -82,7 +81,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testDefEquality()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestDefEquality(), run());
     }
@@ -90,7 +89,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testAttrEquality()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestAttrEquality(), run());
     }
@@ -98,7 +97,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterTrue()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterTrue(), run());
     }
@@ -106,7 +105,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterFalse()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterFalse(), run());
     }
@@ -114,7 +113,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterComplex()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterComplex(), run());
     }
@@ -122,7 +121,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterDef(), run());
     }
@@ -130,7 +129,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND);
@@ -142,7 +141,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterEqBigger()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterEqBigger(), run());
     }
@@ -150,7 +149,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterEqSame()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterEqSame(), run());
     }
@@ -158,7 +157,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterEqSmaller()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterEqSmaller(), run());
     }
@@ -166,7 +165,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterEqComplex()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterEqComplex(), run());
     }
@@ -174,7 +173,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterEqDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterEqDef(), run());
     }
@@ -182,7 +181,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testGreaterEqAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGreaterEqAttr(), run());
     }
@@ -190,7 +189,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerWhenBigger()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerWhenBigger(), run());
     }
@@ -198,7 +197,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerWhenEquals()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerWhenEquals(), run());
     }
@@ -207,14 +206,14 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Test
 	public void testSmallerWhenSmaller() 
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestSmallerWhenSmaller(), run());
 	}
 
 	@Override
     @Test
     public void testSmallerComplex()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerComplex(), run());
     }
@@ -222,7 +221,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerDef(), run());
     }
@@ -230,7 +229,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerAttr(), run());
     }
@@ -238,7 +237,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerEqWhenBigger()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerEqWhenBigger(), run());
     }
@@ -246,7 +245,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerEqWhenSame()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerEqWhenSame(), run());
     }
@@ -254,7 +253,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerEqWhenSmaller()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerEqWhenSmaller(), run());
     }
@@ -262,7 +261,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerEqComplex()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerEqComplex(), run());
     }
@@ -270,7 +269,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerEqDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerEqDef(), run());
     }
@@ -278,7 +277,7 @@ public class BoolOpInterpreterTester extends InterpreterTester implements BoolOp
 	@Override
     @Test
     public void testSmallerEqAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSmallerEqAttr(), run());
     }

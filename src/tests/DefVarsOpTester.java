@@ -1,8 +1,7 @@
 package tests;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
@@ -17,7 +16,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefWithoutUsingSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefWithoutUsingSimple() {
@@ -31,7 +30,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefWithoutUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefWithoutUsingComplex() {
@@ -48,7 +47,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefUsingSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefUsingSimple() {
@@ -64,7 +63,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefUsingComplex() {
@@ -82,7 +81,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefNestedSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefNestedSimple() {
@@ -97,7 +96,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefNestedCaires1()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefNestedCaires1() {
@@ -109,7 +108,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefNestedCaires2()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefNestedCaires2() {
@@ -122,7 +121,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefSameVarDifferentScopesSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefSameVarDifferentScopesSimple() {
@@ -137,7 +136,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefSameVarDifferentScopesComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefSameVarDifferentScopesComplex() {
@@ -152,7 +151,7 @@ public interface DefVarsOpTester {
     @Test
     void testDefDifferentVarsSameScope()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDefDifferentVarsSameScope() {
@@ -168,7 +167,7 @@ public interface DefVarsOpTester {
     @Test
     void testTwoFramesSameScope()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestTwoFramesSameScope() {

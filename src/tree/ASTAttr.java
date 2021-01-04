@@ -15,6 +15,7 @@ import dataTypes.TypeErrorException;
 import dataTypes.VMCell;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTAttr implements ASTNode {
@@ -29,7 +30,7 @@ public class ASTAttr implements ASTNode {
 
 	@Override
 	public IValue eval(Environment<IValue> e)
-			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		IValue updatedValue = value.eval(e);
 		if(var instanceof ASTVariable) {
 			IValue memRef = var.eval(e);

@@ -1,20 +1,12 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.AttrOpTester.getExpectedTestAttrExpressionAfter;
-import static tests.AttrOpTester.getExpectedTestAttrSum;
-import static tests.AttrOpTester.getExpectedTestAttrTerm;
-import static tests.AttrOpTester.getExpectedTestIdentity;
-import static tests.AttrOpTester.getExpectedTestMutabilityOrder;
-import static tests.AttrOpTester.getExpectedTestNestedAttr;
-import static tests.AttrOpTester.getExpectedTestNestedWithExpression;
-import static tests.AttrOpTester.getExpectedTestSimpleAttr;
+import static tests.AttrOpTester.*;
 
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 import tests.AttrOpTester;
 
@@ -23,7 +15,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testSimpleAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSimpleAttr(), run());
     }
@@ -31,7 +23,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testAttrSum()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestAttrSum(), run());
     }
@@ -39,7 +31,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testAttrTerm()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestAttrTerm(), run());
     }
@@ -47,7 +39,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testAttrExpressionAfter()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestAttrExpressionAfter(), run());
     }
@@ -55,7 +47,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testNestedAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNestedAttr(), run());
     }
@@ -63,7 +55,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testIdentity()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestIdentity(), run());
     }
@@ -71,7 +63,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testNestedWithExpression()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNestedWithExpression(), run());
     }
@@ -79,7 +71,7 @@ public class AttrInterpreterOpTester extends InterpreterTester implements AttrOp
 	@Override
     @Test
     public void testMutabilityOrder()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestMutabilityOrder(), run());
     }

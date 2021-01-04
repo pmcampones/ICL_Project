@@ -11,6 +11,7 @@ import dataTypes.TVoid;
 import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 public class ASTSemi implements ASTNode {
@@ -23,7 +24,7 @@ public class ASTSemi implements ASTNode {
     }
 
     @Override
-    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         first.eval(e);
         return second.eval(e);
     }

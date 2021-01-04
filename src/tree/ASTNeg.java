@@ -7,6 +7,7 @@ import compiler.Coordinates;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.binaryArithmetic.ASTMult;
 
@@ -24,7 +25,7 @@ public class ASTNeg implements ASTNode {
 
     @Override
     public IValue eval(Environment<IValue> e)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+            throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
     	IValue res = node.eval(e);
     	if (res instanceof VInt)
     		return new VInt(-((VInt)res).getVal());

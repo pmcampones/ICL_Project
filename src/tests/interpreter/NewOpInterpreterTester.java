@@ -1,21 +1,12 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.NewOpTester.getExpectedTestAlias;
-import static tests.NewOpTester.getExpectedTestNewComplexExpression;
-import static tests.NewOpTester.getExpectedTestNewNoDef;
-import static tests.NewOpTester.getExpectedTestNewSums;
-import static tests.NewOpTester.getExpectedTestNewVarTestNotUsing;
-import static tests.NewOpTester.getExpectedTestNewVarUsing;
-import static tests.NewOpTester.getExpectedTestRedefineNew;
-import static tests.NewOpTester.getExpectedTestSumNewVarBoth;
-import static tests.NewOpTester.getExpectedTestSumNewVarFirst;
+import static tests.NewOpTester.*;
 
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 import tests.NewOpTester;
 
@@ -24,7 +15,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testNewVarTestNotUsing()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewVarTestNotUsing(), run());
     }
@@ -32,7 +23,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testNewVarUsing()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewVarUsing(), run());
     }
@@ -40,7 +31,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testNewNoDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewNoDef(), run());
     }
@@ -48,7 +39,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testNewComplexExpression() 
-    		throws TypeErrorException, UndeclaredIdentifierException, 
+    		throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
     		ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewComplexExpression(), run());
     }
@@ -56,7 +47,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testNewSums()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewSums(), run());
     }
@@ -64,7 +55,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testSumNewVarFirst()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSumNewVarFirst(), run());
     }
@@ -72,7 +63,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testSumNewVarBoth()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestSumNewVarBoth(), run());
     }
@@ -80,7 +71,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testRedefineNew()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestRedefineNew(), run());
     }
@@ -88,7 +79,7 @@ public class NewOpInterpreterTester extends InterpreterTester implements NewOpTe
 	@Override
     @Test
     public void testAlias()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestAlias(), run());
     }

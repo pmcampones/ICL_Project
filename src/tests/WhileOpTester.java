@@ -3,8 +3,7 @@ package tests;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 
 import static tests.GenericTester.writeToToken;
@@ -17,7 +16,7 @@ public interface WhileOpTester {
 
 	@Test
 	void testCountToTen()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -28,7 +27,7 @@ public interface WhileOpTester {
 	
 	@Test
 	void testFibonacci()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -69,7 +68,7 @@ public interface WhileOpTester {
 	
 	@Test
 	void testGaussianSum()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	

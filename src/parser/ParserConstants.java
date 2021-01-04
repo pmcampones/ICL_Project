@@ -81,6 +81,8 @@ public interface ParserConstants {
   int DECLARE_TYPE = 38;
   /** RegularExpression Id. */
   int SEMI = 39;
+  /** RegularExpression Id. */
+  int PRINT = 40;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -127,6 +129,7 @@ public interface ParserConstants {
     "\":=\"",
     "\":\"",
     "\";\"",
+    "\"println\"",
   };
 
 }

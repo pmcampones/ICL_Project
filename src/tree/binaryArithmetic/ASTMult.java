@@ -3,6 +3,7 @@ package tree.binaryArithmetic;
 import dataTypes.IType;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class ASTMult extends ASTIntArithmetic {
     @Override
     public IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
-            TypeErrorException {
+            TypeErrorException, NotEnoughArgumentsException {
     	IValue lRes, rRes;
     	if ((lRes = l.eval(e)) instanceof VInt && (rRes = r.eval(e)) instanceof VInt)
     		return new VInt(((VInt)lRes).getVal() * ((VInt)rRes).getVal());

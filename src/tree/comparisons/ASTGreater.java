@@ -13,6 +13,7 @@ import compiler.operations.SubOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
@@ -25,7 +26,7 @@ public class ASTGreater extends ASTComparison {
     @Override
     public IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException,
-            TypeErrorException {
+            TypeErrorException, NotEnoughArgumentsException {
         IValue lVal, rVal;
         if ((lVal = l.eval(e)) instanceof VInt && (rVal = r.eval(e)) instanceof VInt)
             return new VBool(((VInt)lVal).getVal() > ((VInt)rVal).getVal());

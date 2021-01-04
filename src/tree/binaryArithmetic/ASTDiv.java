@@ -8,6 +8,7 @@ import compiler.operations.DivOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
@@ -26,7 +27,7 @@ public class ASTDiv extends ASTIntArithmetic {
     @Override
     public IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
-            TypeErrorException {
+            TypeErrorException, NotEnoughArgumentsException {
     	IValue lRes, rRes;
     	if ((lRes = l.eval(e)) instanceof VInt && (rRes = r.eval(e)) instanceof VInt)
     		return new VInt(((VInt)lRes).getVal() / ((VInt)rRes).getVal());

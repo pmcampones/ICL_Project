@@ -1,15 +1,12 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.WhileOpTester.getExpectedTestCountToTen;
-import static tests.WhileOpTester.getExpectedTestFibonacci;
-import static tests.WhileOpTester.getExpectedTestGaussianSum;
+import static tests.WhileOpTester.*;
 
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 import tests.WhileOpTester;
 
@@ -18,7 +15,7 @@ public class WhileOpInterpreterTester extends InterpreterTester implements While
 	@Override
     @Test
     public void testCountToTen()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestCountToTen(), run());
     }
@@ -27,7 +24,7 @@ public class WhileOpInterpreterTester extends InterpreterTester implements While
 	@Override
     @Test
     public void testFibonacci()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestFibonacci(), run());
 
@@ -36,7 +33,7 @@ public class WhileOpInterpreterTester extends InterpreterTester implements While
     @Override
     @Test
     public void testGaussianSum()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestGaussianSum(), run());
     }

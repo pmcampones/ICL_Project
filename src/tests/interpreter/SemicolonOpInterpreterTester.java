@@ -1,25 +1,12 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tests.SemicolonOpTester.getExpectedTestArithmeticSeq;
-import static tests.SemicolonOpTester.getExpectedTestAritmeticSeq2;
-import static tests.SemicolonOpTester.getExpectedTestBracketsSeq;
-import static tests.SemicolonOpTester.getExpectedTestChangeVarScope;
-import static tests.SemicolonOpTester.getExpectedTestDefSeq;
-import static tests.SemicolonOpTester.getExpectedTestDoubleFramesSameScopeSeq;
-import static tests.SemicolonOpTester.getExpectedTestMultipleSemicolonsBegin;
-import static tests.SemicolonOpTester.getExpectedTestMultipleSemicolonsEnd;
-import static tests.SemicolonOpTester.getExpectedTestMultipleSemicolonsMiddle;
-import static tests.SemicolonOpTester.getExpectedTestNewSeq;
-import static tests.SemicolonOpTester.getExpectedTestNewSeq2;
-import static tests.SemicolonOpTester.getExpectedTestTripleAritmeticSeq;
-import static tests.SemicolonOpTester.getExpectedTestVariableDifferentSemicolon;
+import static tests.SemicolonOpTester.*;
 
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 import tests.SemicolonOpTester;
 
@@ -36,7 +23,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testArithmeticSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestArithmeticSeq(), run());
 	}
 
@@ -44,7 +31,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testAritmeticSeq2()
 			throws ParseException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestAritmeticSeq2(), run());
 	}
 
@@ -52,7 +39,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testTripleAritmeticSeq()
 			throws ParseException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestTripleAritmeticSeq(), run());
 	}
 
@@ -60,7 +47,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testBracketsSeq()
 			throws ParseException, IDDeclaredTwiceException,
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestBracketsSeq(), run());
 	}
 
@@ -68,7 +55,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testDefSeq()
 			throws ParseException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestDefSeq(), run());
 	}
 
@@ -76,14 +63,14 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testDoubleFramesSameScopeSeq()
 			throws ParseException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestDoubleFramesSameScopeSeq(), run());
 	}
 	
 	@Override
 	@Test
     public void testNewSeq()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewSeq(), run());
     }
@@ -91,7 +78,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Override
 	@Test
     public void testNewSeq2()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException {
         assertEquals(getExpectedTestNewSeq2(), run());
     }
@@ -100,7 +87,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
     public void testMultipleSemicolonsBegin()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestMultipleSemicolonsBegin(), run());
     }
 
@@ -108,7 +95,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
     public void testMultipleSemicolonsEnd()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestMultipleSemicolonsEnd(), run());
     }
     
@@ -116,14 +103,14 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Test
 	public void testMultipleSemicolonsMiddle()
 			throws ParseException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException, TypeErrorException {
+			UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		assertEquals(getExpectedTestMultipleSemicolonsMiddle(), run());
 	}
 
 	@Override
 	@Test
 	public void testVariableDifferentSemicolon()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException {
 		assertEquals(getExpectedTestVariableDifferentSemicolon(), run());
 	}
@@ -131,7 +118,7 @@ public class SemicolonOpInterpreterTester extends InterpreterTester implements S
 	@Override
 	@Test
 	public void testChangeVarScope()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException {
 		assertEquals(getExpectedTestChangeVarScope(), run());
 	}

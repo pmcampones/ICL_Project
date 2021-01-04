@@ -56,6 +56,8 @@ SKIP :
 
 TOKEN :
 {
+  < PRINT : "println" >
+| 
   < DEF : "def" >
 | 
   < IN : "in" >
@@ -138,8 +140,7 @@ ASTNode Start() :
   ASTNode t = null;
 }
 {
-  (
-    t = ExpSeq()
+  (  t = ExpSeq()
   | < EOF >
   )
   {
@@ -285,6 +286,8 @@ ASTNode Fact() :
 }
 {
   (
+  <PRINT> t = Print()
+  |
     n = < NUM >
     {
       t = new ASTNum(Integer.parseInt(n.image));
@@ -325,6 +328,25 @@ ASTNode Fact() :
   {
     return t;
   }
+}
+
+ASTNode Print() :
+{
+  Token fun;
+  Collection <ASTNode> args = new LinkedList <ASTNode> ();
+}
+{
+	fun = < ID >
+	< LPAR >
+  (      { 
+      args.add(Exp());
+    }
+    (< SEMI >)*
+  )+
+  < RPAR >
+
+{ return new ASTPrint(fun.toString(), args); }
+  
 }
 
 ASTNode DefType() :

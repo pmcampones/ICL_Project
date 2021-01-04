@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
@@ -16,7 +15,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testBoolConstTrue() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -27,7 +26,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testBoolConstFalse()
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -38,7 +37,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testDefBool() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -49,7 +48,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testAttrBool() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -60,7 +59,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testTrueEqualityInteger()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 
@@ -73,7 +72,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testFalseEqualityInteger() 
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -87,7 +86,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testTrueEqualityBool() 
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -98,7 +97,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testFalseEqualityBool()
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -109,7 +108,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testDefEquality()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -122,7 +121,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testAttrEquality() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -135,7 +134,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterTrue() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -146,7 +145,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterFalse()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -157,7 +156,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterComplex() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -171,7 +170,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterDef() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -185,7 +184,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterAttr()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -199,7 +198,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterEqBigger() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -210,7 +209,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterEqSame() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -221,7 +220,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterEqSmaller()
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -232,7 +231,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterEqComplex() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -245,7 +244,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterEqDef() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -259,7 +258,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testGreaterEqAttr() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -273,7 +272,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerWhenBigger()
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -284,7 +283,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerWhenEquals() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -295,7 +294,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerWhenSmaller()
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -306,7 +305,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerComplex() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -320,7 +319,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerDef() 
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -334,7 +333,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerAttr() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -347,7 +346,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerEqWhenBigger()
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -358,7 +357,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerEqWhenSame() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -369,7 +368,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerEqWhenSmaller()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -380,7 +379,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerEqComplex()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -393,7 +392,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerEqDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -407,7 +406,7 @@ public interface BoolOpTester {
 
 	@Test
 	void testSmallerEqAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
