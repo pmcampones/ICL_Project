@@ -133,6 +133,8 @@ TOKEN :
   < DECLARE_TYPE : ":" >
 | 
   < SEMI : ";" >
+  | 
+  < COMMA : "," >
 }
 
 ASTNode Start() :
@@ -140,7 +142,8 @@ ASTNode Start() :
   ASTNode t = null;
 }
 {
-  (  t = ExpSeq()
+  (
+    t = ExpSeq()
   | < EOF >
   )
   {
@@ -286,8 +289,8 @@ ASTNode Fact() :
 }
 {
   (
-  <PRINT> t = Print()
-  |
+    < PRINT > t = Print()
+  | 
     n = < NUM >
     {
       t = new ASTNum(Integer.parseInt(n.image));
@@ -332,21 +335,25 @@ ASTNode Fact() :
 
 ASTNode Print() :
 {
-  Token fun;
-  Collection <ASTNode> args = new LinkedList <ASTNode> ();
+  Token fun, n;
+  ASTNode t;
+  Collection < ASTNode > args = new LinkedList < ASTNode > ();
 }
 {
-	fun = < ID >
-	< LPAR >
-  (      { 
-      args.add(Exp());
+  fun = < ID > 
+  < LPAR >
+  (
+    n = < NUM >
+    {
+      t = new ASTNum(Integer.parseInt(n.image));
+      args.add(t);
     }
-    (< SEMI >)*
+    (< COMMA >)*
   )+
   < RPAR >
-
-{ return new ASTPrint(fun.toString(), args); }
-  
+  {
+    return new ASTPrint(fun.toString(), args);
+  }
 }
 
 ASTNode DefType() :
@@ -476,7 +483,8 @@ ASTNode Func(Token name) :
     {
       args.add(new Variable(id.toString(), type, null));
     }
-  )+
+    (< COMMA >)*
+  )*
   < RPAR >
   {
     functype = null;
