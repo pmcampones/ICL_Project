@@ -16,9 +16,9 @@ import dataTypes.IValue;
 * @author Pedro Camponês - 50051
 **/
 
-public class GlobalEnvironment{
+public class GlobalEnvironment<V>{
 	
-	private final Map<String, IValue> globalVars = new HashMap<>();
+	private final Map<String, V> globalVars = new HashMap<>();
 	
 	private final Map<String, Function> globalFuncs = new HashMap<>();   
 
@@ -26,7 +26,7 @@ public class GlobalEnvironment{
     	
     }
 
-    public void assocVar(String id, IValue value) throws IDDeclaredTwiceException {
+    public void assocVar(String id, V value) throws IDDeclaredTwiceException {
         
     	if (globalVars.containsKey(id))
             throw new IDDeclaredTwiceException(id);
@@ -40,8 +40,8 @@ public class GlobalEnvironment{
     	globalFuncs.put(id, fun);
     }
 
-    public IValue findVar(String id) throws UndeclaredIdentifierException{
-    	IValue val = globalVars.get(id);
+    public V findVar(String id) throws UndeclaredIdentifierException{
+    	V val = globalVars.get(id);
         if (val != null)
             return val;
             
