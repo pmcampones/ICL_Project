@@ -23,6 +23,7 @@ import dataTypes.TInt;
 import dataTypes.TMCell;
 import dataTypes.TVoid;
 import dataTypes.TypeErrorException;
+import dataTypes.VVoid;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.NotEnoughArgumentsException;
@@ -62,7 +63,7 @@ public class ASTGlobalDef implements ASTNode {
 			Parser.globalEnv.assocVar(v.id, value);
 		}
        
-        return null;
+        return new VVoid();
     }
 
     @Override
