@@ -14,6 +14,19 @@ import static tests.GenericTester.writeToToken;
 
 public interface SemicolonOpTester {
 	
+	static int generateGlobalVar() {
+		Random r = new Random();
+        int val = r.nextInt(MAX_RAND);
+        String exp = String.format("def globv:int = %d;;", val);
+        writeToToken(exp);
+		return val;
+	}
+	
+	static void generateGlobalFunc() {
+        String exp = "def foo(n:int):int = n + n end;;";
+        writeToToken(exp);
+	}
+	
 	@Test
 	void testArithmeticSeq()
 			throws ParseException, IDDeclaredTwiceException,
@@ -206,5 +219,19 @@ public interface SemicolonOpTester {
 		writeToToken(exp);
 		return String.valueOf(x1);
 	}
+	
+    @Test
+    void testPrintlnGlobalVarFunc()
+            throws ParseException, IDDeclaredTwiceException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
+            IOException, InterruptedException;
+    
+    static String getExpectedGlobalVarFunc(int val) {
+    	Random r = new Random();
+		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
+        String exp = String.format("%d + %d ; println foo(%d);;;", first, second, val);
+        writeToToken(exp);
+    	return String.valueOf(val+val);
+  }
 	
 }

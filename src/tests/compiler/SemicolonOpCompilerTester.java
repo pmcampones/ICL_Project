@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import tests.SemicolonOpTester;
@@ -143,6 +144,13 @@ public class SemicolonOpCompilerTester extends CompilationTester implements Semi
 			UndeclaredIdentifierException, TypeErrorException {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
 		assertEquals(getExpectedTestChangeVarScope(), compileAndGetResults(methodName, 2));
+	}
+
+	@Override
+	public void testPrintlnGlobalVarFunc()
+			throws ParseException, IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException,
+			NotEnoughArgumentsException, IOException, InterruptedException {
+		//TODO		
 	}
 
 }

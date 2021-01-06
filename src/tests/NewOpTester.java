@@ -138,5 +138,4 @@ public interface NewOpTester {
         return String.valueOf(num1 + num2);
 	}
 	
-		
 }
