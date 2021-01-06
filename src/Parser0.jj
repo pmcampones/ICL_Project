@@ -285,11 +285,11 @@ ASTNode Term() :
 ASTNode Fact() :
 {
   Token n;
-  ASTNode t;
+  ASTNode t;;
 }
 {
   (
-    < PRINT > t = Print()
+    < PRINT > t = Exp()
   | 
     n = < NUM >
     {
@@ -300,9 +300,9 @@ ASTNode Fact() :
       t = new ASTBool(n.image);
     }
   | n = < ID >
-    {
-      t = new ASTVariable(n.image);
-    }
+  	{
+  	  	t = isFunc(n);
+  	}
   | < MINUS >
     {
       t = new ASTNeg(Fact());
@@ -333,15 +333,25 @@ ASTNode Fact() :
   }
 }
 
-ASTNode Print() :
+ASTNode isFunc(Token n):
 {
-  Token fun, n;
+  ASTNode t;
+}
+{
+  { t = new ASTVariable(n.image); }
+
+ ( < LPAR > { t = FuncSolver(n); })?
+
+  { return t; }
+}
+
+ASTNode FuncSolver(Token id):
+{
+  Token n;
   ASTNode t;
   Collection < ASTNode > args = new LinkedList < ASTNode > ();
 }
 {
-  fun = < ID > 
-  < LPAR >
   (
     n = < NUM >
     {
@@ -352,7 +362,7 @@ ASTNode Print() :
   )+
   < RPAR >
   {
-    return new ASTPrint(fun.toString(), args);
+    return new ASTFuncSolver(id.toString(), args);
   }
 }
 

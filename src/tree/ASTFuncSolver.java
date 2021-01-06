@@ -23,7 +23,7 @@ import parser.Parser;
  * @author Pedro Campon�s - 50051
  **/
 
-public class ASTPrint implements ASTNode {
+public class ASTFuncSolver implements ASTNode {
 
 	private static final String TYPE_MISMATCH_MESSAGE = "Value attributed to the variable is not the expected type";
 
@@ -31,7 +31,7 @@ public class ASTPrint implements ASTNode {
 	
 	private final Collection<ASTNode> args;
 
-	public ASTPrint(String name, Collection<ASTNode> args) {
+	public ASTFuncSolver(String name, Collection<ASTNode> args) {
 		this.name = name;
 		this.args = args;
 	}
