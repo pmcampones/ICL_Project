@@ -12,13 +12,11 @@ import dataTypes.TypeErrorException;
 import environment.exceptions.*;
 import parser.ParseException;
 
-public interface GlobalVarsTester {
+public interface GlobalFuncsTester {
 	
-	static int generateGlobalVar() {
+	static int generateValue() {
 		Random r = new Random();
         int val = r.nextInt(MAX_RAND);
-        String exp = String.format("def globv:int = %d;;", val);
-        writeToToken(exp);
 		return val;
 	}
 	
@@ -28,112 +26,112 @@ public interface GlobalVarsTester {
 	}
 	
     @Test
-    void testGlobalVar()
+    void testGlobalFunc()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVar(int val) {
-        String exp = "globv;;";
+    static String getExpectedGlobalFunc(int val) {
+        String exp = String.format("foo(%d);;;", val);
         writeToToken(exp);
-    	return String.valueOf(val);
+    	return String.valueOf(val+val);
     }
     
     @Test
-    void testGlobalVarSum()
+    void testGlobalFuncSum()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarSum(int val) {
+    static String getExpectedGlobalFuncSum(int val) {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
-        String exp = String.format("%d + %d + globv", first, second);
+        String exp = String.format("%d + %d + foo(%d)", first, second, val);
         writeToToken(exp);
-        return String.valueOf(first + second + val);
+        return String.valueOf(first + second + (val + val));
   }
     
     @Test
-    void testGlobalVarDiv()
+    void testGlobalFuncDiv()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarDiv(int val) {
+    static String getExpectedGlobalFuncDiv(int val) {
         Random r = new Random();
         int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
-        String exp = String.format("%d / %d + globv", first, second);
+        String exp = String.format("%d / %d + foo(%d)", first, second, val);
         writeToToken(exp);
-        return String.valueOf(first / second + val);
+        return String.valueOf(first / second + (val + val));
   }
     
     @Test
-    void testGlobalVarDef()
+    void testGlobalFuncDef()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarDef(int val) {
+    static String getExpectedGlobalFuncDef(int val) {
         Random r = new Random();
         int[] nums = new int[5];
         for(int i = 0; i < nums.length; i++)
             nums[i] = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = 1 in %d * (-%d + %d * (%d - %d)) + globv end",
-                nums[0], nums[1], nums[2], nums[3], nums[4]);
+        String exp = String.format("def x = 1 in %d * (-%d + %d * (%d - %d)) + foo(%d) end",
+                nums[0], nums[1], nums[2], nums[3], nums[4], val);
         writeToToken(exp);
-        return String.valueOf(nums[0] * (-nums[1] + nums[2] * (nums[3] - nums[4])) + val);
+        return String.valueOf(nums[0] * (-nums[1] + nums[2] * (nums[3] - nums[4])) + (val + val));
   }
     
     @Test
-    void testGlobalVarIf()
+    void testGlobalFuncIf()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarIf(int val) {
+    static String getExpectedGlobalFuncIf(int val) {
 		
     	Random r = new Random();
         int n1 = r.nextInt(MAX_RAND), n2 = r.nextInt(MAX_RAND);
         int thenV = r.nextInt(MAX_RAND), elseV = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new (%d < %d) y = new 2 in if !x then y := %d else y := %d + globv end; !y + 1 end",
-                n1, n2, thenV, elseV);
+        String exp = String.format("def x = new (%d < %d) y = new 2 in if !x then y := %d else y := %d + foo(%d) end; !y + 1 end",
+                n1, n2, thenV, elseV, val);
         writeToToken(exp);
-        int res = n1 < n2 ? thenV + 1 : elseV + 1 + val;
+        int res = n1 < n2 ? thenV + 1 : elseV + 1 + (val + val);
         return String.valueOf(res);
   }
     
     @Test
-    void testGlobalVarNew()
+    void testGlobalFuncNew()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarNew(int val) {
+    static String getExpectedGlobalFuncNew(int val) {
 		Random r = new Random();
         int x = r.nextInt(MAX_RAND), y = r.nextInt(MAX_RAND);
-        String exp = String.format("def x = new %d in !x + !new %d + globv end", x, y);
+        String exp = String.format("def x = new %d in !x + !new %d + foo(%d) end", x, y, val);
         writeToToken(exp);
-        return String.valueOf(x + y + val);
+        return String.valueOf(x + y + (val + val));
   }
     
     @Test
-    void testGlobalVarWhile()
+    void testGlobalFuncWhile()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarWhile(int val) {
+    static String getExpectedGlobalFuncWhile(int val) {
 		int limit = new Random().nextInt(MAX_RAND);
         String exp = String.format(
                 "def i = new 0 sum = new 0 in " +
-                    "while !i < (%d + globv) do " +
+                    "while !i < (%d + foo(%d)) do " +
                         "i := !i + 1; " +
                         "sum := !sum + !i " +
                     "end; " +
                     "!sum " +
-                "end", limit);
+                "end", limit, val);
         writeToToken(exp);
-        return String.valueOf(computeGaussianSum(limit + val));
+        return String.valueOf(computeGaussianSum(limit + (val + val)));
   }
     
 	private static int computeGaussianSum(int limit) {
@@ -144,31 +142,19 @@ public interface GlobalVarsTester {
     }
     
     @Test
-    void testGlobalVarSemi()
+    void testGlobalFuncSemi()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
     
-    static String getExpectedGlobalVarSemi(int val) {
+    static String getExpectedGlobalFuncSemi(int val) {
 		Random r = new Random();
 		int x1 = r.nextInt(MAX_RAND), x2 = r.nextInt(MAX_RAND);
 		int num = r.nextInt(MAX_RAND);
-		String exp = String.format("def x = new %d in x := (!x + %d); !x + %d + globv end",
-				x1, x2, num);
+		String exp = String.format("def x = new %d in x := (!x + %d); !x + %d + foo(%d) end",
+				x1, x2, num, val);
 		writeToToken(exp);
-		return String.valueOf(x1 + x2 + num + val);
-  }
-    
-    @Test
-    void testGlobalVarFunc()
-            throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
-            IOException, InterruptedException;
-    
-    static String getExpectedGlobalVarFunc(int val) {
-        String exp = String.format("foo(%d);;;", val);
-        writeToToken(exp);
-    	return String.valueOf(val+val);
+		return String.valueOf(x1 + x2 + num + (val + val));
   }
 
 }

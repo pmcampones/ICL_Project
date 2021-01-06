@@ -1,6 +1,7 @@
 package tests.interpreter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.GlobalVarsTester.generateGlobalFunc;
 import static tests.GlobalVarsTester.generateGlobalVar;
 import static tests.GlobalVarsTester.getExpectedGlobalVar;
 import static tests.GlobalVarsTester.getExpectedGlobalVarDef;
@@ -10,6 +11,7 @@ import static tests.GlobalVarsTester.getExpectedGlobalVarNew;
 import static tests.GlobalVarsTester.getExpectedGlobalVarSemi;
 import static tests.GlobalVarsTester.getExpectedGlobalVarSum;
 import static tests.GlobalVarsTester.getExpectedGlobalVarWhile;
+import static tests.GlobalVarsTester.getExpectedGlobalVarFunc;
 
 import java.io.IOException;
 
@@ -148,6 +150,24 @@ public class GlobalVarsInterpreterTester extends InterpreterTester implements Gl
 			run();
 		}
 		assertEquals(getExpectedGlobalVarSemi(globalVar), run());
+		
+	}
+
+	@Override
+	public void testGlobalVarFunc() throws ParseException, IDDeclaredTwiceException, UndeclaredIdentifierException,
+			TypeErrorException, NotEnoughArgumentsException, IOException, InterruptedException {
+		
+		if(!defined) {
+			int val = generateGlobalVar();
+			globalVar = val;
+			defined = true;
+			run();
+		}
+		
+		generateGlobalFunc();
+		run();
+		
+		assertEquals(getExpectedGlobalVarFunc(globalVar), run());
 		
 	}
 	
