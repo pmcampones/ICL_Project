@@ -92,7 +92,7 @@ public class SemicolonOpCompilerTester extends CompilationTester implements Semi
 			InterruptedException, IDDeclaredTwiceException, 
 			UndeclaredIdentifierException, TypeErrorException {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();		
-		assertEquals(getExpectedTestNewSeq2(), compileAndGetResults(methodName, 1));
+		assertEquals(getExpectedTestNewSeq2(), compileAndGetResults(methodName, 3));
 	}
 
 	@Override
