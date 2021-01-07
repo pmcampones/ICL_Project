@@ -159,7 +159,7 @@ public interface SemicolonOpTester {
 			IOException, InterruptedException;
 	
 	static String getExpectedTestMultipleSemicolonsBegin() {
-        int number = new Random().nextInt();
+        int number = new Random().nextInt(MAX_RAND);
         writeToToken(String.format(";;;;;;;;;;;%d", number));
         return String.valueOf(number);
 	}
@@ -171,7 +171,7 @@ public interface SemicolonOpTester {
 			IOException, InterruptedException;
 	
 	static String getExpectedTestMultipleSemicolonsEnd() {
-        int number = new Random().nextInt();
+        int number = new Random().nextInt(MAX_RAND);
         writeToToken(String.format("%d;;;;;;;;;;;", number));
         return String.valueOf(number);
 	}
