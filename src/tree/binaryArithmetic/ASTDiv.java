@@ -1,14 +1,15 @@
-package tree;
+package tree.binaryArithmetic;
+
+import java.io.IOException;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
 import compiler.operations.DivOp;
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VInt;
+import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import tree.ASTNode;
 
 /**
 * MIEI
@@ -16,11 +17,11 @@ import environment.exceptions.UndeclaredIdentifierException;
 * @author Pedro Campon�s - 50051
 **/
 
-public class ASTDiv implements ASTNode {
+public class ASTDiv extends ASTIntArithmetic {
 
-    private final ASTNode l, r;
-
-    public ASTDiv(ASTNode l, ASTNode r) {this.l = l; this.r = r;}
+    public ASTDiv(ASTNode l, ASTNode r) {
+        super(l, r);
+    }
 
     @Override
     public IValue eval(Environment<IValue> e)
@@ -33,12 +34,10 @@ public class ASTDiv implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) 
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	l.compile(cb, env);
-    	r.compile(cb, env);
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
+    	l.compile(cb, envCoord, envTypes);
+    	r.compile(cb, envCoord, envTypes);
     	cb.addOperation(new DivOp());
     }
-
-
 }

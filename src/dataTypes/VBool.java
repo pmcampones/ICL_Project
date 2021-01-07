@@ -1,6 +1,6 @@
 package dataTypes;
 
-public class VBool {
+public class VBool implements IValue{
 	
 	private final boolean val;
 	
@@ -17,4 +17,15 @@ public class VBool {
 		return val;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof VBool)
+			return val == ((VBool)other).val;
+		return false;
+	}
+
+	@Override
+	public IType getType() {
+		return new TBool();
+	}
 }

@@ -1,28 +1,20 @@
 package tests.interpreter;
 
+import static parser.Parser.Start;
+
+import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
+import tests.GenericTester;
 
-import static parser.Parser.Start;
 
-import dataTypes.IValue;
-import dataTypes.TypeErrorException;
-import dataTypes.VInt;
+public class InterpreterTester extends GenericTester {
 
-/**
-* MIEI
-* @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
-**/
-
-public class InterpreterTestUtil {
-
-    static int run()
+    protected static String run()
             throws ParseException, IDDeclaredTwiceException,
             UndeclaredIdentifierException, TypeErrorException {
-        return ((VInt)Start().eval(new Environment<IValue>())).getVal();
+        return Start().eval(new Environment<>()).toString();
     }
-    
 }

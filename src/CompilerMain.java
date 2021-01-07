@@ -21,10 +21,11 @@ public class CompilerMain {
         	String directory = args.length >= 2 ? args[1] : Compiler.DEFAULT_COMPILATION_DIRECTORY;
         	String frameDir = args.length >= 3 ? args[2] : Compiler.DEFAULT_FRAME_DIRECTORY;
             Compiler comp = new Compiler(directory, frameDir);
-            exp.compile(comp.getCodeBlock(), new Environment<>());
+            exp.typeCheck(new Environment<>());
+            exp.compile(comp.getCodeBlock(), new Environment<>(), new Environment<>());
             comp.generateOutputFile(fileName);
         } catch (Exception e) {
-          System.err.println ("Syntax Error!");
+          System.err.println (e.getMessage());
           Parser.ReInit(System.in);
         }
 	}

@@ -1,8 +1,11 @@
-package tree;
+package tree.binaryArithmetic;
 
+import dataTypes.IType;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+
+import java.io.IOException;
 
 import compiler.CodeBlock;
 import compiler.Coordinates;
@@ -10,6 +13,7 @@ import compiler.operations.MulOp;
 import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import dataTypes.VInt;
+import tree.ASTNode;
 
 /**
 * MIEI
@@ -17,11 +21,11 @@ import dataTypes.VInt;
 * @author Pedro Campon�s - 50051
 **/
 
-public class ASTMult implements ASTNode {
+public class ASTMult extends ASTIntArithmetic {
 
-    private final ASTNode l, r;
-
-    public ASTMult(ASTNode l, ASTNode r) {this.l = l; this.r = r;}
+    public ASTMult(ASTNode l, ASTNode r) {
+        super(l,r);
+    }
 
     @Override
     public IValue eval(Environment<IValue> e)
@@ -34,10 +38,10 @@ public class ASTMult implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock cb, Environment<Coordinates> env) 
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException {
-    	l.compile(cb, env);
-    	r.compile(cb, env);
+    public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
+    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
+    	l.compile(cb, envCoord, envTypes);
+    	r.compile(cb, envCoord, envTypes);
     	cb.addOperation(new MulOp());
     }
 

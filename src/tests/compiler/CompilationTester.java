@@ -1,5 +1,8 @@
 package tests.compiler;
 
+import static compiler.Compiler.DEFAULT_COMPILATION_DIRECTORY;
+import static compiler.Compiler.DEFAULT_FRAME_DIRECTORY;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,14 +11,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import compiler.Compiler;
-import compiler.Coordinates;
+import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 import parser.Parser;
-
-import static compiler.Compiler.*;
+import tests.GenericTester;
 
 /**
 * MIEI
@@ -23,36 +25,37 @@ import static compiler.Compiler.*;
 * @author Pedro Campon�s - 50051
 **/
 
-public class CompilationUtils {
+public class CompilationTester extends GenericTester {
+
 	
 //	private static final String ASSEMBLED_FILE_DIRECTORY = "src/compiledPrograms/unitTests";
 	
-	static int compileAndGetResults(String methodName) 
+	static String compileAndGetResults(String methodName) 
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException {
+			UndeclaredIdentifierException, TypeErrorException {
 		return compileAndGetResults(methodName, 0);
 	}
 	
-	static int compileAndGetResults(String methodName, int scopesCreated) 
+	static String compileAndGetResults(String methodName, int scopesCreated) 
 			throws ParseException, IOException, 
 			InterruptedException, IDDeclaredTwiceException, 
-			UndeclaredIdentifierException {
+			UndeclaredIdentifierException, TypeErrorException {
 //		String assembledFilePath = String.format("%s/%s", ASSEMBLED_FILE_DIRECTORY, methodName);
 		Compiler comp = new Compiler(DEFAULT_COMPILATION_DIRECTORY + "/UnitTests", DEFAULT_FRAME_DIRECTORY);
 		String assembledFilePath = generateAssembledFile(methodName, comp);
-		String compiledFilePath = compileAssembledFile(assembledFilePath, scopesCreated, comp);
+		compileAssembledFile(assembledFilePath, scopesCreated, comp);
 		return runJVMCompiledFile(comp.codeDirectory, methodName);
 	}
 	
 	private static String generateAssembledFile(String fileName, Compiler comp) 
 			throws ParseException, IOException, 
-			IDDeclaredTwiceException, UndeclaredIdentifierException {
-        Parser.Start().compile(comp.getCodeBlock(), new Environment<Coordinates>());
+			IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+        Parser.Start().compile(comp.getCodeBlock(), new Environment<>(), new Environment<>());
         return comp.generateOutputFile(fileName);
 	}
 	
-	private static String compileAssembledFile(String assembledFilePath, int scopesCreated, Compiler comp) 
+	private static void compileAssembledFile(String assembledFilePath, int scopesCreated, Compiler comp)
 			throws IOException, InterruptedException {
 		List<String> commands = new LinkedList<>();
 		commands.add("java");
@@ -66,10 +69,10 @@ public class CompilationUtils {
         Process compiling = new ProcessBuilder(commands)
         .start();
         compiling.waitFor();
-        return assembledFilePath.substring(0, assembledFilePath.length() - 1);
+        //return assembledFilePath.substring(0, assembledFilePath.length() - 1);
 	}
 	
-	private static int runJVMCompiledFile(String directory, String file) throws IOException {
+	private static String runJVMCompiledFile(String directory, String file) throws IOException {
 		String[] pathComponents = directory.split("/");
 		StringBuilder builder = new StringBuilder();
 		for (String s : pathComponents)
@@ -78,7 +81,7 @@ public class CompilationUtils {
 		Process p = new ProcessBuilder("java", builder.toString()).start();
         try(InputStreamReader in = new InputStreamReader(p.getInputStream());
         		BufferedReader reader = new BufferedReader(in)) {
-        	return Integer.valueOf(reader.readLine());
+        	return reader.readLine();
         }
 	}
 

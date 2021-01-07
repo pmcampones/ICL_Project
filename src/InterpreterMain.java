@@ -11,7 +11,7 @@ public class InterpreterMain {
 	            ASTNode exp = Parser.Start();
 	            System.out.println( exp.eval(new Environment<>()) );
 	        } catch (Exception e) {
-	          System.out.println ("Syntax Error!");
+	          System.out.println (e.getMessage());
 	          Parser.ReInit(System.in);
 	        }
 	    }
