@@ -1,6 +1,6 @@
 # ICL Project - Interpreter and Compiler for the CALC Language
 
-### Project Status: _In Progress_
+### Project Status: _Main Project: COMPLETE / Bonus Part: IN PROGRESS_
 
 This project consists on the implementation of an interpreter and compiler for the programming language CALC, created specifically for this purpose.
 
