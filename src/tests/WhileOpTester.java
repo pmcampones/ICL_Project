@@ -33,7 +33,7 @@ public interface WhileOpTester {
             IOException, InterruptedException;
 	
 	static String getExpectedTestFibonacci() {
-		int fibIndex = new Random().nextInt(MAX_RAND);
+		int fibIndex = new Random().nextInt(15);
         String exp = String.format(
                 "def fibIndex = %d result = new 0 in " +
                     "if fibIndex <= 1 then " +

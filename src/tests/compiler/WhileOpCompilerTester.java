@@ -34,7 +34,7 @@ public class WhileOpCompilerTester extends CompilationTester implements WhileOpT
 			InterruptedException, IDDeclaredTwiceException, 
 			UndeclaredIdentifierException, TypeErrorException {
 		String methodName = new Object() {}.getClass().getEnclosingMethod().getName();
-		assertEquals(getExpectedTestFibonacci(), compileAndGetResults(methodName, 2));
+		assertEquals(getExpectedTestFibonacci(), compileAndGetResults(methodName, 3));
 	}
 
 	@Test
