@@ -4,6 +4,12 @@
 
 This project consists on the implementation of an interpreter and compiler for the programming language CALC, created specifically for this purpose.
 
+### For Professor Caires:
+
+The deliveries of the project are in the branch **Delivery**
+The first phase delivery is the commit titled **Delivery Phase 1**
+The final phase delivery is in the commit titled **Delivery Phase 2**
+
 ## How to Run
 
 The project can be run as either an interpreter or a compiler.
@@ -53,7 +59,20 @@ Another highlight of the program is the fact that the same identifier can be dec
 There is a variety of JUnit tests for both the interpreter and the compiler.
 The compiler tests have only been successfully experimented on a Linux system with a bash terminal. The tests compile the expressions into Java bytecodes and assemble the results using Jasmin. It is assumed `jasmin.jar` is in the project root; the failure to comply to this assumption leads to an error in the tests.
 
+The tests cover all uses of the language, starting from testing simple arithmetic operations and ending with computing the fibonacci sequence.
+
 ### Dinamic Stack Allocation
 
 For any given expression, the compiler identifies the maximum memory the program will require and will allocate a stack with that exact size.
-This is accomplished by attributing each operation a value representing its induced variation in the stack. Eg: `stackChange(push) = +1  stackChange(pop) = -1`.
+This is accomplished by attributing each operation a value representing its induced variation in the stack. Eg:<br>
+`stackChange(push) = +1`<br>
+`stackChange(pop) = -1`
+
+### Static and Dynamic Typechecking
+
+The language supports both static and dynamic typechecking. Because all variables are initialized upon being declared and there are no non-deterministic operations that attribute a value (such as would happen if in an _if_ operation if the _then_ and _else_ fields returned a value), it's possible to infer their type.
+
+In this language all the following three expressions are valid and correctly evaluated:<br>
+`def x = 1 y = 2 in x + y end`<br>
+`def x : int = 1 y : int = 2 in x + y end`<br>
+`def x = 1 y : int = 2 in x + y end`
