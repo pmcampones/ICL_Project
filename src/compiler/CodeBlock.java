@@ -12,7 +12,7 @@ import dataTypes.IType;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
 
 public class CodeBlock {
@@ -68,7 +68,7 @@ public class CodeBlock {
 	 */
 	public Frame createFrame(int numVars) {
 		Frame parent = activeFrames.peek();
-		String frameName = String.format("%s/frame_%d", frameDirectory, frameCounter++);
+		String frameName = String.format("%s/frame_%d", frameDirectory, frameCounter++).replaceAll("./", "");
 		Frame f = new Frame(numVars, parent, frameName);
 		activeFrames.add(f);
 		frames.add(f);

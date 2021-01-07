@@ -68,7 +68,7 @@ public class Compiler {
     			String.format("%s/%s", 
     			codeDirectory, frameDirectory);
     	new File(this.frameDirectory + "/.").mkdirs();
-    	cb = new CodeBlock(this.frameDirectory);
+    	cb = new CodeBlock(this.frameDirectory.replaceAll("./", ""));
     }
     
     private static void writeToFile(String filePath, String fileContent) throws IOException {
@@ -88,12 +88,12 @@ public class Compiler {
         Collection<String> frameCode = cb.getFrameCode();
         int index = 0;
         for(String frame: frameCode) {
-        	String framePath = String.format("%s/frame_%d.j", frameDirectory, index++);
+        	String framePath = String.format("%s/frame_%d.j", frameDirectory, index++).replaceAll("./", "");
         	writeToFile(framePath, frame);
         }
         
         String callStackCode = cb.getCallStackCode();
-        String className = String.format("%s/%s", codeDirectory, fileName);
+        String className = String.format("%s/%s", codeDirectory, fileName).replaceAll("./", "");
         int stackSize = cb.getMaxStackSize();
         String fileContent = String.format(FILE_STUB, className, stackSize, callStackCode);
         String filePath = String.format("%s.j", className);
