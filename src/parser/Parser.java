@@ -296,7 +296,7 @@ public class Parser implements ParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PRINT:
       jj_consume_token(PRINT);
-      t = Exp();
+      t = new ASTPrintln(Exp());
       break;
     case NUM:
       n = jj_consume_token(NUM);
