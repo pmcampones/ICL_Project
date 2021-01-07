@@ -17,6 +17,12 @@ import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class ASTAttr implements ASTNode {
 
 	private final ASTNode var;

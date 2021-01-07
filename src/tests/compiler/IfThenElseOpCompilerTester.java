@@ -14,6 +14,12 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class IfThenElseOpCompilerTester extends CompilationTester implements IfThenElseOpTester{
 
 	@Override

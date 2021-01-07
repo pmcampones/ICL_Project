@@ -3,6 +3,12 @@ import environment.Environment;
 import parser.Parser;
 import tree.ASTNode;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class CompilerMain {
 
 	public static void main(String[] args) {

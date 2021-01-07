@@ -9,6 +9,12 @@ import dataTypes.TBool;
 import dataTypes.VBool;
 import environment.Environment;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class ASTBool implements ASTNode {
 
     private final boolean val;

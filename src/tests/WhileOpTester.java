@@ -13,6 +13,12 @@ import static tests.GenericTester.MAX_RAND;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public interface WhileOpTester {
 
 	@Test

@@ -11,6 +11,12 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class ASTAnd extends ASTBoolArithmetic {
 
     public ASTAnd(ASTNode l, ASTNode r) {

@@ -12,6 +12,12 @@ import environment.exceptions.UndeclaredIdentifierException;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public interface BoolOpTester {
 
 	@Test

@@ -12,6 +12,12 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 //TODO MAY HAVE TO REALLY IMPLEMENT THIS BECAUSE THE ORDER IN WHICH THE EXPRESSIONS ARE EVALUATED MAY BE IMPORTANT
 public class ASTSmallerEq implements ASTNode {
 

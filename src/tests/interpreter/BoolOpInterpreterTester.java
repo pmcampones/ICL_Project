@@ -13,6 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static tests.BoolOpTester.*;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class BoolOpInterpreterTester extends InterpreterTester implements BoolOpTester {
 
 	@Override
