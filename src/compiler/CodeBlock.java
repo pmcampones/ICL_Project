@@ -7,11 +7,12 @@ import java.util.Queue;
 import java.util.Stack;
 
 import compiler.operations.Operation;
+import dataTypes.IType;
 
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
 
 public class CodeBlock {
@@ -67,7 +68,7 @@ public class CodeBlock {
 	 */
 	public Frame createFrame(int numVars) {
 		Frame parent = activeFrames.peek();
-		String frameName = String.format("%s/frame_%d", frameDirectory, frameCounter++);
+		String frameName = String.format("%s/frame_%d", frameDirectory, frameCounter++).replaceAll("./", "");
 		Frame f = new Frame(numVars, parent, frameName);
 		activeFrames.add(f);
 		frames.add(f);
@@ -85,10 +86,9 @@ public class CodeBlock {
 		.append(".super java/lang/Object\n")
 		.append(".field public sl L").append(frame.parent.name).append(";\n");
 		
-		int numVars = frame.numVariables;
-		
-		for (int i = 0; i < numVars; i++) 
-			builder.append(".field public v").append(i).append(" I\n");
+		int i = 0;
+		for (IType t : frame.varTypes) 
+			builder.append(".field public v").append(i++).append(String.format(" %s\n", t.getCompString()));
 		builder.append(INIT_METHOD);
 		
 		return builder.toString();
