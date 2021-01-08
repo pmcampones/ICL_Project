@@ -8,6 +8,7 @@ import compiler.operations.AndOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
@@ -26,7 +27,7 @@ public class ASTAnd extends ASTBoolArithmetic {
     @Override
     public IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException,
-            TypeErrorException {
+            TypeErrorException, NotEnoughArgumentsException {
         IValue lV, rV;
         if ((lV = l.eval(e)) instanceof VBool && (rV = r.eval(e)) instanceof VBool)
             return new VBool(((VBool)lV).isTrue() && ((VBool)rV).isTrue());

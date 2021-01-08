@@ -6,8 +6,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 
 import static tests.GenericTester.MAX_RAND;
@@ -23,7 +22,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testSimpleIntExp()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -36,7 +35,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testSimpleBoolExp()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -47,7 +46,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testSimpleRefExp()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 
@@ -60,7 +59,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testSeveralExp()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -74,7 +73,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testChainedTypes()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -87,7 +86,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testStaticAndDynamic()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -101,7 +100,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testDifferentScopesStatic()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -115,7 +114,7 @@ public interface StaticTypecheckerOpTester {
 	
 	@Test
 	void testDifferentScopesStaticAndDynamic()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	

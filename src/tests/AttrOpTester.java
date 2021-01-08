@@ -6,8 +6,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 
 import static tests.GenericTester.MAX_RAND;
@@ -23,7 +22,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testSimpleAttr()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -36,7 +35,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testAttrSum()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -50,7 +49,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testAttrTerm()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -64,7 +63,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testAttrExpressionAfter()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -78,7 +77,7 @@ public interface AttrOpTester {
 
 	@Test
 	void testNestedAttr()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -92,7 +91,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testIdentity()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -105,7 +104,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testNestedWithExpression()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -124,7 +123,7 @@ public interface AttrOpTester {
 	
 	@Test
 	void testMutabilityOrder()
-			throws TypeErrorException, UndeclaredIdentifierException,
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	

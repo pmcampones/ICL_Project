@@ -25,6 +25,7 @@ import dataTypes.TVoid;
 import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 /**
@@ -50,7 +51,7 @@ public class ASTDef implements ASTNode {
     @Override
     public IValue eval(Environment<IValue> prevEnv)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
-            TypeErrorException {
+            TypeErrorException, NotEnoughArgumentsException {
         Environment<IValue> currEnv = prevEnv.beginScope();
         for (Variable v : variables) {
 			Optional<String> optType = v.type;

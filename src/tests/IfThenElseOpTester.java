@@ -9,8 +9,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 
 /**
@@ -23,7 +22,7 @@ public interface IfThenElseOpTester {
 	
 	@Test
 	void testSimpleExpressionTrue() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -36,7 +35,7 @@ public interface IfThenElseOpTester {
 
 	@Test
 	void testSimpleExpressionFalse() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -49,7 +48,7 @@ public interface IfThenElseOpTester {
 	
 	@Test
 	void testElseExpressionTrue() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -63,7 +62,7 @@ public interface IfThenElseOpTester {
 	
 	@Test
 	void testElseExpressionFalse() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	
@@ -77,7 +76,7 @@ public interface IfThenElseOpTester {
 	
 	@Test
 	void testExpressionScopeIf() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException,
 			IOException, InterruptedException;
 	
@@ -94,7 +93,7 @@ public interface IfThenElseOpTester {
 	
 	@Test
 	void testRunningExpressionIf() 
-			throws TypeErrorException, UndeclaredIdentifierException, 
+			throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
 			ParseException, IDDeclaredTwiceException, 
 			IOException, InterruptedException;
 	

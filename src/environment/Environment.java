@@ -2,6 +2,7 @@ package environment;
 
 import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
+import parser.Parser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +49,9 @@ public class Environment<V> {
         V val = scopeVars.get(id);
         if (val != null)
             return val;
-        if (parentEnv == null)
-            throw new UndeclaredIdentifierException(id);
+        if (parentEnv == null) {
+        	return (V) Parser.globalEnv.findVar(id);
+        }
         return parentEnv.find(id);
     }
     

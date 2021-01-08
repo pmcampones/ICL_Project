@@ -6,8 +6,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 
 import static tests.GenericTester.MAX_RAND;
@@ -23,7 +22,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testNewVarTestNotUsing()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -36,7 +35,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testNewVarUsing()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -49,7 +48,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testNewNoDef()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -62,7 +61,7 @@ public interface NewOpTester {
 
 	@Test
 	void testNewComplexExpression() 
-    		throws TypeErrorException, UndeclaredIdentifierException, 
+    		throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException, 
     		ParseException, IDDeclaredTwiceException, 
     		IOException, InterruptedException;
 	
@@ -76,7 +75,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testNewSums()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -90,7 +89,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testSumNewVarFirst()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -104,7 +103,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testSumNewVarBoth()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -118,7 +117,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testRedefineNew()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException,
             IOException, InterruptedException;
 	
@@ -133,7 +132,7 @@ public interface NewOpTester {
 	
 	@Test
 	void testAlias()
-            throws TypeErrorException, UndeclaredIdentifierException,
+            throws TypeErrorException, NotEnoughArgumentsException, UndeclaredIdentifierException,
             ParseException, IDDeclaredTwiceException, 
             IOException, InterruptedException;
 	
@@ -145,5 +144,4 @@ public interface NewOpTester {
         return String.valueOf(num1 + num2);
 	}
 	
-		
 }

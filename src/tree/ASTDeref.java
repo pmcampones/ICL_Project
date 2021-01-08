@@ -9,6 +9,7 @@ import compiler.operations.GetFieldOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 /**
@@ -27,7 +28,7 @@ public class ASTDeref implements ASTNode {
 
 	@Override
 	public IValue eval(Environment<IValue> e)
-			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		IValue res = node.eval(e);
 		if (res instanceof VMCell)
 			return ((VMCell) res).getValue();
