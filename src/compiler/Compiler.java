@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
 
 public class Compiler {
@@ -68,7 +68,7 @@ public class Compiler {
     			String.format("%s/%s", 
     			codeDirectory, frameDirectory);
     	new File(this.frameDirectory + "/.").mkdirs();
-    	cb = new CodeBlock(this.frameDirectory.replaceAll("./", ""));
+    	cb = new CodeBlock(this.frameDirectory.replace("./", ""));
     }
     
     private static void writeToFile(String filePath, String fileContent) throws IOException {
@@ -88,12 +88,12 @@ public class Compiler {
         Collection<String> frameCode = cb.getFrameCode();
         int index = 0;
         for(String frame: frameCode) {
-        	String framePath = String.format("%s/frame_%d.j", frameDirectory, index++).replaceAll("./", "");
+        	String framePath = String.format("%s/frame_%d.j", frameDirectory, index++).replace("./", "");
         	writeToFile(framePath, frame);
         }
         
         String callStackCode = cb.getCallStackCode();
-        String className = String.format("%s/%s", codeDirectory, fileName).replaceAll("./", "");
+        String className = String.format("%s/%s", codeDirectory, fileName).replace("./", "");
         int stackSize = cb.getMaxStackSize();
         String fileContent = String.format(FILE_STUB, className, stackSize, callStackCode);
         String filePath = String.format("%s.j", className);
