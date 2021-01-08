@@ -1,6 +1,6 @@
 # ICL Project - Interpreter and Compiler for the CALC Language
 
-### Project Status: _Main Project: COMPLETE / Bonus Part: IN PROGRESS_
+### Project Status: _Main Project: COMPLETE / Bonus Part: HALFWAY COMPLETE_
 
 This project consists on the implementation of an interpreter and compiler for the programming language CALC.
 
@@ -8,7 +8,8 @@ This project consists on the implementation of an interpreter and compiler for t
 
 The deliveries of the project are in the branch **Delivery**<br>
 The first phase delivery is the commit titled **Delivery Phase 1**<br>
-The final phase delivery is in the commit titled **Delivery Phase 2**
+The final phase delivery is in the commit titled **Delivery Phase 2 Final**<br>
+The bonus phase delivery is in the commit titled **Delivery Bonus**
 
 ## How to Run
 
@@ -95,3 +96,9 @@ In this language all the following three expressions are valid and correctly eva
 `def x = 1 y = 2 in x + y end`<br>
 `def x : int = 1 y : int = 2 in x + y end`<br>
 `def x = 1 y : int = 2 in x + y end`
+
+## Bonus
+
+The Bonus part of the project is incomplete as only the *Interpreter* has que required features implemented.
+
+In the interpreter it's possible to define functions, and declare global variables. Aditionally, a *println* operation has been added allowing the display of values that are not returned.
