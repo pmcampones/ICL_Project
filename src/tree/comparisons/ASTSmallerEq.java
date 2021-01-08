@@ -19,6 +19,7 @@ import tree.ASTNode;
 * @author Pedro Campones - 50051
 **/
 
+//TODO MAY HAVE TO REALLY IMPLEMENT THIS BECAUSE THE ORDER IN WHICH THE EXPRESSIONS ARE EVALUATED MAY BE IMPORTANT
 public class ASTSmallerEq implements ASTNode {
 
     private final ASTGreaterEq node;

@@ -119,7 +119,11 @@ public interface SemicolonOpTester {
 			IOException, InterruptedException;
 	
 	static String getExpectedTestDoubleFramesSameScopeSeq() {
-		String exp = "(1 + 2)*3; 4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end";
+		Random r = new Random();
+		int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND), third = r.nextInt(MAX_RAND);
+		String exp = String.format(
+				"(%d + %d) / %d; 4 + def x = 2 y = x + 1 in x + y + def z = x + y in 2 * z end + def w = x - y in w + 2 end end",
+				first, second, third);
 		writeToToken(exp);
 		return "20";
 	}
