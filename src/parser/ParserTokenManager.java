@@ -306,8 +306,7 @@ static private int jjMoveStringLiteralDfa4_0(long old0, long active0){
    }
    return jjStartNfa_0(3, active0);
 }
-static private int jjMoveStringLiteralDfa5_0(long old0, long active0)
-{
+static private int jjMoveStringLiteralDfa5_0(long old0, long active0){
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(3, old0);
    try { curChar = input_stream.readChar(); }
@@ -324,8 +323,7 @@ static private int jjMoveStringLiteralDfa5_0(long old0, long active0)
    }
    return jjStartNfa_0(4, active0);
 }
-static private int jjMoveStringLiteralDfa6_0(long old0, long active0)
-{
+static private int jjMoveStringLiteralDfa6_0(long old0, long active0){
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(4, old0);
    try { curChar = input_stream.readChar(); }
@@ -376,7 +374,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                      break;
                   if (kind > 19)
                      kind = 19;
-                  jjCheckNAdd(17);
+                  { jjCheckNAdd(17); }
                   break;
                case 2:
                case 16:
@@ -384,7 +382,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                      break;
                   if (kind > 18)
                      kind = 18;
-                  jjCheckNAdd(16);
+                  { jjCheckNAdd(16); }
                   break;
                default : break;
             }
@@ -402,7 +400,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                   {
                      if (kind > 18)
                         kind = 18;
-                     jjCheckNAdd(16);
+                     { jjCheckNAdd(16); }
                   }
                   if (curChar == 70)
                      jjstateSet[jjnewStateCnt++] = 13;
@@ -418,7 +416,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                   {
                      if (kind > 18)
                         kind = 18;
-                     jjCheckNAdd(16);
+                     { jjCheckNAdd(16); }
                   }
                   if (curChar == 114)
                      jjstateSet[jjnewStateCnt++] = 1;
@@ -474,14 +472,14 @@ static private int jjMoveNfa_0(int startState, int curPos)
                      break;
                   if (kind > 18)
                      kind = 18;
-                  jjCheckNAdd(16);
+                  { jjCheckNAdd(16); }
                   break;
                case 16:
                   if ((0x7fffffe07fffffeL & l) == 0L)
                      break;
                   if (kind > 18)
                      kind = 18;
-                  jjCheckNAdd(16);
+                  { jjCheckNAdd(16); }
                   break;
                default : break;
             }
@@ -521,66 +519,6 @@ public static final String[] jjstrLiteralImages = {
 "\162\145\146", null, null, "\53", "\55", "\52", "\57", "\45", "\50", "\51", "\12", "\75\75", 
 "\76", "\76\75", "\74", "\74\75", "\46\46", "\174\174", "\176", "\75", "\41", 
 "\72\75", "\72", "\73", "\54", };
-
-/** Lexer state names. */
-public static final String[] lexStateNames = {
-   "DEFAULT",
-};
-static final long[] jjtoToken = {
-   0x3fffffffff1L, 
-};
-static final long[] jjtoSkip = {
-   0xeL, 
-};
-static protected SimpleCharStream input_stream;
-static private final int[] jjrounds = new int[18];
-static private final int[] jjstateSet = new int[36];
-static protected char curChar;
-/** Constructor. */
-public ParserTokenManager(SimpleCharStream stream){
-   if (input_stream != null)
-      throw new TokenMgrError("ERROR: Second call to constructor of static lexer. You must use ReInit() to initialize the static variables.", TokenMgrError.STATIC_LEXER_ERROR);
-   input_stream = stream;
-}
-
-/** Constructor. */
-public ParserTokenManager(SimpleCharStream stream, int lexState){
-   this(stream);
-   SwitchTo(lexState);
-}
-
-/** Reinitialise parser. */
-static public void ReInit(SimpleCharStream stream)
-{
-   jjmatchedPos = jjnewStateCnt = 0;
-   curLexState = defaultLexState;
-   input_stream = stream;
-   ReInitRounds();
-}
-static private void ReInitRounds()
-{
-   int i;
-   jjround = 0x80000001;
-   for (i = 18; i-- > 0;)
-      jjrounds[i] = 0x80000000;
-}
-
-/** Reinitialise parser. */
-static public void ReInit(SimpleCharStream stream, int lexState)
-{
-   ReInit(stream);
-   SwitchTo(lexState);
-}
-
-/** Switch to specified lex state. */
-static public void SwitchTo(int lexState)
-{
-   if (lexState >= 1 || lexState < 0)
-      throw new TokenMgrError("Error: Ignoring invalid lexical state : " + lexState + ". State unchanged.", TokenMgrError.INVALID_LEXICAL_STATE);
-   else
-      curLexState = lexState;
-}
-
 static protected Token jjFillToken()
 {
    final Token t;
@@ -790,10 +728,10 @@ public static final String[] lexStateNames = {
 /** Lex State array. */
 public static final int[] jjnewLexState = {
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
 };
 static final long[] jjtoToken = {
-   0xfffffffff1L, 
+   0x3fffffffff1L, 
 };
 static final long[] jjtoSkip = {
    0xeL, 

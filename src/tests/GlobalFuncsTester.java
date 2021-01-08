@@ -65,7 +65,7 @@ public interface GlobalFuncsTester {
     
     static String getExpectedGlobalFuncDiv(int val) {
         Random r = new Random();
-        int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND);
+        int first = r.nextInt(MAX_RAND), second = r.nextInt(MAX_RAND) + 1;
         String exp = String.format("%d / %d + foo(%d)", first, second, val);
         writeToToken(exp);
         return String.valueOf(first / second + (val + val));
