@@ -27,11 +27,11 @@ import parser.ParseException;
 import tests.PrintlnOpTester;
 
 /**
- * MIEI
- * 
- * @author Ana Josefa Matos - 49938
- * @author Pedro Campon�s - 50051
- **/
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class PrintlnOpInterpreterTester extends InterpreterTester implements PrintlnOpTester {
 
 	static boolean defined = false;

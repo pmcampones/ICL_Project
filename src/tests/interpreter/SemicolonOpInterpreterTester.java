@@ -16,11 +16,10 @@ import parser.ParseException;
 import tests.SemicolonOpTester;
 
 /**
- * MIEI
- * 
- * @author Ana Josefa Matos - 49938
- * @author Pedro Campon�s - 50051
- **/
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
 
 public class SemicolonOpInterpreterTester extends InterpreterTester implements SemicolonOpTester {
 

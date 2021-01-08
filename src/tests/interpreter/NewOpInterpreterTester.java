@@ -10,6 +10,12 @@ import environment.exceptions.*;
 import parser.ParseException;
 import tests.NewOpTester;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class NewOpInterpreterTester extends InterpreterTester implements NewOpTester{
 
 	@Override

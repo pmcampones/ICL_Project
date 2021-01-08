@@ -16,6 +16,12 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class ASTNot implements ASTNode{
 
     private final ASTNode node;

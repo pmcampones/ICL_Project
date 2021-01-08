@@ -33,52 +33,48 @@ import parser.Parser;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
 
 public class ASTGlobalDef implements ASTNode {
 
-	private static final String TYPE_MISMATCH_MESSAGE =
-			"Value attributed to the variable is not the expected type";
+	private static final String TYPE_MISMATCH_MESSAGE = "Value attributed to the variable is not the expected type";
 
-    private final Collection<Variable> variables;
+	private final Collection<Variable> variables;
 
-    public ASTGlobalDef(Collection<Variable> variables) {
-        this.variables = variables;
-    }
-    
-    @Override
-    public IValue eval(Environment<IValue> prevEnv)
-            throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
-            TypeErrorException, NotEnoughArgumentsException {
-    	
-    	Environment<IValue> currEnv = prevEnv.beginScope();
-        for (Variable v : variables) {
+	public ASTGlobalDef(Collection<Variable> variables) {
+		this.variables = variables;
+	}
+
+	@Override
+	public IValue eval(Environment<IValue> prevEnv) throws IDDeclaredTwiceException, UndeclaredIdentifierException,
+			TypeErrorException, NotEnoughArgumentsException {
+
+		Environment<IValue> currEnv = prevEnv.beginScope();
+		for (Variable v : variables) {
 			Optional<String> optType = v.type;
-        	IValue valAttr = v.exp.eval(currEnv);
-        	if (optType.isPresent() && !optType.get().equals(valAttr.getType().toString()))
-        		throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
-        	IValue value = v.exp.eval(currEnv);
+			IValue valAttr = v.exp.eval(currEnv);
+			if (optType.isPresent() && !optType.get().equals(valAttr.getType().toString()))
+				throw new TypeErrorException(TYPE_MISMATCH_MESSAGE);
+			IValue value = v.exp.eval(currEnv);
 			currEnv.assoc(v.id, value);
 			Parser.globalEnv.assocVar(v.id, value);
 		}
-       
-        return new VVoid();
-    }
 
-    @Override
-    public void compile(CodeBlock cb,Environment<Coordinates> envCoord, Environment<IType> envTypes)
-    		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
+		return new VVoid();
+	}
 
-    }
+	@Override
+	public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
+			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
+		// TODO
+	}
 
 	@Override
 	public IType typeCheck(Environment<IType> e)
 			throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException {
-		
+		//TODO
 		return null;
 	}
 
-
-    
 }

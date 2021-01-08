@@ -8,6 +8,12 @@ import environment.exceptions.IDDeclaredTwiceException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 abstract class ASTBoolArithmetic implements ASTNode {
 
     protected final ASTNode l, r;

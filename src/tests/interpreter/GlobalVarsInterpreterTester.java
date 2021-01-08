@@ -27,8 +27,9 @@ import tests.GlobalVarsTester;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
+
 public class GlobalVarsInterpreterTester extends InterpreterTester implements GlobalVarsTester {
 	
 	static int globalVar;

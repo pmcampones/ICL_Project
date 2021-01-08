@@ -10,6 +10,12 @@ import environment.exceptions.*;
 import parser.ParseException;
 import tests.WhileOpTester;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class WhileOpInterpreterTester extends InterpreterTester implements WhileOpTester {
 
 	@Override

@@ -13,7 +13,7 @@ import dataTypes.IValue;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Camponês - 50051
+* @author Pedro Campones - 50051
 **/
 
 public class GlobalEnvironment<V>{

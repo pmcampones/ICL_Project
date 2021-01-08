@@ -32,7 +32,7 @@ import parser.Parser;
 /**
 * MIEI
 * @author Ana Josefa Matos - 49938
-* @author Pedro Campon�s - 50051
+* @author Pedro Campones - 50051
 **/
 
 public class ASTFunc implements ASTNode {
@@ -69,13 +69,13 @@ public class ASTFunc implements ASTNode {
 	@Override
 	public void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
 			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
-		
+		//TODO
 	}
 
 	@Override
 	public IType typeCheck(Environment<IType> e)
 			throws TypeErrorException, IDDeclaredTwiceException, UndeclaredIdentifierException {
-		
+		//TODO
 		return null;
 	}
 

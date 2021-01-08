@@ -13,7 +13,12 @@ import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import tree.ASTNode;
 
-//TODO MAY HAVE TO REALLY IMPLEMENT THIS BECAUSE THE ORDER IN WHICH THE EXPRESSIONS ARE EVALUATED MAY BE IMPORTANT
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class ASTSmallerEq implements ASTNode {
 
     private final ASTGreaterEq node;

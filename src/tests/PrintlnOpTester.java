@@ -14,6 +14,12 @@ import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 import parser.ParseException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public interface PrintlnOpTester {
 	
 	static int generateGlobalVar() {

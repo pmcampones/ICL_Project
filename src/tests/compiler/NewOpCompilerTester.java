@@ -14,6 +14,12 @@ import static tests.NewOpTester.*;
 
 import java.io.IOException;
 
+/**
+* MIEI
+* @author Ana Josefa Matos - 49938
+* @author Pedro Campones - 50051
+**/
+
 public class NewOpCompilerTester extends CompilationTester implements NewOpTester {
 
 	@Override
