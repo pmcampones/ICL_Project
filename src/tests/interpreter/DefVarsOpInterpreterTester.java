@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import parser.ParseException;
 import tests.DefVarsOpTester;
 
@@ -24,7 +23,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefWithoutUsingSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefWithoutUsingSimple(), run());
     }
 
@@ -32,7 +31,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefWithoutUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefWithoutUsingComplex(), run());
     }
 
@@ -40,7 +39,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefUsingSimple() 
     		throws ParseException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException, TypeErrorException {
+    		UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefUsingSimple(), run());
     }
 	
@@ -48,7 +47,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefUsingComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefUsingComplex(), run());
     }
 
@@ -56,7 +55,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefNestedSimple()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefNestedSimple(), run());
     }
 
@@ -64,7 +63,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefNestedCaires1()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefNestedCaires1(), run());
     }
 
@@ -72,7 +71,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefNestedCaires2()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefNestedCaires2(), run());
     }
 
@@ -80,7 +79,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefSameVarDifferentScopesSimple()
             throws ParseException, IDDeclaredTwiceException, 
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefSameVarDifferentScopesSimple(), run());
     }
 
@@ -88,7 +87,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefSameVarDifferentScopesComplex()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefSameVarDifferentScopesComplex(), run());
     }
 
@@ -96,7 +95,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testDefDifferentVarsSameScope()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException {
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         assertEquals(getExpectedTestDefDifferentVarsSameScope(), run());
     }
     
@@ -104,7 +103,7 @@ public class DefVarsOpInterpreterTester extends InterpreterTester implements Def
     @Test
     public void testTwoFramesSameScope() 
     		throws ParseException, IDDeclaredTwiceException, 
-    		UndeclaredIdentifierException, TypeErrorException {
+    		UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
     	assertEquals(getExpectedTestTwoFramesSameScope(), run());
     }
 

@@ -1,8 +1,7 @@
 package tests;
 
 import dataTypes.TypeErrorException;
-import environment.exceptions.IDDeclaredTwiceException;
-import environment.exceptions.UndeclaredIdentifierException;
+import environment.exceptions.*;
 import org.junit.jupiter.api.Test;
 import parser.ParseException;
 
@@ -22,7 +21,7 @@ public interface ArithmeticOpTester {
     @Test
     void testNumber()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestNumber() {
@@ -34,7 +33,7 @@ public interface ArithmeticOpTester {
     @Test
     void testSum()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestSum() {
@@ -48,7 +47,7 @@ public interface ArithmeticOpTester {
     @Test
     void testSub()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestSub() {
@@ -62,7 +61,7 @@ public interface ArithmeticOpTester {
     @Test
     void testMult()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestMult() {
@@ -76,7 +75,7 @@ public interface ArithmeticOpTester {
     @Test
     void testDiv()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestDiv() {
@@ -90,7 +89,7 @@ public interface ArithmeticOpTester {
     @Test
     void testManySums()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestManySums() {
@@ -104,7 +103,7 @@ public interface ArithmeticOpTester {
     @Test
     void testManySubs()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestManySubs() {
@@ -119,7 +118,7 @@ public interface ArithmeticOpTester {
     @Test
     void testManyMults()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestManyMults() {
@@ -134,7 +133,7 @@ public interface ArithmeticOpTester {
     @Test
     void testManyDivs()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestManyDivs() {
@@ -150,7 +149,7 @@ public interface ArithmeticOpTester {
     @Test
     void testBrackets()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestBrackets() {
@@ -162,7 +161,7 @@ public interface ArithmeticOpTester {
     @Test
     void testBracketsSum()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestBracketsSum() {
@@ -176,7 +175,7 @@ public interface ArithmeticOpTester {
     @Test
     void testSumsAndMultBrackets()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestSumsAndMultsBrackets() {
@@ -193,7 +192,7 @@ public interface ArithmeticOpTester {
     @Test
     void testMinusSingle()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestMinusSingle() {
@@ -205,7 +204,7 @@ public interface ArithmeticOpTester {
     @Test
     void testMinusTwo()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestMinusTwo() {
@@ -219,7 +218,7 @@ public interface ArithmeticOpTester {
     @Test
     void testMinusExpression()
             throws ParseException, IDDeclaredTwiceException,
-            UndeclaredIdentifierException, TypeErrorException,
+            UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException,
             IOException, InterruptedException;
 
     static String getExpectedTestMinusExpression() {

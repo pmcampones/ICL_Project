@@ -9,6 +9,7 @@ import dataTypes.IValue;
 import dataTypes.TypeErrorException;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 /**
@@ -21,7 +22,7 @@ public interface ASTNode {
 
     IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, 
-            TypeErrorException;
+            TypeErrorException, NotEnoughArgumentsException;
 
     void compile(CodeBlock codeBlock, Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException;

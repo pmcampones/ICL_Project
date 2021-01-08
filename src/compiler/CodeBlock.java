@@ -68,7 +68,7 @@ public class CodeBlock {
 	 */
 	public Frame createFrame(int numVars) {
 		Frame parent = activeFrames.peek();
-		String frameName = String.format("%s/frame_%d", frameDirectory, frameCounter++).replaceAll("./", "");
+		String frameName = String.format("%s/frame_%d", frameDirectory, frameCounter++).replace("./", "");
 		Frame f = new Frame(numVars, parent, frameName);
 		activeFrames.add(f);
 		frames.add(f);
@@ -103,7 +103,7 @@ public class CodeBlock {
 	
 	int getMaxStackSize() {
 		int max = 3;
-		int current = 1;
+		int current = 20;
 		for (Operation op : callStackOperations) {
 			current += op.getStackChange();
 			max = Math.max(max, current);

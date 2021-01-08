@@ -18,6 +18,7 @@ import dataTypes.VBool;
 import dataTypes.VVoid;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 /**
@@ -37,7 +38,7 @@ public class ASTIf implements ASTNode{
     }
 
     @Override
-    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+    public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         IValue ifVal = ifNode.eval(e);
         if (ifVal instanceof VBool) {
             if(((VBool) ifVal).isTrue())

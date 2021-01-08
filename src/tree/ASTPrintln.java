@@ -17,34 +17,32 @@ import tree.binaryArithmetic.ASTMult;
 * @author Pedro Campones - 50051
 **/
 
-public class ASTNeg implements ASTNode {
+public class ASTPrintln implements ASTNode {
 
     private final ASTNode node;
 
-    public ASTNeg(ASTNode node) {this.node = node;}
+    public ASTPrintln(ASTNode node) {this.node = node;}
 
     @Override
     public IValue eval(Environment<IValue> e)
             throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
     	IValue res = node.eval(e);
     	if (res instanceof VInt)
-    		return new VInt(-((VInt)res).getVal());
-    	throw new TypeErrorException("Expression is not an integer");
+    		System.out.println(String.format("Print: %d", ((VInt) res).getVal()));
+    	return res;
     }
 
     @Override
     public void compile(CodeBlock cb, Environment<Coordinates> envCoord, Environment<IType> envTypes)
     		throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, IOException {
-        new ASTMult(node, new ASTNum(-1)).compile(cb, envCoord, envTypes);
     }
 
     @Override
     public IType typeCheck(Environment<IType> e)
             throws TypeErrorException, IDDeclaredTwiceException,
             UndeclaredIdentifierException {
-        if (node.typeCheck(e) instanceof TInt)
-            return new TInt();
-        throw new TypeErrorException("Unary negative requires a type Int.");
+				return null;
+    	
     }
 
 }

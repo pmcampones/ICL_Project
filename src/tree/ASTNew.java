@@ -11,6 +11,7 @@ import compiler.operations.PutFieldOp;
 import dataTypes.*;
 import environment.Environment;
 import environment.exceptions.IDDeclaredTwiceException;
+import environment.exceptions.NotEnoughArgumentsException;
 import environment.exceptions.UndeclaredIdentifierException;
 
 /**
@@ -29,7 +30,7 @@ public class ASTNew implements ASTNode {
 
 	@Override
 	public IValue eval(Environment<IValue> e)
-			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException {
+			throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
 		return new VMCell(node.eval(e));
 	}
 
