@@ -31,7 +31,7 @@ public class ASTOr extends ASTBoolArithmetic implements ASTNode {
     public IValue eval(Environment<IValue> e) throws IDDeclaredTwiceException, UndeclaredIdentifierException, TypeErrorException, NotEnoughArgumentsException {
         IValue lV, rV;
         if ((lV = l.eval(e)) instanceof VBool && (rV = r.eval(e)) instanceof VBool)
-            return new VBool(((VBool)lV).isTrue() && ((VBool)rV).isTrue());
+            return new VBool(((VBool)lV).isTrue() || ((VBool)rV).isTrue());
         throw new TypeErrorException("Expressions aren't boolean values");
     }
 
